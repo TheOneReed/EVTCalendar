@@ -355,7 +355,56 @@
 				</Scripts>
 				<FontString inherits="ChatFontNormal" bytes="32"/>
 			</EditBox>
-		</Frames>
+<!--				<Frame name="EVTFrameFromTime" inherits="UIDropDownMenuTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOMRIGHT" relativeTo="EVTFrameCreatorEditBox">
+						<Offset>
+							<AbsDimension x="0" y="-35"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="From: ">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+				</Scripts>
+			</Frame>
+			<Frame name="EVTFrameToTime" inherits="UIDropDownMenuTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOMLEFT" relativeTo="EVTFrameCreatorEditBox">
+						<Offset>
+							<AbsDimension x="-50" y="-35"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="To: ">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-5" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+				</Scripts>
+			</Frame> 
+-->
+			</Frames>
 		<Layers>
 			<Layer level="ARTWORK">
 				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameTopRight">
