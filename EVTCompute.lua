@@ -71,18 +71,40 @@ function DaysInMonth(year, month)
     return daysPerMonth[month]
 end
 
-function DaysFromEpoch(year, month, day)
+function DaysFromEpoch(toYear, toMonth, toDay)
     local count = 0;
-    for i = epochYear, (year - 1) do
-        count = count + DaysInYear(i);
-    end
-    for i = 1, (month - 1) do
-        count = count + DaysInMonth(year, i);
-    end
-    count = count + day;
+	if epochYear <= toYear then
+		for i = epochYear, (toYear - 1), 1 do
+			count = count + DaysInYear(i);
+		end
+		for i = 1, (toMonth - 1) do
+			count = count + DaysInMonth(toYear, i);
+		end
+		count = count + toDay;
+	else
+		for i = (epochYear - 1), toYear, -1 do
+			count = count + DaysInYear(i);
+		end
+		for i = 1, (toMonth - 1) do
+			count = count - DaysInMonth(toYear, i);
+		end
+		count = count - toDay;
+	end
     return count;
 end
 
 function GetDayofWeek(curY, curM, curD)
-    return mod((DaysFromEpoch(curY, curM, curD) + epochDay), 7);
+	local dayInWeek;
+	if epochYear <= curY then
+		dayInWeek = mod((DaysFromEpoch(curY, curM, curD)), 7) + epochDay;
+		if (dayInWeek > 7) then
+			dayInWeek = dayInWeek - 7;
+		end
+	else
+		dayInWeek = epochDay - mod((DaysFromEpoch(curY, curM, curD)), 7)
+		if (dayInWeek < 1) then
+			dayInWeek = dayInWeek + 7;
+		end
+	end
+	return dayInWeek;
 end

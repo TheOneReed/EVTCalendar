@@ -123,6 +123,7 @@ end
 
 function EVT_UpdateCalendar(disMonth, disYear)
 	local startDay = GetDayofWeek(disYear, disMonth, 1);
+		DEFAULT_CHAT_FRAME:AddMessage(tostring(startDay), 1, 0.1, 0.1);
 	local z = 1;
 	
 	for step = 1, 42, 1 do
@@ -134,7 +135,7 @@ function EVT_UpdateCalendar(disMonth, disYear)
 			preMonth = 12
 		end
 		if (step < startDay) then
-			preNum = DaysInMonth(disYear, preMonth) + - startDay + (step + 1);	
+			preNum = DaysInMonth(disYear, preMonth) - startDay + (step + 1);	
 			s:SetText(preNum);
 			table_DayVal[step] = nil;
 			DisableButton(b, step);
@@ -259,6 +260,7 @@ end
 
 function EVT_UpdateDayPanel()
 	local dow = table_Dotw[GetDayofWeek(displayYear, displayMonth, displayDay)];
+	DEFAULT_CHAT_FRAME:AddMessage(tostring(dow)..tostring(displayYear)..tostring(displayMonth)..tostring(displayDay), 0.1, 0.1, 1);
 	dayString = string.format("%s, %s %s, %s", dow, table_Months[displayMonth], displayDay, displayYear);
 	EVTDate:SetText(dayString);
 	EVT_UpdateScrollBar();
