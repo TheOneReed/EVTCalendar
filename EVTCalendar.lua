@@ -286,3 +286,121 @@ function EVT_UpdateScrollBar()
 		end
 	end		
 end
+
+function EVTFrameFromTime_OnLoad()
+	UIDropDownMenu_Initialize(this, EVTFrameFromTime_Initialize);
+	UIDropDownMenu_SetWidth(75, EVTFrameFromTime);
+	UIDropDownMenu_SetSelectedValue(this, "From0:30");
+end
+
+function EVTFrameFromTime_Initialize()
+	local info;
+	local int = 0;
+	local str;
+	for i=1, 24, 1 do
+		if mod(i, 2) == 0 then
+			int = int + 1;
+			str = string.format("%s:%s", int, "00");
+			else
+			str = string.format("%s:%s", int, "30");
+		end		
+		checked = nil;
+		info = {};
+		info.text = tostring(str);
+		info.value = "From"..str;
+		info.func = EVTFrameFromTime_OnClick;
+		info.checked = checked;
+		UIDropDownMenu_AddButton(info);
+	end
+end
+
+function EVTFrameFromTime_OnClick()
+	UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, this.value);
+end
+
+function EVTFrameToTime_OnLoad()
+	UIDropDownMenu_Initialize(this, EVTFrameToTime_Initialize);
+	UIDropDownMenu_SetWidth(75, EVTFrameToTime);
+	UIDropDownMenu_SetSelectedValue(this, "To0:30");
+end
+
+function EVTFrameToTime_Initialize()
+	local info;
+	local int = 0;
+	local str;
+	for i=1, 24, 1 do
+		if mod(i, 2) == 0 then
+			int = int + 1;
+			str = string.format("%s:%s", int, "00");
+			else
+			str = string.format("%s:%s", int, "30");
+		end		
+		checked = nil;
+		info = {};
+		info.text = str;
+		info.value = "To"..str;
+		info.func = EVTFrameToTime_OnClick;
+		info.checked = checked;
+		UIDropDownMenu_AddButton(info);
+	end
+end
+
+function EVTFrameToTime_OnClick()
+	UIDropDownMenu_SetSelectedValue(EVTFrameToTime, this.value);
+end
+
+function EVTFrameAMPM1_OnLoad()
+	UIDropDownMenu_Initialize(this, EVTFrameAMPM1_Initialize);
+	UIDropDownMenu_SetWidth(45, EVTFrameAMPM1);
+	UIDropDownMenu_SetSelectedValue(this, "1AM");
+	end
+
+function EVTFrameAMPM1_Initialize()
+	local info;
+
+	checked = nil;
+	info = {};
+	info.text = "AM";
+	info.value = "1".."AM";
+	info.func = EVTFrameAMPM1_OnClick;
+	info.checked = checked;
+	UIDropDownMenu_AddButton(info);
+	info = {};
+	info.text = "PM";
+	info.value = "1".."PM";
+	info.func = EVTFrameAMPM1_OnClick;
+	info.checked = checked;
+	UIDropDownMenu_AddButton(info);
+end
+
+function EVTFrameAMPM1_OnClick()
+	UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, this.value);
+end
+
+function EVTFrameAMPM2_OnLoad()
+	UIDropDownMenu_Initialize(this, EVTFrameAMPM2_Initialize);
+	UIDropDownMenu_SetWidth(45, EVTFrameAMPM2);
+	UIDropDownMenu_SetSelectedValue(this, "2AM");
+end
+
+function EVTFrameAMPM2_Initialize()
+	local info;
+
+	checked = nil;
+	info = {};
+	info.text = "AM";
+	info.value = "2".."AM";
+	info.func = EVTFrameAMPM2_OnClick;
+	info.checked = checked;
+	UIDropDownMenu_AddButton(info);
+	info = {};
+	info.text = "PM";
+	info.value = "2".."PM";
+	info.func = EVTFrameAMPM2_OnClick;
+	info.checked = checked;
+	UIDropDownMenu_AddButton(info);
+end
+
+function EVTFrameAMPM2_OnClick()
+	UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, this.value);
+end
