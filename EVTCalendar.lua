@@ -133,21 +133,15 @@ function EVT_UpdateCalendar(disMonth, disYear)
 		if (preMonth < 1) then
 			preMonth = 12
 		end
-		if ((disMonth == 2) and isLeapYear(disYear)) then
-			dispMonth = "Leap";
-		end
-		if ((preMonth == 2) and isLeapYear(disYear)) then
-			preMonth = "Leap";
-		end
 		if (step < startDay) then
-			preNum = daysPerMonth[preMonth] - startDay + (step + 1);	
+			preNum = DaysInMonth(disYear, preMonth) + - startDay + (step + 1);	
 			s:SetText(preNum);
 			table_DayVal[step] = nil;
 			DisableButton(b, step);
-		elseif (step >= (daysPerMonth[dispMonth] + startDay)) then
-			newDays = (step - (daysPerMonth[dispMonth] + startDay - 1));
+		elseif (step >= (DaysInMonth(disYear, disMonth) + startDay)) then
+			newDays = (step - (DaysInMonth(disYear, disMonth) + startDay - 1));
 			s:SetText(newDays);
-			table_DayPos[(daysPerMonth[dispMonth] + startDay) + newDays] = nil;
+			table_DayPos[(DaysInMonth(disYear, disMonth) + startDay) + newDays] = nil;
 			DisableButton(b, step);
 		else
 			s:SetText(z);
