@@ -23,8 +23,8 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<NormalTexture file="Interface\AddOns\EVTCalender\Images\EVTButtonUp"/>
-				<PushedTexture file="Interface\AddOns\EVTCalender\Images\EVTButtonDown"/>
+				<NormalTexture file="Interface\AddOns\EVTCalendar\Images\EVTButtonUp"/>
+				<PushedTexture file="Interface\AddOns\EVTCalendar\Images\EVTButtonDown"/>
 				<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
 				<Layers>
 					<Layer level="OVERLAY">

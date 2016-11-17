@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- EVTCalender English Localization
+-- EVTCalendar English Localization
 -- Author: Reed
 -- 
 --

@@ -1,5 +1,5 @@
 ----------------------------------------------------------------
--- EVTCalender
+-- EVTCalendar
 -- Author: Reed
 -- 
 --
@@ -21,11 +21,11 @@ local initialized = false;
 local allowEdit = true;
 
 -- Asset Location
-local ImgDayActive = "Interface\\AddOns\\EVTCalender\\Images\\EVTDayFrameActive";
-local ImgDayInactive = "Interface\\AddOns\\EVTCalender\\Images\\EVTDayFrameInactive";
-local ImgDayToday = "Interface\\AddOns\\EVTCalender\\Images\\EVTDayFrameToday";
-local ImgDaySelected = "Interface\\AddOns\\EVTCalender\\Images\\EVTDayFrameSelected";
-local ImgDayHightlight = "Interface\\AddOns\\EVTCalender\\Images\\EVTDayFrameHighlight";
+local ImgDayActive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameActive";
+local ImgDayInactive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameInactive";
+local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
+local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
+local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
 
 function EVT_OnLoad()
 	this:RegisterEvent("ADDON_LOADED");
@@ -39,13 +39,13 @@ function EVT_OnLoad()
 	displayDay = day;
 	displayMonth = month;
 	displayYear = year;
-	EVT_BuildCalender();
+	EVT_BuildCalendar();
 
 	SLASH_EVT1 = EVT_SLASH;
 	SlashCmdList["EVT"] = function(msg)
 		if msg == "test" then
 			displayYear = 2444;
-			EVT_UpdateCalender(displayMonth, displayYear)
+			EVT_UpdateCalendar(displayMonth, displayYear)
 		elseif msg == "leap" then
 			isLeapYear(displayYear)
 		else
@@ -78,7 +78,7 @@ function EVT_Toggle()
 		displayDay = day;
 		displayMonth = month;
 		displayYear = year;
-		EVT_UpdateCalender(month, year);
+		EVT_UpdateCalendar(month, year);
 		EVT_DayClick(table_Days[table_DayPos[day]]:GetName(), false);
 		ShowUIPanel(EVTFrame);
 		PlaySoundFile("Sound\\interface\\uCharacterSheetOpen.wav");
@@ -108,7 +108,7 @@ function EVT_IncMonth()
 		displayYear = displayYear - 1;
 	end
 	EVTMonthDisplay:SetText(table_Months[tostring(displayMonth)]);
-	EVT_UpdateCalender(displayMonth, displayYear);
+	EVT_UpdateCalendar(displayMonth, displayYear);
 end
 
 function EVT_DecMonth()
@@ -118,10 +118,10 @@ function EVT_DecMonth()
 		displayYear = displayYear + 1;
 	end
 	EVTMonthDisplay:SetText(table_Months[tostring(displayMonth)]);
-	EVT_UpdateCalender(displayMonth, displayYear);
+	EVT_UpdateCalendar(displayMonth, displayYear);
 end
 
-function EVT_UpdateCalender(disMonth, disYear)
+function EVT_UpdateCalendar(disMonth, disYear)
 	local startDay = GetDayofWeek(disYear, disMonth, 1);
 	local z = 1;
 	
@@ -191,7 +191,7 @@ end
 			end
 	end
 
-function EVT_BuildCalender()
+function EVT_BuildCalendar()
 	local x = 1;
 	local y = 1;
 
@@ -223,7 +223,7 @@ function EVT_BuildCalender()
 		s:SetText(step);
 		table_DayStr[step] = s;
 	end
-	EVT_UpdateCalender(month, year);
+	EVT_UpdateCalendar(month, year);
 end
 
 

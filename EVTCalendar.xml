@@ -67,7 +67,7 @@
  				</Offset>
  			</Anchor>
  		</Anchors>
-		<Backdrop bgFile="Interface\AddOns\EVTCalender\Images\EVTFrameBackground-Dark" tile="true">
+		<Backdrop bgFile="Interface\AddOns\EVTCalendar\Images\EVTFrameBackground-Dark" tile="true">
 			<BackgroundInsets>
 				<AbsInset left="0" right="0" top="15" bottom="5"/>
 			</BackgroundInsets>
@@ -358,7 +358,7 @@
 		</Frames>
 		<Layers>
 			<Layer level="ARTWORK">
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameTopRight">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameTopRight">
 					<Size>
 						<AbsDimension x="512" y="32"/>
 					</Size>
@@ -370,7 +370,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameTopLeft">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameTopLeft">
 					<Size>
 						<AbsDimension x="512" y="32"/>
 					</Size>
@@ -382,7 +382,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTMonthSelect" file="Interface\AddOns\EVTCalender\Images\EVTFrameTop">
+				<Texture name="EVTMonthSelect" file="Interface\AddOns\EVTCalendar\Images\EVTFrameTop">
 					<Size>
 						<AbsDimension x="256" y="64"/>
 					</Size>
@@ -394,7 +394,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameRight">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameRight">
 					<Size>
 						<AbsDimension x="32" y="256"/>
 					</Size>
@@ -406,7 +406,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameLeft">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameLeft">
 					<Size>
 						<AbsDimension x="32" y="256"/>
 					</Size>
@@ -418,7 +418,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameRight">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameRight">
 					<Size>
 						<AbsDimension x="32" y="256"/>
 					</Size>
@@ -430,7 +430,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameLeft">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameLeft">
 					<Size>
 						<AbsDimension x="32" y="256"/>
 					</Size>
@@ -442,7 +442,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture> 
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameBottomL">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameBottomL">
 					<Size>
 						<AbsDimension x="530" y="32"/>
 					</Size>
@@ -454,7 +454,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture> 
-				<Texture file="Interface\AddOns\EVTCalender\Images\EVTFrameBottomR">
+				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameBottomR">
 					<Size>
 						<AbsDimension x="530" y="32"/>
 					</Size>
@@ -466,7 +466,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture> 
-				<Texture name="EVTSunday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">
+				<Texture name="EVTSunday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
@@ -478,7 +478,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTMonday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">
+				<Texture name="EVTMonday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
@@ -490,7 +490,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTTuesday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">
+				<Texture name="EVTTuesday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
@@ -502,7 +502,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTWednesday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">
+				<Texture name="EVTWednesday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
@@ -514,7 +514,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTThursday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">
+				<Texture name="EVTThursday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
@@ -526,7 +526,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTFriday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">
+				<Texture name="EVTFriday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
@@ -538,7 +538,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<Texture name="EVTSaturday" file="Interface\AddOns\EVTCalender\Images\EVTFrameDay">		
+				<Texture name="EVTSaturday" file="Interface\AddOns\EVTCalendar\Images\EVTFrameDay">		
 					<Size>
 						<AbsDimension x="80" y="40"/>
 					</Size>
