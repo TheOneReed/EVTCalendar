@@ -1,0 +1,10 @@
+## Interface: 11200
+## Title: EVTCalender
+## Notes: My first AddOn
+## Version: 0.1
+localization.enUS.lua
+EVTCompute.lua
+EVTCalender.lua
+EVTCalender.xml
+EVTButton.lua
+EVTButton.xml
