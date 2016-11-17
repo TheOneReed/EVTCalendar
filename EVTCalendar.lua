@@ -123,7 +123,6 @@ end
 
 function EVT_UpdateCalendar(disMonth, disYear)
 	local startDay = GetDayofWeek(disYear, disMonth, 1);
-		DEFAULT_CHAT_FRAME:AddMessage(tostring(startDay), 1, 0.1, 0.1);
 	local z = 1;
 	
 	for step = 1, 42, 1 do
