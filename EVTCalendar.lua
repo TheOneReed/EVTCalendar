@@ -17,6 +17,7 @@ local displayYear;
 local displayDay;
 local displayPos;
 local initialized = false;
+local varsLoaded = false;
 
 -- Asset Location
 local ImgDayActive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameActive";
@@ -25,32 +26,27 @@ local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
 local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
 local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
 
+-- Calendar Data Table
+
 function EVT_OnLoad()
     this:RegisterEvent("ADDON_LOADED");
     this:RegisterEvent("VARIABLES_LOADED");
     
     tinsert(UISpecialFrames, "EVTFrame");
-    tinsert(UISpecialFrames, "EVTFrameCreatePopup");
-    
-    displayMonth = date("%m") + 0;
-    displayDay = date("%d") + 0;
-    displayYear = date("%Y") + 0;
-    EVT_BuildCalendar();
     
     SLASH_EVT1 = EVT_SLASH;
     SlashCmdList["EVT"] = function(msg)
-        if msg == "test" then
-            displayYear = 2444;
-            EVT_UpdateCalendar(displayMonth, displayYear)
-        elseif msg == "leap" then
-            isLeapYear(displayYear)
+        if msg == "add" then
+			local dtg = tostring(date("%m%d%Y"));
+			CalendarData[dtg] = {};
+			CalendarData[dtg][1] = "Success";
+        elseif msg == "read" then
+			local dtg = tostring(date("%m%d%Y"));
+            DEFAULT_CHAT_FRAME:AddMessage(tostring(CalendarData[dtg][1]), 0.1, 0.1, 1);
         else
             EVT_SlashCommand(msg);
         end
     end
-    
-    initialized = true;
-
 end
 
 function EVT_SlashCommand(msg)
@@ -62,7 +58,29 @@ function EVT_SlashCommand(msg)
 --	end
 end
 
-function EVT_Toggle()
+function EVT_OnEvent()
+	if (event == "ADDON_LOADED") then
+		if (strlower(arg1) == "evtcalendar") then
+			varsLoaded = true;
+			EVT_Initialize();
+		end
+	elseif (event == "VARIABLES_LOADED") then
+		if (not varsLoaded) then
+			varsLoaded = true;
+			EVT_Initialize();
+		end
+	end
+end
+
+function EVT_Initialize()
+    displayMonth = date("%m") + 0;
+    displayDay = date("%d") + 0;
+    displayYear = date("%Y") + 0;
+    EVT_BuildCalendar();
+    initialized = true;
+end
+	
+	function EVT_Toggle()
     EVTButtonDay:SetText(date("%d"));
     if (EVTFrame:IsVisible()) then
         HideUIPanel(EVTFrame);

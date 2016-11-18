@@ -59,6 +59,7 @@
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(EVTFrameCreatePopup);
+						EVTClearFrame();
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -74,6 +75,9 @@
 				</Anchor>
 			</Anchors>
 				<Scripts>
+					<OnShow>
+						this:Disable();
+					</OnShow>
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(EVTFrameCreatePopup);
@@ -106,6 +110,9 @@
 					</Layer>
 				</Layers>
 				<Scripts>
+					<OnEditFocusLost>
+						EVTCheckComplete();
+					</OnEditFocusLost>
 					<OnShow>
 						this:ClearFocus();
 					</OnShow>
@@ -158,7 +165,7 @@
 			</EditBox>
 			<EditBox name="EVTFrameNoteEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="DIALOG" historyLines="0">
 				<Size>
-					<AbsDimension x="175" y="96"/>
+					<AbsDimension x="175" y="16"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOP" relativeTo="EVTFrameCreatorEditBox" relativePoint="BOTTOM">
@@ -174,7 +181,7 @@
 							<Anchors>
 								<Anchor point="RIGHT" relativeTo="EVTFrameNoteEditBox" relativePoint="LEFT">
 									<Offset>
-										<AbsDimension x="-8" y="0"/>
+										<AbsDimension x="-7" y="0"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -318,7 +325,7 @@
 					</OnShow>
 				</Scripts>
 			</Frame>
-			<Frame name="EVTFrameSubType" inherits="UIDropDownMenuTemplate" hidden="true" id="5">
+			<Frame name="EVTFrameSubType" inherits="UIDropDownMenuTemplate" hidden="true" id="6">
 				<Anchors>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="EVTFrameType">
 						<Offset>
@@ -335,6 +342,37 @@
 					</OnShow>
 				</Scripts>
 			</Frame>
-		</Frames>
+			<CheckButton name="EVTFrameMando" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameCreatorEditBox" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="7" y="-123"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Mandatory:">
+							<Anchors>
+								<Anchor point="RIGHT" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</CheckButton>
+			</Frames>
+		<Scripts>
+			<OnShow>
+				EVTFrameCreatePopup_OnLoad();
+			</OnShow>
+			<OnEscapePressed>
+				EVTClearFrame();
+				HideUIPanel(EVTFrameCreatePopup);
+			</OnEscapePressed>
+		</Scripts>
 	</Frame>
 </Ui>

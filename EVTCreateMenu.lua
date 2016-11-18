@@ -5,6 +5,12 @@
 --
 ----------------------------------------------------------------
 
+function EVTFrameCreatePopup_OnLoad()
+	EVTFrameCreatorEditBox:SetText(UnitName("player"));
+	EVTFrameCreatorEditBox:EnableKeyboard(false);
+	EVTFrameCreatorEditBox:EnableMouse(false);
+end
+
 function EVTFrameFromTime_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameFromTime_Initialize);
     UIDropDownMenu_SetWidth(75, EVTFrameFromTime);
@@ -33,6 +39,7 @@ end
 
 function EVTFrameFromTime_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, this.value);
+	EVTCheckComplete();
 end
 
 function EVTFrameToTime_OnLoad()
@@ -63,6 +70,7 @@ end
 
 function EVTFrameToTime_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameToTime, this.value);
+	EVTCheckComplete();
 end
 
 function EVTFrameAMPM1_OnLoad()
@@ -81,6 +89,7 @@ end
 
 function EVTFrameAMPM1_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, this.value);
+	EVTCheckComplete();
 end
 
 function EVTFrameAMPM2_OnLoad()
@@ -97,6 +106,11 @@ function EVTFrameAMPM2_Initialize()
     UIDropDownMenu_AddButton(info);
 end
 
+function EVTFrameAMPM2_OnClick()
+    UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, this.value);
+	EVTCheckComplete();
+end
+
 function EVTFrameType_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameType, this.value);
 end
@@ -104,8 +118,7 @@ end
 function EVTFrameType_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameType_Initialize);
     UIDropDownMenu_SetWidth(75, EVTFrameType);
-    UIDropDownMenu_SetSelectedValue(this, 0);
-
+    UIDropDownMenu_SetSelectedValue(this, 7);
 end
 
 function EVTFrameType_Initialize()
@@ -126,7 +139,7 @@ end
 function EVTFrameSubType_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameSubType_Initialize);
     UIDropDownMenu_SetWidth(125, EVTFrameSubType);
-    UIDropDownMenu_SetSelectedValue(this, 0);
+    UIDropDownMenu_SetSelectedValue(this, 1);
 end
 
 function EVTFrameSubType_Initialize()
@@ -164,6 +177,42 @@ end
 
 function EVTFrameSubType_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameSubType, this.value);
+end
+
+function EVTCheckComplete()
+	if (EVTFrameNameEditBox:GetText() ~= "") and (compareInputTime() == true) then
+		EVTFrameCreatePopupAccept:Enable()
+	else
+		EVTFrameCreatePopupAccept:Disable()
+	end
+end
+
+function EVTClearFrame()
+	EVTFrameCreatorEditBox:SetText("");
+	EVTFrameNameEditBox:SetText("");
+	EVTFrameNoteEditBox:SetText("");
+    UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, 1);		
+    UIDropDownMenu_SetSelectedValue(EVTFrameToTime, 1);	
+    UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, 1);		
+    UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, 1);	
+    UIDropDownMenu_SetSelectedValue(EVTFrameType, 7);	
+	UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 1);
+	HideUIPanel(EVTFrameSubType);
+end
+
+function compareInputTime()
+	local bTime = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
+	local aTime = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
+	local bAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1);
+	local aAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2);
+	
+	if aAMPM > bAMPM then
+		return true;
+	elseif (aTime > bTime) and (aAMPM == bAMPM) then
+		return true;
+	else
+		return false;
+	end
 end
 
 function buildButton(btText, btValue, btFunc)

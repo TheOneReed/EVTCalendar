@@ -561,6 +561,9 @@
 			<OnLoad>
 				EVT_OnLoad();
 			</OnLoad>
+			<OnEvent>
+				EVT_OnEvent();
+			</OnEvent>
 		</Scripts>
 	</Frame>
 </Ui> 

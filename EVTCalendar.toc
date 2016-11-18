@@ -2,6 +2,8 @@
 ## Title: EVTCalendar
 ## Notes: My first AddOn
 ## Version: 0.1
+## SavedVariables: CalendarOptions
+## SavedVariablesPerCharacter: CalendarData
 localization.enUS.lua
 EVTCompute.lua
 EVTCalendar.lua
