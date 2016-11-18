@@ -1,0 +1,340 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Frame name="EVTFrameCreatePopup" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="400" y="285"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="SoundOptionsFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="Create Event">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="SoundOptionsFrameHeader">
+							<Offset>
+								<AbsDimension x="0" y="-14"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="EVTFrameCreatePopupCancel" inherits="GameMenuButtonTemplate" text="CANCEL">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameCreatePopup);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="EVTFrameCreatePopupAccept" inherits="GameMenuButtonTemplate" text="Accept">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameCreatePopup);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<EditBox name="EVTFrameNameEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="DIALOG" historyLines="0">
+				<Size>
+					<AbsDimension x="175" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameCreatePopup" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-25"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Name:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="EVTFrameNameEditBox" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+						this:ClearFocus();
+					</OnShow>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+					<OnEscapePressed>
+						this:ClearFocus();
+					</OnEscapePressed>
+				</Scripts>
+				<FontString inherits="ChatFontNormal" bytes="32"/>
+			</EditBox>
+			<EditBox name="EVTFrameCreatorEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="DIALOG" historyLines="0">
+				<Size>
+					<AbsDimension x="175" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameNameEditBox" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Created By:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="EVTFrameCreatorEditBox" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+						this:ClearFocus();
+					</OnShow>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+					<OnEscapePressed>
+						this:ClearFocus();
+					</OnEscapePressed>
+				</Scripts>
+				<FontString inherits="ChatFontNormal" bytes="32"/>
+			</EditBox>
+			<EditBox name="EVTFrameNoteEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="DIALOG" historyLines="0">
+				<Size>
+					<AbsDimension x="175" y="96"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameCreatorEditBox" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-100"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Note:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="EVTFrameNoteEditBox" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+						this:ClearFocus();
+					</OnShow>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+					<OnEscapePressed>
+						this:ClearFocus();
+					</OnEscapePressed>
+				</Scripts>
+				<FontString inherits="ChatFontNormal" bytes="32"/>
+			</EditBox>
+			<Frame name="EVTFrameFromTime" inherits="UIDropDownMenuTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="EVTFrameCreatorEditBox">
+						<Offset>
+							<AbsDimension x="-23" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="From: ">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-10" y="3"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						EVTFrameFromTime_OnLoad();
+					</OnLoad>
+					<OnShow>
+						EVTFrameFromTime_OnLoad();
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame name="EVTFrameToTime" inherits="UIDropDownMenuTemplate" id="2">
+				<Anchors>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EVTFrameFromTime">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="To: ">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="2" y="3"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						EVTFrameToTime_OnLoad();
+					</OnLoad>
+					<OnShow>
+						EVTFrameToTime_OnLoad();
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame name="EVTFrameAMPM1" inherits="UIDropDownMenuTemplate" id="3">
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="EVTFrameFromTime">
+						<Offset>
+							<AbsDimension x="-35" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						EVTFrameAMPM1_OnLoad();
+					</OnLoad>
+					<OnShow>
+						EVTFrameAMPM1_OnLoad();
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame name="EVTFrameAMPM2" inherits="UIDropDownMenuTemplate" id="4">
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="EVTFrameToTime">
+						<Offset>
+							<AbsDimension x="-35" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						EVTFrameAMPM2_OnLoad();
+					</OnLoad>
+					<OnShow>
+						EVTFrameAMPM2_OnLoad();
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame name="EVTFrameType" inherits="UIDropDownMenuTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="EVTFrameToTime">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Type: ">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-10" y="3"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						EVTFrameType_OnLoad();
+					</OnLoad>
+					<OnShow>
+						EVTFrameType_OnLoad();
+					</OnShow>
+				</Scripts>
+			</Frame>
+			<Frame name="EVTFrameSubType" inherits="UIDropDownMenuTemplate" hidden="true" id="5">
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="EVTFrameType">
+						<Offset>
+							<AbsDimension x="-35" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						EVTFrameSubType_OnLoad();
+					</OnLoad>
+					<OnShow>
+						EVTFrameSubType_OnLoad();
+					</OnShow>
+				</Scripts>
+			</Frame>
+		</Frames>
+	</Frame>
+</Ui>

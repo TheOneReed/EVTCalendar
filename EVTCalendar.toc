@@ -6,5 +6,7 @@ localization.enUS.lua
 EVTCompute.lua
 EVTCalendar.lua
 EVTCalendar.xml
+EVTCreateMenu.lua
+EVTCreateMenu.xml
 EVTButton.lua
 EVTButton.xml
