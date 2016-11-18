@@ -54,8 +54,6 @@
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
 	</Button>
-
-
 	<Frame name="EVTFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
 		<Size>
 			<AbsDimension x="828" y="524"/>
@@ -227,7 +225,7 @@
 				<DisabledTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Disabled"/>
 				<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
 			</Button>
-			<Button name ="EVTFrameCreateButton" inherits="UIPanelButtonTemplate" text="Create">
+			<Button name="EVTFrameCreateButton" inherits="UIPanelButtonTemplate" text="Create">
 				<Size>
 					<AbsDimension x="85" y="21"/>
 				</Size>
@@ -237,11 +235,12 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
+						ShowUIPanel(EVTFrameCreatePopup);
 						PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name ="EVTFrameModifyButton" inherits="UIPanelButtonTemplate" text="Modify">
+			<Button name="EVTFrameModifyButton" inherits="UIPanelButtonTemplate" text="Modify">
 				<Size>
 					<AbsDimension x="85" y="21"/>
 				</Size>
@@ -255,7 +254,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name ="EVTFrameDeleteButton" inherits="UIPanelButtonTemplate" text="Delete">
+			<Button name="EVTFrameDeleteButton" inherits="UIPanelButtonTemplate" text="Delete">
 				<Size>
 					<AbsDimension x="85" y="21"/>
 				</Size>
@@ -269,187 +268,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<EditBox name="EVTFrameNameEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="HIGH" historyLines="32">
-				<Size>
-					<AbsDimension x="175" y="32"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPRIGHT" relativeTo="EVTFrameEventList" relativePoint="BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x="0" y="-25"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormalSmall" text="Name:">
-							<Color r="0.8" g="0.8" b="0.1"/>
-							<Anchors>
-								<Anchor point="RIGHT" relativeTo="EVTFrameNameEditBox" relativePoint="LEFT">
-									<Offset>
-										<AbsDimension x="-8" y="0"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-				<Scripts>
-					<OnShow>
-						this:ClearFocus();
-					</OnShow>
-					<OnEnterPressed>
-						this:ClearFocus();
-					</OnEnterPressed>
-					<OnEscapePressed>
-						this:ClearFocus();
-					</OnEscapePressed>
-					<OnEditFocusGained>
-						if allowEdit == false then
-							this:ClearFocus();
-						end
-					</OnEditFocusGained>
-				</Scripts>
-				<FontString inherits="ChatFontNormal" bytes="32"/>
-			</EditBox>
-			<EditBox name="EVTFrameCreatorEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="HIGH" historyLines="32">
-				<Size>
-					<AbsDimension x="175" y="32"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOP" relativeTo="EVTFrameNameEditBox" relativePoint="BOTTOM">
-						<Offset>
-							<AbsDimension x="0" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormalSmall" text="Created By:">
-							<Color r="0.8" g="0.8" b="0.1"/>
-							<Anchors>
-								<Anchor point="RIGHT" relativeTo="EVTFrameCreatorEditBox" relativePoint="LEFT">
-									<Offset>
-										<AbsDimension x="-8" y="0"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-				<Scripts>
-					<OnShow>
-						this:ClearFocus();
-					</OnShow>
-					<OnEnterPressed>
-						this:ClearFocus();
-					</OnEnterPressed>
-					<OnEscapePressed>
-						this:ClearFocus();
-					</OnEscapePressed>
-					<OnEditFocusGained>
-						if allowEdit == false then
-							this:ClearFocus();
-						end
-					</OnEditFocusGained>
-				</Scripts>
-				<FontString inherits="ChatFontNormal" bytes="32"/>
-			</EditBox>
-			<Frame name="EVTFrameFromTime" inherits="UIDropDownMenuTemplate" id="1">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="EVTFrameCreatorEditBox">
-						<Offset>
-							<AbsDimension x="-23" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormalSmall" text="From: ">
-							<Anchors>
-								<Anchor point="LEFT">
-									<Offset>
-										<AbsDimension x="-10" y="3"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-				<Scripts>
-					<OnLoad>
-						EVTFrameFromTime_OnLoad();
-					</OnLoad>
-					<OnShow>
-						EVTFrameFromTime_OnLoad();
-					</OnShow>
-				</Scripts>
-			</Frame>
-			<Frame name="EVTFrameToTime" inherits="UIDropDownMenuTemplate" id="2">
-				<Anchors>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EVTFrameFromTime">
-						<Offset>
-							<AbsDimension x="0" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormalSmall" text="To: ">
-							<Anchors>
-								<Anchor point="LEFT">
-									<Offset>
-										<AbsDimension x="2" y="3"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-				<Scripts>
-					<OnLoad>
-						EVTFrameToTime_OnLoad();
-					</OnLoad>
-					<OnShow>
-						EVTFrameToTime_OnLoad();
-					</OnShow>
-				</Scripts>
-			</Frame>
-			<Frame name="EVTFrameAMPM1" inherits="UIDropDownMenuTemplate" id="3">
-				<Anchors>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="EVTFrameFromTime">
-						<Offset>
-							<AbsDimension x="-35" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						EVTFrameAMPM1_OnLoad();
-					</OnLoad>
-					<OnShow>
-						EVTFrameAMPM1_OnLoad();
-					</OnShow>
-				</Scripts>
-			</Frame>
-			<Frame name="EVTFrameAMPM2" inherits="UIDropDownMenuTemplate" id="4">
-				<Anchors>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="EVTFrameToTime">
-						<Offset>
-							<AbsDimension x="-35" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnLoad>
-						EVTFrameAMPM2_OnLoad();
-					</OnLoad>
-					<OnShow>
-						EVTFrameAMPM2_OnLoad();
-					</OnShow>
-				</Scripts>
-			</Frame>
-			</Frames>
+		</Frames>
 		<Layers>
 			<Layer level="ARTWORK">
 				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameTopRight">
@@ -743,6 +562,5 @@
 				EVT_OnLoad();
 			</OnLoad>
 		</Scripts>
-
 	</Frame>
 </Ui> 

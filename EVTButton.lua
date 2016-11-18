@@ -8,7 +8,7 @@ function EVTButton_Init()
     EVTButtonPosition = 134.66365694988;
 	EVTButton_UpdatePosition();
 	EVTButtonFrame:Show();
-	EVTButtonDay:SetText(tostring(day));
+	EVTButtonDay:SetText(tostring(date("%d")));
 end
 
 function EVTButton_UpdatePosition()
