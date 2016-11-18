@@ -6,6 +6,18 @@ local epochYear = 2016;
 local epochMonth = 1; --whichever month your epoch is
 local epochDay = 5; --whichever day your epoch is
 
+function currentDay()
+    return date("%d") + 0
+end
+
+function currentMonth()
+    return date("%m") + 0
+end
+
+function currentYear()
+    return date("%Y") + 0
+end
+
 function isLeapYear(year)
     local naiveLeap = (mod(year, 4) == 0);
     local centuryClause = (mod(year, 100) ~= 0);
@@ -26,10 +38,10 @@ end
 implementation found online. see https://en.wikipedia.org/wiki/Determination_of_the_day_of_the_week#Implementation-dependent_methods
 works for any year above 1752
 --]]
-function GetDayofWeek(curY, curM, curD)
+function GetDayofWeek(year, month, day)
     local t = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
-    if curM < 3 then
-        curY = curY - 1;
+    if month < 3 then
+        year = year - 1;
     end
-    return mod(curY + floor(curY / 4) + floor(curY / 100) + t[curM] + curD, 7) + 1;
+    return mod(year + floor(year/4) - floor(year/100) + floor(year/400) + t[month] + day, 7) + 1;
 end
