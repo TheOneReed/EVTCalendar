@@ -45,7 +45,7 @@ function EVT_OnLoad()
     SlashCmdList["EVT"] = function(msg)
         if msg == "test" then
             displayYear = 2444;
-            EVT_UpdateCalendar(displayMonth, displayYear)
+            EVT_UpdateCalendar()
         elseif msg == "leap" then
             isLeapYear(displayYear)
         else
@@ -74,7 +74,7 @@ function EVT_Toggle()
     else
         EVT_ResetDisplayDate();
         
-        EVT_UpdateCalendar(displayMonth, displayYear);
+        EVT_UpdateCalendar();
         EVT_DayClick(table_Days[table_DayPos[displayDay]]:GetName(), false);
         ShowUIPanel(EVTFrame);
         PlaySoundFile("Sound\\interface\\uCharacterSheetOpen.wav");
@@ -104,7 +104,7 @@ function EVT_IncMonth()
         displayYear = displayYear - 1;
     end
     EVTMonthDisplay:SetText(table_Months[tostring(displayMonth)]);
-    EVT_UpdateCalendar(displayMonth, displayYear);
+    EVT_UpdateCalendar();
 end
 
 function EVT_DecMonth()
@@ -114,7 +114,7 @@ function EVT_DecMonth()
         displayYear = displayYear + 1;
     end
     EVTMonthDisplay:SetText(table_Months[tostring(displayMonth)]);
-    EVT_UpdateCalendar(displayMonth, displayYear);
+    EVT_UpdateCalendar();
 end
 
 function EVT_UpdateCalendar()
@@ -213,7 +213,7 @@ function EVT_BuildCalendar()
         s:SetText(step);
         table_DayStr[step] = s;
     end
-    EVT_UpdateCalendar(displayMonth, displayYear);
+    EVT_UpdateCalendar();
 end
 
 
@@ -222,7 +222,7 @@ function EVT_DayClick(name, pressed)
     
     if (displayPos ~= nil) then
         local b2 = table_Days[tonumber(displayPos)];
-        if ((displayDay == day) and (displayMonth == month) and (displayYear == year)) then
+        if displayDay == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
             b2:SetNormalTexture(ImgDayToday);
         else
             if (table_DayVal[tonumber(displayPos)] ~= nil) then
