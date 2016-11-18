@@ -26,22 +26,20 @@ local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
 local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
 local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
 
-<<<<<<< HEAD
+
 -- Calendar Data Table
-=======
+
 function EVT_ResetDisplayDate()
     displayDay = currentDay();
     displayMonth = currentMonth();
     displayYear = currentYear();
 end
->>>>>>> 07bc3c53fa0c1bbb4fad5005d3beb347fa08b8c2
 
 function EVT_OnLoad()
     this:RegisterEvent("ADDON_LOADED");
     this:RegisterEvent("VARIABLES_LOADED");
     
     tinsert(UISpecialFrames, "EVTFrame");
-<<<<<<< HEAD
     
     SLASH_EVT1 = EVT_SLASH;
     SlashCmdList["EVT"] = function(msg)
@@ -52,24 +50,8 @@ function EVT_OnLoad()
         elseif msg == "read" then
 			local dtg = tostring(date("%m%d%Y"));
             DEFAULT_CHAT_FRAME:AddMessage(tostring(CalendarData[dtg][1]), 0.1, 0.1, 1);
-=======
-    tinsert(UISpecialFrames, "EVTFrameCreatePopup");
-    
-    EVT_ResetDisplayDate();
-    EVT_BuildCalendar();
-    
-    SLASH_EVT1 = EVT_SLASH;
-    SlashCmdList["EVT"] = function(msg)
-        if msg == "test" then
-            displayYear = 2444;
-            EVT_UpdateCalendar()
-        elseif msg == "leap" then
-            isLeapYear(displayYear)
->>>>>>> 07bc3c53fa0c1bbb4fad5005d3beb347fa08b8c2
-        else
-            EVT_SlashCommand(msg);
-        end
-    end
+		end
+	end
 end
 
 function EVT_SlashCommand(msg)
