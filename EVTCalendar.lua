@@ -165,7 +165,7 @@ function EVT_UpdateCalendar()
             z = z + 1;
         end
     end
-    EVTMonthDisplay:SetText(table_Months[disMonth]);
+    EVTMonthDisplay:SetText(table_Months[displayMonth]);
 end
 
 function DisableButton(Button, ButtonPos)
