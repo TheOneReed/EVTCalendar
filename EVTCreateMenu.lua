@@ -26,12 +26,7 @@ function EVTFrameFromTime_Initialize()
 				str = string.format("%s:%s", int, "30");
 			end
         end
-        checked = nil;
-        info = {};
-        info.text = tostring(str);
-        info.value = i;
-        info.func = EVTFrameFromTime_OnClick;
-        info.checked = checked;
+		info = buildButton(str, i, EVTFrameFromTime_OnClick)  
         UIDropDownMenu_AddButton(info);
     end
 end
@@ -61,12 +56,7 @@ function EVTFrameToTime_Initialize()
 				str = string.format("%s:%s", int, "30");
 			end
         end
-        checked = nil;
-        info = {};
-        info.text = str;
-		info.value = i;
-        info.func = EVTFrameToTime_OnClick;
-        info.checked = checked;
+		info = buildButton(str, i, EVTFrameToTime_OnClick)  
         UIDropDownMenu_AddButton(info);
     end
 end
@@ -83,19 +73,9 @@ end
 
 function EVTFrameAMPM1_Initialize()
     local info;
-    
-    checked = nil;
-    info = {};
-    info.text = "AM";
-    info.value = 1;
-    info.func = EVTFrameAMPM1_OnClick;
-    info.checked = checked;
+	info = buildButton("AM", 1, EVTFrameAMPM1_OnClick)    
     UIDropDownMenu_AddButton(info);
-    info = {};
-    info.text = "PM";
-    info.value = 2;
-    info.func = EVTFrameAMPM1_OnClick;
-    info.checked = checked;
+	info = buildButton("PM", 2, EVTFrameAMPM1_OnClick) 
     UIDropDownMenu_AddButton(info);
 end
 
@@ -111,19 +91,9 @@ end
 
 function EVTFrameAMPM2_Initialize()
     local info;
-    
-    checked = nil;
-    info = {};
-    info.text = "AM";
-    info.value = 1;
-    info.func = EVTFrameAMPM2_OnClick;
-    info.checked = checked;
+	info = buildButton("AM", 1, EVTFrameAMPM2_OnClick)    
     UIDropDownMenu_AddButton(info);
-    info = {};
-    info.text = "PM";
-    info.value = 2;
-    info.func = EVTFrameAMPM2_OnClick;
-    info.checked = checked;
+	info = buildButton("PM", 2, EVTFrameAMPM2_OnClick) 
     UIDropDownMenu_AddButton(info);
 end
 
@@ -143,12 +113,7 @@ function EVTFrameType_Initialize()
 	local evtTypes = {"Dungeon", "Raid", "PvP", "Quests", "Meeting", "Event", "Other" };
 
     for i = 1, 7, 1 do
-		checked = nil;
-		info = {};
-		info.text = evtTypes[i];
-		info.value = i;
-		info.func = EVTFrameType_OnClick;
-		info.checked = checked;
+		info = buildButton(evtTypes[i], i, EVTFrameType_OnClick)
 		UIDropDownMenu_AddButton(info);
 	end
 end
@@ -174,19 +139,13 @@ function EVTFrameSubType_Initialize()
 		{"Warsong Gultch", "Arathi Basin", "Alterac Valley", "World"}
 		};
 	UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
-
 	if subType == 1 or subType == 2 or subType == 3 then
 		n = table.getn(evtSubMenu[subType]);
 	end
 	for i = 1, n, 1 do
 		if subType == 1 or subType == 2 or subType == 3 then
 			UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
-			checked = nil;
-			info = {};
-			info.text = evtSubMenu[subType][i];
-			info.value = i;
-			info.func = EVTFrameSubType_OnClick;
-			info.checked = checked;
+			info = buildButton(evtSubMenu[subType][i], i, EVTFrameSubType_OnClick)
 			UIDropDownMenu_AddButton(info);
 		end
 	end
@@ -205,4 +164,14 @@ end
 
 function EVTFrameSubType_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameSubType, this.value);
+end
+
+function buildButton(btText, btValue, btFunc)
+	local info;
+    info = {};
+    info.text = btText;
+    info.value = btValue;
+    info.func = btFunc;
+    info.checked = nil;
+	return info;
 end
