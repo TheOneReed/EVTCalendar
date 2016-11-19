@@ -5,6 +5,30 @@
 --
 ----------------------------------------------------------------
 
+createDate = "";
+
+function EVTFrameAcceptBtn_OnClick()
+	if (TableIndexExists(CalendarData, createDate) == false) then
+		CalendarData[createDate] = {};
+	end
+
+	local firstOpen = GetFirstOpenSpot(CalendarData, createDate);
+
+	table.insert(CalendarData[createDate],{
+		[1] = EVTFrameNameEditBox:GetText(),
+		[2] = EVTFrameCreatorEditBox:GetText(),
+		[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
+		[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
+		[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
+		[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
+		[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
+		[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
+		[9] = EVTFrameMando:GetChecked(),
+		[10] = EVTFrameNoteEditBox:GetText()
+		});
+
+end
+
 function EVTFrameCreatePopup_OnLoad()
 	EVTFrameCreatorEditBox:SetText(UnitName("player"));
 	EVTFrameCreatorEditBox:EnableKeyboard(false);
@@ -123,7 +147,6 @@ end
 
 function EVTFrameType_Initialize()
     local info;
-	local evtTypes = {"Dungeon", "Raid", "PvP", "Quests", "Meeting", "Event", "Other" };
 
     for i = 1, 7, 1 do
 		info = buildButton(evtTypes[i], i, EVTFrameType_OnClick)
@@ -146,11 +169,6 @@ function EVTFrameSubType_Initialize()
     local info;
 	local n = 0;
 	local subType= UIDropDownMenu_GetSelectedValue(EVTFrameType);
-	local evtSubMenu = {
-		{"Blackfathom Depths", "Blackrock Depths", "Blackrock Spire", "The Deadmines", "Dire Maul", "Gnomeregan", "Maraudon", "Ragefire Chasm", "Razorfen Downs", "Razorfen Kraul", "Scarlet Monastery", "Scholomance", "Shadowfang Keep", "The Stockades", "Stratholome", "The Sunken Temple", "Uldaman", "Wailing Caverns", "Zul'Farak" },
-		{"Ahn'Qiraj (20)", "Ahn'Qiraj (40)", "Blackwing Lair", "Molten Core", "Naxxramas", "Onxyia's Lair", "Zul'Gurub"},
-		{"Warsong Gultch", "Arathi Basin", "Alterac Valley", "World"}
-		};
 	UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
 	if subType == 1 or subType == 2 or subType == 3 then
 		n = table.getn(evtSubMenu[subType]);

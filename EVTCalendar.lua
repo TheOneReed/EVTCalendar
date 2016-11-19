@@ -82,6 +82,9 @@ function EVT_Initialize()
     displayDay = date("%d") + 0;
     displayYear = date("%Y") + 0;
     EVT_BuildCalendar();
+	if (CalendarData == nil) then
+		CalendarData = {};
+	end	
     initialized = true;
 end
 	
@@ -300,4 +303,14 @@ function EVT_UpdateScrollBar()
             getglobal("EventButton" .. y):Hide();
         end
     end
+end
+
+function EVTFrameCreateButton_Toggle()
+    if (EVTFrameCreatePopup:IsVisible()) then
+        HideUIPanel(EVTFrame);
+		EVTClearFrame()
+	else
+		createDate = string.format("%s%s%s", displayMonth, displayDay, displayYear);
+		ShowUIPanel(EVTFrameCreatePopup);
+	end
 end

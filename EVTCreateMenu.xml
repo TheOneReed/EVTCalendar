@@ -79,6 +79,7 @@
 						this:Disable();
 					</OnShow>
 					<OnClick>
+						EVTFrameAcceptBtn_OnClick();
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(EVTFrameCreatePopup);
 					</OnClick>

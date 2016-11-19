@@ -26,7 +26,7 @@ function isLeapYear(year)
 end
 
 function DaysInMonth(year, month)
-    if month == 2 and isLeapYear(year) then
+    if ((month == 2) and isLeapYear(year)) then
         return 29;
     end
     
@@ -44,4 +44,25 @@ function GetDayofWeek(year, month, day)
         year = year - 1;
     end
     return mod(year + floor(year/4) - floor(year/100) + floor(year/400) + t[month] + day, 7) + 1;
+end
+
+function GetFirstOpenSpot(t, dtg)
+	local index = 0;
+--	if (t[dtg] ~= nil) then
+		index = table.getn(t[dtg]);
+		if (index + 1 > 10) then
+			return false;
+		end
+--	end
+	DEFAULT_CHAT_FRAME:AddMessage(tostring(index), 0.1, 0.1, 1);
+	return index + 1;
+end
+
+function TableIndexExists(t, i)
+	for index,value in pairs(t) do 
+		if (index == i) then
+			return true;
+		end
+	end
+	return false;
 end

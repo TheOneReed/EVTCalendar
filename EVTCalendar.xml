@@ -235,8 +235,8 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						ShowUIPanel(EVTFrameCreatePopup);
 						PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
+						EVTFrameCreateButton_Toggle();
 					</OnClick>
 				</Scripts>
 			</Button>
