@@ -59,6 +59,7 @@
 					<OnClick>
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(EVTFrameCreatePopup);
+						HideUIPanel(EVTFrameOverlay);
 						EVTClearFrame();
 					</OnClick>
 				</Scripts>

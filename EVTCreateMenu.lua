@@ -26,6 +26,7 @@ function EVTFrameAcceptBtn_OnClick()
 			});
 		EVT_UpdateScrollBar();
 		EVTClearFrame();
+		HideUIPanel(EVTFrameOverlay);
 end
 
 function EVTFrameCreatePopup_OnLoad()

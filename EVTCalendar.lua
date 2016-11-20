@@ -46,9 +46,8 @@ function EVT_OnLoad()
     SlashCmdList["EVT"] = function(msg)
         if msg == "delete" then
 			CalendarData[displayDate()] = {};
-        elseif msg == "read" then
-			local dtg = tostring(date("%m%d%Y"));
-            DEFAULT_CHAT_FRAME:AddMessage(tostring(CalendarData[dtg][1]), 0.1, 0.1, 1);
+        elseif msg == "test" then
+			SendAddonMessage( "EVTCalendar", "Test Message", "PARTY");
 		end
 	end
 end
@@ -73,6 +72,10 @@ function EVT_OnEvent()
 			varsLoaded = true;
 			EVT_Initialize();
 		end
+	elseif (event == "CHAT_MSG_ADDON") then
+		if (strlower(arg1) == "evtcalendar") then
+			DEFAULT_CHAT_FRAME:AddMessage(arg2, 0.1, 0.1, 1);
+		end		
 	end
 end
 
@@ -289,7 +292,8 @@ function EVT_UpdateScrollBar()
 	local tSize;
 	local btnText;
 	
-	EVT_EventClearSelection()
+	EVT_EventClearSelection();
+	HideUIPanel(EVTFrameDetailsList);
 	EVTFrameModifyButton:Disable();
 	EVTFrameDeleteButton:Disable(); 	
 	if TableIndexExists(CalendarData, displayDate()) then
@@ -322,6 +326,7 @@ function EVT_EventButton_OnClick(button)
 	selectedButton = button;
 	EVTFrameModifyButton:Enable();
 	EVTFrameDeleteButton:Enable();
+	ShowUIPanel(EVTFrameDetailsList);
 end
 
 function EVT_FrameDeleteButton_OnClick()
@@ -340,10 +345,12 @@ end
 
 function EVTFrameCreateButton_Toggle()
     if (EVTFrameCreatePopup:IsVisible()) then
+		HideUIPanel(EVTFrameOverlay);
         HideUIPanel(EVTFrame);
 		EVTClearFrame()
 	else
 		createDate = displayDate();
+		ShowUIPanel(EVTFrameOverlay);
 		ShowUIPanel(EVTFrameCreatePopup);
 	end
 end

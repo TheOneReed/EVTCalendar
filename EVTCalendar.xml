@@ -173,6 +173,39 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
+			<Frame name = "EVTFrameDetailsList" inherits="OptionFrameBoxTemplate" hidden="true">
+				<Size>
+					<AbsDimension x="250" y="300"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameEventList" relativePoint="Bottom">
+						<Offset>
+							<AbsDimension x="0" y="-22"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Name:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="TOP" relativeTo="EVTFrameDetailsList" relativePoint="TOP">
+									<Offset>
+										<AbsDimension x="8" y="14"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						this:SetBackdropColor(0.1, 0.1, 0.1);
+					</OnLoad>
+				</Scripts>
+			</Frame>
 			<Button name="EVTFrameCloseButton" inherits="UIPanelCloseButton">
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="EVTFrame" relativePoint="TOPRIGHT">
@@ -566,6 +599,21 @@
 			<OnEvent>
 				EVT_OnEvent();
 			</OnEvent>
+			<OnShow>
+				if EVTFrameCreatePopup:IsVisible() then
+					ShowUIPanel(EVTFrameOverlay);
+				end
+			</OnShow>
+			<OnHide>
+				HideUIPanel(EVTFrameOverlay);
+			</OnHide>
+		</Scripts>
+	</Frame>
+	<Frame name="EVTFrameOverlay" enableMouse="true" hidden="true" frameStrata="HIGH">
+		<Scripts>
+			<OnLoad>
+				this:SetAllPoints("EVTFrame");
+			</OnLoad>
 		</Scripts>
 	</Frame>
 </Ui> 
