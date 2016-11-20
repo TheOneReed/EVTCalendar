@@ -9,13 +9,14 @@ local table_Days = {};
 local table_DayStr = {};
 local table_DayVal = {};
 local table_DayPos = {};
-local table_EventDis = {}
 
 ---Initialize variables
 local displayMonth;
 local displayYear;
 local displayDay;
 local displayPos;
+local eventClicked;
+local selectedButton;
 local initialized = false;
 local varsLoaded = false;
 
@@ -43,10 +44,8 @@ function EVT_OnLoad()
     
     SLASH_EVT1 = EVT_SLASH;
     SlashCmdList["EVT"] = function(msg)
-        if msg == "add" then
-			local dtg = tostring(date("%m%d%Y"));
-			CalendarData[dtg] = {};
-			CalendarData[dtg][1] = "Success";
+        if msg == "delete" then
+			CalendarData[displayDate()] = {};
         elseif msg == "read" then
 			local dtg = tostring(date("%m%d%Y"));
             DEFAULT_CHAT_FRAME:AddMessage(tostring(CalendarData[dtg][1]), 0.1, 0.1, 1);
@@ -286,17 +285,29 @@ end
 function EVT_UpdateScrollBar()
     local y;
     local yoffset;
-    local tableSize = table.getn(table_EventDis);
-    
-    FauxScrollFrame_Update(EventListScrollFrame, tableSize, 5, 20);
-    
+    local t;
+	local tSize;
+	local btnText;
+	
+	EVT_EventClearSelection()
+	EVTFrameModifyButton:Disable();
+	EVTFrameDeleteButton:Disable(); 	
+	if TableIndexExists(CalendarData, displayDate()) then
+		t = CalendarData[displayDate()];
+	else
+		t = {};
+	end
+	tSize = table.getn(t);
+	FauxScrollFrame_Update(EventListScrollFrame, tSize, 5, 20);
     for y = 1, 5, 1 do
         yoffset = y + FauxScrollFrame_GetOffset(EventListScrollFrame);
-        if (yoffset <= tableSize) then
-            if (table_EventDis[yoffset] == nil) then
+        if (yoffset <= tSize) then
+			local t2 = t[yoffset];
+            if (t2 == nil) then
                 getglobal("EventButton" .. y):Hide();
             else
-                getglobal("EventButton" .. y .. "Info"):SetText(tostring(table_EventDis[yoffset]));
+				btnText = string.format("%s - %s    %s", getTimeStr(t2[3], t2[4]), getTimeStr(t2[5], t2[6]), t2[1]);
+                getglobal("EventButton" .. y .. "Info"):SetText(btnText);
                 getglobal("EventButton" .. y):Show();
             end
         else
@@ -305,12 +316,39 @@ function EVT_UpdateScrollBar()
     end
 end
 
+function EVT_EventButton_OnClick(button)
+	EVT_EventClearSelection();
+	button:LockHighlight();
+	selectedButton = button;
+	EVTFrameModifyButton:Enable();
+	EVTFrameDeleteButton:Enable();
+end
+
+function EVT_FrameDeleteButton_OnClick()
+	local pos = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
+	DEFAULT_CHAT_FRAME:AddMessage(pos, 0.1, 0.1, 1);
+	table.remove(CalendarData[displayDate()], pos);
+	EVT_UpdateScrollBar();
+end
+
+function EVT_EventClearSelection()
+	if selectedButton ~= nil then
+		selectedButton:UnlockHighlight();
+		selectedButton = nil;
+	end
+end
+
 function EVTFrameCreateButton_Toggle()
     if (EVTFrameCreatePopup:IsVisible()) then
         HideUIPanel(EVTFrame);
 		EVTClearFrame()
 	else
-		createDate = string.format("%s%s%s", displayMonth, displayDay, displayYear);
+		createDate = displayDate();
 		ShowUIPanel(EVTFrameCreatePopup);
 	end
+end
+
+--- Helper Functions ---
+function displayDate()
+	return string.format("%s%s%s", displayMonth, displayDay, displayYear);
 end

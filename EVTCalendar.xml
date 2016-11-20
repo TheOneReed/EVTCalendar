@@ -45,11 +45,12 @@
 			</Layer>
 		</Layers>
 		<Scripts>
-			<OnLoad>
+<!--			<OnLoad>
 				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
-			</OnLoad>
+			</OnLoad>-->
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
+				EVT_EventButton_OnClick(this);
 			</OnClick>
 		</Scripts>
 		<HighlightTexture file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD"/>
@@ -264,6 +265,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
+						EVT_FrameDeleteButton_OnClick();
 						PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
 					</OnClick>
 				</Scripts>

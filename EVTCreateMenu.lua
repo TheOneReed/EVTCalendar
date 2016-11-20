@@ -12,21 +12,20 @@ function EVTFrameAcceptBtn_OnClick()
 		CalendarData[createDate] = {};
 	end
 
-	local firstOpen = GetFirstOpenSpot(CalendarData, createDate);
-
-	table.insert(CalendarData[createDate],{
-		[1] = EVTFrameNameEditBox:GetText(),
-		[2] = EVTFrameCreatorEditBox:GetText(),
-		[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
-		[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
-		[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
-		[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
-		[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
-		[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
-		[9] = EVTFrameMando:GetChecked(),
-		[10] = EVTFrameNoteEditBox:GetText()
-		});
-
+		table.insert(CalendarData[createDate],{
+			[1] = EVTFrameNameEditBox:GetText(),
+			[2] = EVTFrameCreatorEditBox:GetText(),
+			[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
+			[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
+			[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
+			[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
+			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
+			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
+			[9] = EVTFrameMando:GetChecked(),
+			[10] = EVTFrameNoteEditBox:GetText()
+			});
+		EVT_UpdateScrollBar();
+		EVTClearFrame();
 end
 
 function EVTFrameCreatePopup_OnLoad()
@@ -45,17 +44,8 @@ function EVTFrameFromTime_Initialize()
     local info;
     local int = 0;
     local str;
-    for i = 1, 24, 1 do
-        if mod(i, 2) == 0 then
-            int = int + 1;
-            str = string.format("%s:%s", int, "00");
-        else
-			if (int == 0) then
-				str = string.format("%s:%s", int + 12, "30");
-			else
-				str = string.format("%s:%s", int, "30");
-			end
-        end
+    for i = 1, 12, 1 do
+		str = getTimeStr(i);
 		info = buildButton(str, i, EVTFrameFromTime_OnClick)  
         UIDropDownMenu_AddButton(info);
     end
@@ -74,19 +64,9 @@ end
 
 function EVTFrameToTime_Initialize()
     local info;
-    local int = 0;
     local str;
-    for i = 1, 24, 1 do
-        if mod(i, 2) == 0 then
-            int = int + 1;
-            str = string.format("%s:%s", int, "00");
-        else
-			if (int == 0) then
-				str = string.format("%s:%s", int + 12, "30");
-			else
-				str = string.format("%s:%s", int, "30");
-			end
-        end
+    for i = 1, 12, 1 do
+		str = getTimeStr(i);
 		info = buildButton(str, i, EVTFrameToTime_OnClick)  
         UIDropDownMenu_AddButton(info);
     end
@@ -241,4 +221,16 @@ function buildButton(btText, btValue, btFunc)
     info.func = btFunc;
     info.checked = nil;
 	return info;
+end
+
+function getTimeStr(i, ampm)
+	str = string.format("%s:%s", i, "00");
+	if ampm ~= nil then
+		if ampm == 1 then
+			str = string.format("%s%s", str, "am");
+		elseif ampm == 2 then
+			str = string.format("%s%s", str, "pm");
+		end
+	end
+	return str;
 end
