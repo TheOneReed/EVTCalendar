@@ -8,6 +8,7 @@
 local table_Days = {};
 local table_DayStr = {};
 local table_DayVal = {};
+local table_DayTex = {};
 local table_DayPos = {};
 
 ---Initialize variables
@@ -26,6 +27,7 @@ local ImgDayInactive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameInact
 local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
 local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
 local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
+local ImgIcoRagnaros = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoRagnaros";
 
 
 -- Calendar Data Table
@@ -150,6 +152,7 @@ function EVT_UpdateCalendar()
     for step = 1, 42, 1 do
         local s = table_DayStr[step];
         local b = table_Days[step];
+		local t = table_DayTex[step];
         local preMonth = displayMonth - 1;
         if (preMonth < 1) then
             preMonth = 12
@@ -187,6 +190,9 @@ function EVT_UpdateCalendar()
                 EVT_DayClick(name, true);
                 PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
             end);
+			
+			t:SetTexture(getDayOverlayTex(z));
+			
             z = z + 1;
         end
     end
@@ -215,9 +221,15 @@ function EVT_BuildCalendar()
         b:SetWidth(78);
         b:SetPoint("TOP", EVTFrame, "TOPLEFT", xoffset, yoffset);
         table_Days[step] = b;
+ 
+		name = string.format("%s%s", name, "Tex");
+		local t = b:CreateTexture("name", "OVERLAY");
+		t:SetAllPoints();
+		t:SetAlpha(0.5);
+        table_DayTex[step] = t;		
         
         name = string.format("%s%s%s", "Day", step, "str");
-        local s = b:CreateFontString(name, "ARTWORK", "GameFontNormal")
+        local s = b:CreateFontString(name, "OVERLAY", "GameFontNormal")
         s:SetHeight(20);
         s:SetWidth(20);
         s:SetPoint("TOP", b, "TOP", -25, -5);
@@ -346,6 +358,9 @@ function EVT_UpdateDetailList()
 	else
 		EVTDetailsNotes:SetText(t[10]);
 	end
+	if t[2] ~= UnitName("player") then
+		EVTFrameModifyButton:Disable();
+	end
 	ShowUIPanel(EVTFrameDetailsList);	
 end	
 	
@@ -391,4 +406,18 @@ function disableButton(Button, ButtonPos)
         name = Button:GetName();
         EVT_DayClick(name, false);
     end
+end
+
+function getDayOverlayTex(val)
+	local calData = string.format("%s%s%s", displayMonth, val, displayYear);
+	local tex;
+	if TableIndexExists(CalendarData, calData) then
+		DEFAULT_CHAT_FRAME:AddMessage("Pass.", 0.1, 0.1, 1);
+		local t = CalendarData[calData];
+		if t[1] ~= nil then
+			DEFAULT_CHAT_FRAME:AddMessage("Pass 2.", 0.1, 0.1, 1);
+			return ImgIcoRagnaros;
+		end
+	end
+	return "";
 end
