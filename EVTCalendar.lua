@@ -42,8 +42,9 @@ end
 function EVT_OnLoad()
     this:RegisterEvent("ADDON_LOADED");
     this:RegisterEvent("VARIABLES_LOADED");
+    this:RegisterEvent("CHAT_MSG_ADDON"); 
     
-    tinsert(UISpecialFrames, "EVTFrame");
+	tinsert(UISpecialFrames, "EVTFrame");
     
     SLASH_EVT1 = EVT_SLASH;
     SlashCmdList["EVT"] = function(msg)
