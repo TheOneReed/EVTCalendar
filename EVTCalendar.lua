@@ -47,7 +47,7 @@ function EVT_OnLoad()
         if msg == "delete" then
 			CalendarData[displayDate()] = {};
         elseif msg == "test" then
-			SendAddonMessage( "EVTCalendar", "Test Message", "PARTY");
+			DEFAULT_CHAT_FRAME:AddMessage(tostring(EVTFrameMando:GetChecked()), 0.1, 0.1, 1);
 		end
 	end
 end
@@ -158,12 +158,12 @@ function EVT_UpdateCalendar()
             local preNum = DaysInMonth(displayYear, preMonth) - startDay + (step + 1);
             s:SetText(preNum);
             table_DayVal[step] = nil;
-            DisableButton(b, step);
+            disableButton(b, step);
         elseif (step >= (DaysInMonth(displayYear, displayMonth) + startDay)) then
             local newDays = (step - (DaysInMonth(displayYear, displayMonth) + startDay - 1));
             s:SetText(newDays);
             table_DayPos[(DaysInMonth(displayYear, displayMonth) + startDay) + newDays] = nil;
-            DisableButton(b, step);
+            disableButton(b, step);
         else
             s:SetText(z);
             table_DayPos[z] = step;
@@ -189,19 +189,6 @@ function EVT_UpdateCalendar()
             end);
             z = z + 1;
         end
-    end
-end
-
-function DisableButton(Button, ButtonPos)
-    table_DayVal[ButtonPos] = nil;
-    Button:SetNormalTexture(ImgDayInactive);
-    Button:SetPushedTexture(ImgDayInactive);
-    Button:SetHighlightTexture("");
-    Button:SetScript("Onclick", function()
-        end);
-    if (displayPos == ButtonPos) then
-        name = Button:GetName();
-        EVT_DayClick(name, false);
     end
 end
 
@@ -310,8 +297,13 @@ function EVT_UpdateScrollBar()
             if (t2 == nil) then
                 getglobal("EventButton" .. y):Hide();
             else
-				btnText = string.format("%s - %s    %s", getTimeStr(t2[3], t2[4]), getTimeStr(t2[5], t2[6]), t2[1]);
+				btnText = string.format("%s    %s", getTimeStr(t2[3], t2[4]), t2[1]);
                 getglobal("EventButton" .. y .. "Info"):SetText(btnText);
+				if t2[9] == 1 then
+					getglobal("EventButton" .. y .. "Info"):SetTextColor(1, 0.1, 0.1);
+				else
+					getglobal("EventButton" .. y .. "Info"):SetTextColor(1, 1, 1);
+				end
                 getglobal("EventButton" .. y):Show();
             end
         else
@@ -326,9 +318,37 @@ function EVT_EventButton_OnClick(button)
 	selectedButton = button;
 	EVTFrameModifyButton:Enable();
 	EVTFrameDeleteButton:Enable();
-	ShowUIPanel(EVTFrameDetailsList);
+	EVT_UpdateDetailList()
 end
 
+function EVT_UpdateDetailList()
+	local pos = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
+	local t = CalendarData[displayDate()][pos];
+	local subType = t[7];
+	local mando = t[9];
+	EVTDetailsName:SetText(t[1]);
+	EVTDetailsCreated:SetText(t[2]);
+	EVTDetailsTime:SetText(string.format("%s    -    %s", getTimeStr(t[3], t[4]), getTimeStr(t[5], t[6])));
+	if (subType == 1 or subType == 2 or subType == 3) then
+		EVTDetailsType:SetText(string.format("%s    -    %s", evtTypes[subType], evtSubMenu[t[7]][t[8]]));
+	else
+		EVTDetailsType:SetText(evtTypes[subType]);
+	end
+	if (mando == 1) then
+		EVTDetailsMando:SetText("Yes");
+		EVTDetailsMando:SetTextColor(1, 0.1, 0.1);
+	else
+		EVTDetailsMando:SetText("No");
+		EVTDetailsMando:SetTextColor(1, 1, 1);
+	end
+	if t[10] == "" then
+		EVTDetailsNotes:SetText("None");
+	else
+		EVTDetailsNotes:SetText(t[10]);
+	end
+	ShowUIPanel(EVTFrameDetailsList);	
+end	
+	
 function EVT_FrameDeleteButton_OnClick()
 	local pos = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
 	DEFAULT_CHAT_FRAME:AddMessage(pos, 0.1, 0.1, 1);
@@ -358,4 +378,17 @@ end
 --- Helper Functions ---
 function displayDate()
 	return string.format("%s%s%s", displayMonth, displayDay, displayYear);
+end
+
+function disableButton(Button, ButtonPos)
+    table_DayVal[ButtonPos] = nil;
+    Button:SetNormalTexture(ImgDayInactive);
+    Button:SetPushedTexture(ImgDayInactive);
+    Button:SetHighlightTexture("");
+    Button:SetScript("Onclick", function()
+        end);
+    if (displayPos == ButtonPos) then
+        name = Button:GetName();
+        EVT_DayClick(name, false);
+    end
 end

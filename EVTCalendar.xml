@@ -173,7 +173,7 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
-			<Frame name = "EVTFrameDetailsList" inherits="OptionFrameBoxTemplate" hidden="true">
+			<Frame name = "EVTFrameDetailsList" hidden="true">
 				<Size>
 					<AbsDimension x="250" y="300"/>
 				</Size>
@@ -188,23 +188,128 @@
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormalSmall" text="Name:">
+						<FontString inherits="GameFontNormalSmall" text="Event Name:">
 							<Color r="0.8" g="0.8" b="0.1"/>
 							<Anchors>
-								<Anchor point="TOP" relativeTo="EVTFrameDetailsList" relativePoint="TOP">
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="8" y="14"/>
+										<AbsDimension x="10" y="-14"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="Created by: ">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-42"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="Time:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-70"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="Type:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-98"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="Notes:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-126"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="Mandatory:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-154"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="EVTDetailsName" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-28"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="EVTDetailsCreated" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-56"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="EVTDetailsTime" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-84"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="EVTDetailsType" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-112"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="EVTDetailsNotes" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-140"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="EVTDetailsMando" inherits="GameFontNormal" text="">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-168"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
 						</FontString>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnLoad>
-						this:SetBackdropColor(0.1, 0.1, 0.1);
-					</OnLoad>
-				</Scripts>
 			</Frame>
 			<Button name="EVTFrameCloseButton" inherits="UIPanelCloseButton">
 				<Anchors>

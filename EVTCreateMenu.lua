@@ -8,8 +8,14 @@
 createDate = "";
 
 function EVTFrameAcceptBtn_OnClick()
+	local mando;
 	if (TableIndexExists(CalendarData, createDate) == false) then
 		CalendarData[createDate] = {};
+	end
+	if EVTFrameMando:GetChecked() == nil then
+		mando = 0;
+	else
+		mando = 1;
 	end
 
 		table.insert(CalendarData[createDate],{
@@ -21,7 +27,7 @@ function EVTFrameAcceptBtn_OnClick()
 			[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
 			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
-			[9] = EVTFrameMando:GetChecked(),
+			[9] = mando,
 			[10] = EVTFrameNoteEditBox:GetText()
 			});
 		EVT_UpdateScrollBar();
@@ -142,7 +148,7 @@ end
 
 function EVTFrameSubType_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameSubType_Initialize);
-    UIDropDownMenu_SetWidth(125, EVTFrameSubType);
+    UIDropDownMenu_SetWidth(130, EVTFrameSubType);
     UIDropDownMenu_SetSelectedValue(this, 1);
 end
 

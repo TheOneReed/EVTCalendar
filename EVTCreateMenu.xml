@@ -354,7 +354,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="ARTWORK">
-						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Mandatory:">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Mandatory">
 							<Anchors>
 								<Anchor point="RIGHT" relativePoint="LEFT">
 									<Offset>
