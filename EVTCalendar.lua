@@ -28,6 +28,7 @@ local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
 local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
 local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
 local ImgIcoRagnaros = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoRagnaros";
+local ImgIcoInstance = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoInstance";
 
 
 -- Calendar Data Table
@@ -49,7 +50,8 @@ function EVT_OnLoad()
         if msg == "delete" then
 			CalendarData[displayDate()] = {};
         elseif msg == "test" then
-			DEFAULT_CHAT_FRAME:AddMessage(tostring(EVTFrameMando:GetChecked()), 0.1, 0.1, 1);
+			SendAddonMessage("EVTCalendar", "If you recieved this, test SAT.", "PARTY");
+			DEFAULT_CHAT_FRAME:AddMessage("Message Sent", 0.1, 0.1, 1);
 		end
 	end
 end
@@ -412,11 +414,14 @@ function getDayOverlayTex(val)
 	local calData = string.format("%s%s%s", displayMonth, val, displayYear);
 	local tex;
 	if TableIndexExists(CalendarData, calData) then
-		DEFAULT_CHAT_FRAME:AddMessage("Pass.", 0.1, 0.1, 1);
 		local t = CalendarData[calData];
 		if t[1] ~= nil then
-			DEFAULT_CHAT_FRAME:AddMessage("Pass 2.", 0.1, 0.1, 1);
-			return ImgIcoRagnaros;
+			if t[1][7] == 1 then
+				return ImgIcoInstance;
+			end
+			if t[1][7] == 2 then
+				return ImgIcoRagnaros;
+			end
 		end
 	end
 	return "";
