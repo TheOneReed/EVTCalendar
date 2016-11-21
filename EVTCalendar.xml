@@ -75,7 +75,7 @@
 			</TileSize>
 		</Backdrop>
 		<Frames>
-			<Frame name = "EVTFrameEventList" inherits="OptionFrameBoxTemplate">
+			<Frame name="EVTFrameEventList" inherits="OptionFrameBoxTemplate">
 				<Size>
 					<AbsDimension x="250" y="95"/>
 				</Size>
@@ -173,7 +173,7 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
-			<Frame name = "EVTFrameDetailsList" hidden="true">
+			<Frame name="EVTFrameDetailsList" hidden="true">
 				<Size>
 					<AbsDimension x="250" y="300"/>
 				</Size>
@@ -185,6 +185,24 @@
 					</Anchor>
 				</Anchors>
 				<Frames>
+					<Button name="EVTFrameInviteButton" inherits="UIPanelButtonTemplate" text="Invite">
+						<Size>
+							<AbsDimension x="85" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="EVTFrameEventList" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-323"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
+								EVTFrameInviteButton_Toggle();
+							</OnClick>
+						</Scripts>
+					</Button>
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -409,7 +427,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-		</Frames>
+			</Frames>
 		<Layers>
 			<Layer level="ARTWORK">
 				<Texture file="Interface\AddOns\EVTCalendar\Images\EVTFrameTopRight">
@@ -706,9 +724,7 @@
 				EVT_OnEvent();
 			</OnEvent>
 			<OnShow>
-				if EVTFrameCreatePopup:IsVisible() then
-					ShowUIPanel(EVTFrameOverlay);
-				end
+
 			</OnShow>
 			<OnHide>
 				HideUIPanel(EVTFrameOverlay);

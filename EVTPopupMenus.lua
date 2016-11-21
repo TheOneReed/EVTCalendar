@@ -48,6 +48,7 @@ function EVTFrameAcceptBtn_OnClick()
 		EVT_UpdateScrollBar();
 		EVTClearFrame();
 		HideUIPanel(EVTFrameOverlay);
+		EVT_UpdateCalendar();
 end
 
 function EVTFrameCreatePopup_OnLoad()
@@ -220,6 +221,49 @@ function EVTClearFrame()
 	HideUIPanel(EVTFrameSubType);
 end
 
+--------- Invite Popup --------------
+function EVTFrameInviteMenu_OnLoad()
+    UIDropDownMenu_Initialize(this, EVTFrameInviteMenu_Initialize);
+    UIDropDownMenu_SetWidth(125, EVTFrameInviteMenu);
+    UIDropDownMenu_SetSelectedValue(this, 0);
+	UIDropDownMenu_JustifyText("LEFT", EVTFrameInviteMenu);
+end
+
+function EVTFrameInviteMenu_Initialize()
+    local info;
+
+    for i = 1, 4, 1 do
+		info = buildButton(evtInvites[i], i, EVTFrameInviteMenu_OnClick)
+		UIDropDownMenu_AddButton(info);
+	end
+end
+
+function EVTFrameInviteMenu_OnClick()
+    UIDropDownMenu_SetSelectedValue(EVTFrameInviteMenu, this.value);
+end
+
+function EVTFrameInviteLockMenu_OnLoad()
+    UIDropDownMenu_Initialize(this, EVTFrameInviteLockMenu_Initialize);
+    UIDropDownMenu_SetWidth(125, EVTFrameInviteLockMenu);
+    UIDropDownMenu_SetSelectedValue(this, 0);
+	UIDropDownMenu_JustifyText("LEFT", EVTFrameInviteLockMenu);
+end
+
+function EVTFrameInviteLockMenu_Initialize()
+    local info;
+
+    for i = 1, 4, 1 do
+		info = buildButton(evtInviteLock[i], i, EVTFrameInviteLockMenu_OnClick)
+		UIDropDownMenu_AddButton(info);
+	end
+end
+
+function EVTFrameInviteLockMenu_OnClick()
+    UIDropDownMenu_SetSelectedValue(EVTFrameInviteLockMenu, this.value);
+end
+
+
+--- Helper Functions ---
 function compareInputTime()
 	local bTime = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
 	local aTime = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);

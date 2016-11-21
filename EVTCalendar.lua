@@ -92,21 +92,23 @@ function EVT_Initialize()
     displayMonth = date("%m") + 0;
     displayDay = date("%d") + 0;
     displayYear = date("%Y") + 0;
-    EVT_BuildCalendar();
 	if (CalendarData == nil) then
 		CalendarData = {};
 	end	
+    EVT_BuildCalendar();
     initialized = true;
 end
 	
-	function EVT_Toggle()
+function EVT_Toggle()
     EVTButtonDay:SetText(date("%d"));
     if (EVTFrame:IsVisible()) then
         HideUIPanel(EVTFrame);
         PlaySoundFile("Sound\\interface\\uCharacterSheetClose.wav");
     else
+		if EVTFrameCreatePopup:IsVisible() or EVTFrameInvitePopup:IsVisible() then
+			ShowUIPanel(EVTFrameOverlay);
+		end
         EVT_ResetDisplayDate();
-        
         EVT_UpdateCalendar();
         EVT_DayClick(table_Days[table_DayPos[displayDay]]:GetName(), false);
         ShowUIPanel(EVTFrame);
@@ -412,6 +414,16 @@ function EVTFrameCreateButton_Toggle()
 	end
 end
 
+function EVTFrameInviteButton_Toggle()
+    if (EVTFrameInvitePopup:IsVisible()) then
+		HideUIPanel(EVTFrameOverlay);
+        HideUIPanel(EVTFrame);
+	else
+		ShowUIPanel(EVTFrameOverlay);
+		ShowUIPanel(EVTFrameInvitePopup);
+	end
+end
+
 function EVTFrameModifyButton_Toggle()
 	EVTClearFrame()
     if (EVTFrameCreatePopup:IsVisible()) then
@@ -449,7 +461,7 @@ end
 
 --- Helper Functions ---
 function displayDate()
-	return string.format("%s%s%s", displayMonth, displayDay, displayYear);
+	return string.format("%s%s%s", displayYear, displayMonth, displayDay);
 end
 
 function disableButton(Button, ButtonPos)
@@ -471,7 +483,7 @@ function getButtonPosOffset()
 end
 
 function getDayOverlayTex(val)
-	local calData = string.format("%s%s%s", displayMonth, val, displayYear);
+	local calData = string.format("%s%s%s",displayYear, displayMonth, val);
 	local tex;
 	if TableIndexExists(CalendarData, calData) then
 		local t = CalendarData[calData];

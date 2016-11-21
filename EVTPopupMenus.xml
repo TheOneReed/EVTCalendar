@@ -315,8 +315,6 @@
 					<OnLoad>
 						EVTFrameType_OnLoad();
 					</OnLoad>
-					<OnShow>
-					</OnShow>
 				</Scripts>
 			</Frame>
 			<Frame name="EVTFrameSubType" inherits="UIDropDownMenuTemplate" hidden="true" id="6">
@@ -345,7 +343,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="ARTWORK">
-						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Mandatory">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Mandatory:">
 							<Anchors>
 								<Anchor point="RIGHT" relativePoint="LEFT">
 									<Offset>
@@ -362,10 +360,194 @@
 			<OnShow>
 				EVTFrameCreatePopup_OnLoad();
 			</OnShow>
-			<OnEscapePressed>
-				EVTClearFrame();
-				HideUIPanel(EVTFrameCreatePopup);
-			</OnEscapePressed>
+		</Scripts>
+	</Frame>
+	<Frame name="EVTFrameInvitePopup" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="400" y="225"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="InviteEventFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="Invite">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="InviteEventFrameHeader">
+							<Offset>
+								<AbsDimension x="0" y="-14"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="EVTFrameInvitePopupCancel" inherits="GameMenuButtonTemplate" text="CANCEL">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameInvitePopup);
+						HideUIPanel(EVTFrameOverlay);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="EVTFrameInvitePopupAccept" inherits="GameMenuButtonTemplate" text="Accept">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameInvitePopup);
+						HideUIPanel(EVTFrameOverlay);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="EVTFrameInviteMenu" inherits="UIDropDownMenuTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameInvitePopup" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-30"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Send to:">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-25" y="3"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						EVTFrameInviteMenu_OnLoad();
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<EditBox name="EVTFrameInviteNameEditBox" inherits="InputBoxTemplate" autoFocus="false" frameStrata="DIALOG" historyLines="0">
+				<Size>
+					<AbsDimension x="133" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="EVTFrameInviteMenu">
+						<Offset>
+							<AbsDimension x="25" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="(Optional) Name:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="EVTFrameInviteNameEditBox" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="-8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="***Personal invites only work if the player is your party/raid/guild!***">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOP" relativeTo="EVTFrameInviteNameEditBox" relativePoint="BOTTOM">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnShow>
+						this:ClearFocus();
+					</OnShow>
+					<OnEnterPressed>
+						this:ClearFocus();
+					</OnEnterPressed>
+					<OnEscapePressed>
+						this:ClearFocus();
+					</OnEscapePressed>
+				</Scripts>
+				<FontString inherits="ChatFontNormal" bytes="16"/>
+			</EditBox>
+			<Frame name="EVTFrameInviteLockMenu" inherits="UIDropDownMenuTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameInviteMenu" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-100"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Invite Lock:">
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-43" y="3"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						EVTFrameInviteLockMenu_OnLoad();
+					</OnLoad>
+				</Scripts>
+			</Frame>
+		</Frames>
+		<Scripts>
 		</Scripts>
 	</Frame>
 </Ui>
