@@ -389,6 +389,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
+						EVTFrameModifyButton_Toggle()
 						PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
 					</OnClick>
 				</Scripts>

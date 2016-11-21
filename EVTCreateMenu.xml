@@ -20,7 +20,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer level="ARTWORK">
-				<Texture name="SoundOptionsFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
+				<Texture name="CreateEventFrameHeader" file="Interface\DialogFrame\UI-DialogBox-Header">
 					<Size>
 						<AbsDimension x="256" y="64"/>
 					</Size>
@@ -32,7 +32,7 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<FontString inherits="GameFontNormal" text="Create Event">
+				<FontString name="EVTFrameCreatePopupTitle" inherits="GameFontNormal" text="Create Event">
 					<Anchors>
 						<Anchor point="TOP" relativeTo="SoundOptionsFrameHeader">
 							<Offset>
@@ -76,9 +76,6 @@
 				</Anchor>
 			</Anchors>
 				<Scripts>
-					<OnShow>
-						this:Disable();
-					</OnShow>
 					<OnClick>
 						EVTFrameAcceptBtn_OnClick();
 						PlaySound("gsTitleOptionExit");
@@ -229,7 +226,6 @@
 						EVTFrameFromTime_OnLoad();
 					</OnLoad>
 					<OnShow>
-						EVTFrameFromTime_OnLoad();
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -259,7 +255,6 @@
 						EVTFrameToTime_OnLoad();
 					</OnLoad>
 					<OnShow>
-						EVTFrameToTime_OnLoad();
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -276,7 +271,6 @@
 						EVTFrameAMPM1_OnLoad();
 					</OnLoad>
 					<OnShow>
-						EVTFrameAMPM1_OnLoad();
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -293,7 +287,6 @@
 						EVTFrameAMPM2_OnLoad();
 					</OnLoad>
 					<OnShow>
-						EVTFrameAMPM2_OnLoad();
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -323,7 +316,6 @@
 						EVTFrameType_OnLoad();
 					</OnLoad>
 					<OnShow>
-						EVTFrameType_OnLoad();
 					</OnShow>
 				</Scripts>
 			</Frame>
@@ -340,7 +332,6 @@
 						EVTFrameSubType_OnLoad();
 					</OnLoad>
 					<OnShow>
-						EVTFrameSubType_OnLoad();
 					</OnShow>
 				</Scripts>
 			</Frame>

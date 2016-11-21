@@ -17,7 +17,7 @@ function EVTFrameAcceptBtn_OnClick()
 	else
 		mando = 1;
 	end
-
+	if (EVTFrameCreatePopupTitle:GetText() == "Create Event") then
 		table.insert(CalendarData[createDate],{
 			[1] = EVTFrameNameEditBox:GetText(),
 			[2] = EVTFrameCreatorEditBox:GetText(),
@@ -30,6 +30,21 @@ function EVTFrameAcceptBtn_OnClick()
 			[9] = mando,
 			[10] = EVTFrameNoteEditBox:GetText()
 			});
+		else
+			CalendarData[createDate][getButtonPosOffset()] = {
+				[1] = EVTFrameNameEditBox:GetText(),
+				[2] = EVTFrameCreatorEditBox:GetText(),
+				[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
+				[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
+				[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
+				[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
+				[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
+				[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
+				[9] = mando,
+				[10] = EVTFrameNoteEditBox:GetText()
+			};
+		end
+		
 		EVT_UpdateScrollBar();
 		EVTClearFrame();
 		HideUIPanel(EVTFrameOverlay);
@@ -130,6 +145,7 @@ function EVTFrameType_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameType_Initialize);
     UIDropDownMenu_SetWidth(75, EVTFrameType);
     UIDropDownMenu_SetSelectedValue(this, 7);
+	UIDropDownMenu_JustifyText("LEFT", this);
 end
 
 function EVTFrameType_Initialize()
@@ -144,24 +160,26 @@ end
 function EVTFrameType_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameType, this.value);
 	EVTFrameSubType_Toggle();
+	EVTCheckComplete();
 end
 
 function EVTFrameSubType_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameSubType_Initialize);
     UIDropDownMenu_SetWidth(130, EVTFrameSubType);
     UIDropDownMenu_SetSelectedValue(this, 1);
+	UIDropDownMenu_JustifyText("LEFT", this);
 end
 
 function EVTFrameSubType_Initialize()
     local info;
 	local n = 0;
-	local subType= UIDropDownMenu_GetSelectedValue(EVTFrameType);
+	local subType = UIDropDownMenu_GetSelectedValue(EVTFrameType);
 	UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
-	if subType == 1 or subType == 2 or subType == 3 then
+	if isSubtype(subType) then
 		n = table.getn(evtSubMenu[subType]);
 	end
 	for i = 1, n, 1 do
-		if subType == 1 or subType == 2 or subType == 3 then
+		if isSubtype(subType) then
 			UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
 			info = buildButton(evtSubMenu[subType][i], i, EVTFrameSubType_OnClick)
 			UIDropDownMenu_AddButton(info);
@@ -170,22 +188,25 @@ function EVTFrameSubType_Initialize()
 end
 
 function EVTFrameSubType_Toggle()
-	subType = UIDropDownMenu_GetSelectedValue(EVTFrameType);
-	if subType == 1 or subType == 2 or subType == 3 then
+	local subType = UIDropDownMenu_GetSelectedValue(EVTFrameType);
+
+	if isSubtype(subType) then
 		ShowUIPanel(EVTFrameSubType);
-		UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
-		UIDropDownMenu_SetText(nil, EVTFrameSubType)
 	else 
 		HideUIPanel(EVTFrameSubType);
 	end
+	EVTFrameSubType_Initialize();
+	UIDropDownMenu_SetText(nil, EVTFrameSubType);
+	UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
 end
 
 function EVTFrameSubType_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameSubType, this.value);
+	EVTCheckComplete();
 end
 
 function EVTCheckComplete()
-	if (EVTFrameNameEditBox:GetText() ~= "") and (compareInputTime() == true) then
+	if ((EVTFrameNameEditBox:GetText() ~= "") and compareInputTime() and (isSubtype(UIDropDownMenu_GetSelectedValue(EVTFrameType)) == (UIDropDownMenu_GetSelectedValue(EVTFrameSubType) ~= 0))) then
 		EVTFrameCreatePopupAccept:Enable()
 	else
 		EVTFrameCreatePopupAccept:Disable()
@@ -196,12 +217,6 @@ function EVTClearFrame()
 	EVTFrameCreatorEditBox:SetText("");
 	EVTFrameNameEditBox:SetText("");
 	EVTFrameNoteEditBox:SetText("");
-    UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, 1);		
-    UIDropDownMenu_SetSelectedValue(EVTFrameToTime, 1);	
-    UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, 1);		
-    UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, 1);	
-    UIDropDownMenu_SetSelectedValue(EVTFrameType, 7);	
-	UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 1);
 	HideUIPanel(EVTFrameSubType);
 end
 
@@ -211,13 +226,18 @@ function compareInputTime()
 	local bAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1);
 	local aAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2);
 	
-	if aAMPM > bAMPM then
-		return true;
-	elseif (aTime > bTime) and (aAMPM == bAMPM) then
+	if (aTime + (12 * (aAMPM - 1))) > (bTime + (12 * (bAMPM - 1))) then
 		return true;
 	else
 		return false;
 	end
+end
+
+function isSubtype(subType)
+	if subType == 1 or subType == 2 or subType == 3 then
+		return true;
+	end
+	return false;
 end
 
 function buildButton(btText, btValue, btFunc)

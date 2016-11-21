@@ -54,8 +54,9 @@ function EVT_OnLoad()
         if msg == "delete" then
 			CalendarData[displayDate()] = {};
         elseif msg == "test" then
-			SendAddonMessage("EVTCalendar", "If you recieved this, test SAT.", "PARTY");
-			DEFAULT_CHAT_FRAME:AddMessage("Message Sent", 0.1, 0.1, 1);
+			
+--			SendAddonMessage("EVTCalendar", "If you recieved this, test SAT.", "PARTY");
+			DEFAULT_CHAT_FRAME:AddMessage(tostring(UIDropDownMenu_GetSelectedValue(EVTFrameSubType)), 0.1, 0.1, 1);
 		end
 	end
 end
@@ -340,7 +341,7 @@ function EVT_EventButton_OnClick(button)
 end
 
 function EVT_UpdateDetailList()
-	local pos = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
+	local pos = getButtonPosOffset();
 	local t = CalendarData[displayDate()][pos];
 	local subType = t[7];
 	local mando = t[9];
@@ -371,7 +372,7 @@ function EVT_UpdateDetailList()
 end	
 	
 function EVT_FrameDeleteButton_OnClick()
-	local pos = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
+	local pos = getButtonPosOffset();
 	DEFAULT_CHAT_FRAME:AddMessage(pos, 0.1, 0.1, 1);
 	table.remove(CalendarData[displayDate()], pos);
 	EVT_UpdateScrollBar();
@@ -385,14 +386,64 @@ function EVT_EventClearSelection()
 end
 
 function EVTFrameCreateButton_Toggle()
+	EVTClearFrame()
     if (EVTFrameCreatePopup:IsVisible()) then
 		HideUIPanel(EVTFrameOverlay);
         HideUIPanel(EVTFrame);
-		EVTClearFrame()
 	else
+		EVTFrameCreatePopupTitle:SetText("Create Event");
 		createDate = displayDate();
 		ShowUIPanel(EVTFrameOverlay);
 		ShowUIPanel(EVTFrameCreatePopup);
+		UIDropDownMenu_Initialize(EVTFrameFromTime, EVTFrameFromTime_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, 1);
+		UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, 1);
+		UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameToTime, 1);
+		UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, 1);
+		UIDropDownMenu_Initialize(EVTFrameType, EVTFrameType_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameType, 7);
+		UIDropDownMenu_Initialize(EVTFrameSubType, EVTFrameSubType_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameSubType, 0);
+		EVTCheckComplete();
+		HideUIPanel(EVTFrameSubType);
+	end
+end
+
+function EVTFrameModifyButton_Toggle()
+	EVTClearFrame()
+    if (EVTFrameCreatePopup:IsVisible()) then
+		HideUIPanel(EVTFrameOverlay);
+        HideUIPanel(EVTFrame);
+	else
+		EVTFrameCreatePopupTitle:SetText("Modify Event");
+		createDate = displayDate();
+		ShowUIPanel(EVTFrameOverlay);
+		ShowUIPanel(EVTFrameCreatePopup);
+		
+		local t = CalendarData[createDate][getButtonPosOffset()];
+		EVTFrameNameEditBox:SetText(t[1]);
+		EVTFrameCreatorEditBox:SetText(t[2]);
+		if isSubtype(t[7]) then
+			ShowUIPanel(EVTFrameSubType);
+		end
+		UIDropDownMenu_Initialize(EVTFrameFromTime, EVTFrameFromTime_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, t[3]);
+		UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, t[4]);
+		UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameToTime, t[5]);
+		UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, t[6]);
+		UIDropDownMenu_Initialize(EVTFrameType, EVTFrameType_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameType, t[7]);
+		UIDropDownMenu_Initialize(EVTFrameSubType, EVTFrameSubType_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameSubType, t[8]);
+		EVTFrameMando:SetChecked(t[9]);
+		EVTFrameNoteEditBox:SetText(t[10]);
+		EVTCheckComplete();
 	end
 end
 
@@ -412,6 +463,11 @@ function disableButton(Button, ButtonPos)
         name = Button:GetName();
         EVT_DayClick(name, false);
     end
+end
+
+function getButtonPosOffset()
+	local offset = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
+	return offset;
 end
 
 function getDayOverlayTex(val)
