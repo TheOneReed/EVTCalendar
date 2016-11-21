@@ -29,7 +29,10 @@ local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelec
 local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
 local ImgIcoRagnaros = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoRagnaros";
 local ImgIcoInstance = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoInstance";
-
+local ImgIcoMeeting = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoMeeting";
+local ImgIcoQuest = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoQuest";
+local ImgIcoOther = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOther";
+local ImgIcoPvP = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoPvP";
 
 -- Calendar Data Table
 
@@ -422,6 +425,21 @@ function getDayOverlayTex(val)
 			end
 			if t[1][7] == 2 then
 				return ImgIcoRagnaros;
+			end
+			if t[1][7] == 3 then
+				return ImgIcoPvP;
+			end
+			if t[1][7] == 4 then
+				return ImgIcoQuest;
+			end
+			if t[1][7] == 5 then
+				return ImgIcoMeeting;
+			end
+			if t[1][7] == 6 then
+				return ImgIcoOther;
+			end
+			if t[1][7] == 7 then
+				return ImgIcoOther;
 			end
 		end
 	end
