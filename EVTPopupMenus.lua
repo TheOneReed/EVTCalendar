@@ -6,6 +6,7 @@
 ----------------------------------------------------------------
 
 createDate = "";
+createEvt = 0;
 
 function EVTFrameAcceptBtn_OnClick()
 	local mando;
@@ -32,7 +33,7 @@ function EVTFrameAcceptBtn_OnClick()
 			[11] = 0
 			});
 		else
-			CalendarData[createDate][getButtonPosOffset()] = {
+			CalendarData[createDate][createEvt] = {
 				[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
 				[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
 				[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
@@ -230,15 +231,15 @@ function EVTFrameInvitePopupAccept_OnClick()
 	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
 	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
 	local lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
-	local selEvt = getButtonPosOffset();
 	
 	if toWho == "" then
 		toWho = "All ";
 	end
 	
-	local tableStr = TableToString(CalendarData[createDate][selEvt], lockedTo);
+	local tableStr = TableToString(CalendarData[createDate][createEvt], lockedTo);
 	local msgStr = string.format("%s¿%s¿%s¿", toWho, "Invite", tableStr);
 
+	DEFAULT_CHAT_FRAME:AddMessage(msgStr, 1, 0.1, 0.1);
 	SendAddonMessage("EVTCalendar", msgStr, toChannel);
 end
 

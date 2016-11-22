@@ -46,14 +46,7 @@ function GetDayofWeek(year, month, day)
     return mod(year + floor(year/4) - floor(year/100) + floor(year/400) + t[month] + day, 7) + 1;
 end
 
-function TableIndexExists(t, i)
-	for index,value in pairs(t) do 
-		if (index == i) then
-			return true;
-		end
-	end
-	return false;
-end
+
 
 -----------------Communications Functions------------------
 
@@ -76,6 +69,24 @@ end
 
 
 ------- Helper Functions----------
+function TableIndexExists(t, i)
+	for index,value in pairs(t) do 
+		if (index == i) then
+			return true;
+		end
+	end
+	return false;
+end
+
+function TableFindDupe(t, i)
+	for index,value in pairs(t) do 
+		if (value == i) then
+			return true;
+		end
+	end
+	return false;
+end
+
 function strSplit(msgStr, c)
 	local table_str = {};
 	local capture = string.format("(.-)%s", c);
@@ -98,8 +109,12 @@ function StringToTable(str)
 	if TableIndexExists(t, s12) == false then
 		t[s12] = {};
 	end
-	table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11)});
-	EVT_UpdateCalendar();
+	if TableFindDupe(t[s12], s1) then
+		table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11)});
+		EVT_UpdateCalendar();
+	else
+		DEFAULT_CHAT_FRAME:AddMessage("Duplicate Exists!", 1, 0.1, 1);
+	end
 end
 
 function checkIllegal(str)

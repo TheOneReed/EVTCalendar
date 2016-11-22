@@ -40,6 +40,7 @@ function EVT_ResetDisplayDate()
     displayDay = currentDay();
     displayMonth = currentMonth();
     displayYear = currentYear();
+	displayPos = nil;
 end
 
 function EVT_OnLoad()
@@ -155,6 +156,7 @@ function EVT_UpdateCalendar()
     EVTMonthDisplay:SetText(table_Months[displayMonth]);
 
     local startDay = GetDayofWeek(displayYear, displayMonth, 1);
+
     local z = 1;
     
     for step = 1, 42, 1 do
@@ -286,7 +288,6 @@ end
 
 function EVT_UpdateDayPanel()
     local dow = table_Dotw[GetDayofWeek(displayYear, displayMonth, displayDay)];
-    --    DEFAULT_CHAT_FRAME:AddMessage(tostring(dow) .. tostring(displayYear) .. tostring(displayMonth) .. tostring(displayDay), 0.1, 0.1, 1);
     dayString = string.format("%s, %s %s, %s", dow, table_Months[displayMonth], displayDay, displayYear);
     EVTDate:SetText(dayString);
     EVT_UpdateScrollBar();
@@ -379,7 +380,6 @@ end
 	
 function EVT_FrameDeleteButton_OnClick()
 	local pos = getButtonPosOffset();
-	DEFAULT_CHAT_FRAME:AddMessage(pos, 0.1, 0.1, 1);
 	table.remove(CalendarData[displayDate()], pos);
 	EVT_UpdateScrollBar();
 end
@@ -426,6 +426,7 @@ function EVTFrameInviteButton_Toggle()
 		ShowUIPanel(EVTFrameOverlay);
 		ShowUIPanel(EVTFrameInvitePopup);
 		createDate = displayDate();
+		createEvt = getButtonPosOffset();
 	end
 end
 
@@ -437,10 +438,11 @@ function EVTFrameModifyButton_Toggle()
 	else
 		EVTFrameCreatePopupTitle:SetText("Modify Event");
 		createDate = displayDate();
+		createEvt = getButtonPosOffset();
 		ShowUIPanel(EVTFrameOverlay);
 		ShowUIPanel(EVTFrameCreatePopup);
 		
-		local t = CalendarData[createDate][getButtonPosOffset()];
+		local t = CalendarData[createDate][createEvt];
 		EVTFrameNameEditBox:SetText(t[1]);
 		EVTFrameCreatorEditBox:SetText(t[2]);
 		if isSubtype(t[7]) then
