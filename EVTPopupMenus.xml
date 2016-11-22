@@ -438,6 +438,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
+						EVTFrameInvitePopupAccept_OnClick();
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(EVTFrameInvitePopup);
 						HideUIPanel(EVTFrameOverlay);

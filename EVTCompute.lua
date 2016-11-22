@@ -54,3 +54,63 @@ function TableIndexExists(t, i)
 	end
 	return false;
 end
+
+-----------------Communications Functions------------------
+
+function EVTIncMessage(msgStr, fromWho)
+	if fromWho == UnitName("player") then
+		DEFAULT_CHAT_FRAME:AddMessage("From Self", 1, 0.1, 1);
+	end
+
+	local s1, s2, s3 = strSplit(msgStr, "¿");
+	
+	if s1 == UnitName("player") or s1 == "All " then
+		DEFAULT_CHAT_FRAME:AddMessage(s1, 1, 0.1, 1);
+		DEFAULT_CHAT_FRAME:AddMessage(s2, 1, 0.1, 1);
+		DEFAULT_CHAT_FRAME:AddMessage(s3, 1, 0.1, 1);
+		StringToTable(s3);
+	else 
+		DEFAULT_CHAT_FRAME:AddMessage("Not for you!", 1, 0.1, 1);
+	end
+end
+
+
+------- Helper Functions----------
+function strSplit(msgStr, c)
+	local table_str = {};
+	local capture = string.format("(.-)%s", c);
+	
+	for v in string.gfind(msgStr, capture) do
+		table.insert(table_str, v);
+	end
+	
+	return unpack(table_str);
+end
+
+function TableToString(t, lock)
+	strTable = string.format("%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡", t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10], lock, createDate);
+	return strTable;
+end
+
+function StringToTable(str)
+	local s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12 = strSplit(str, "¡");
+	local t = CalendarData;
+	if TableIndexExists(t, s12) == false then
+		t[s12] = {};
+	end
+	table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11)});
+	EVT_UpdateCalendar();
+end
+
+function checkIllegal(str)
+	str = string.gsub(str, "¿", "?");
+	str = string.gsub(str, "¡", "!");
+	return str;
+end
+
+
+
+
+
+
+

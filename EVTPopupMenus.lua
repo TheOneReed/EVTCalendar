@@ -19,8 +19,8 @@ function EVTFrameAcceptBtn_OnClick()
 	end
 	if (EVTFrameCreatePopupTitle:GetText() == "Create Event") then
 		table.insert(CalendarData[createDate],{
-			[1] = EVTFrameNameEditBox:GetText(),
-			[2] = EVTFrameCreatorEditBox:GetText(),
+			[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
+			[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
 			[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
 			[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
 			[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
@@ -28,12 +28,13 @@ function EVTFrameAcceptBtn_OnClick()
 			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 			[9] = mando,
-			[10] = EVTFrameNoteEditBox:GetText()
+			[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
+			[11] = 0
 			});
 		else
 			CalendarData[createDate][getButtonPosOffset()] = {
-				[1] = EVTFrameNameEditBox:GetText(),
-				[2] = EVTFrameCreatorEditBox:GetText(),
+				[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
+				[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
 				[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
 				[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
 				[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
@@ -41,7 +42,8 @@ function EVTFrameAcceptBtn_OnClick()
 				[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 				[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 				[9] = mando,
-				[10] = EVTFrameNoteEditBox:GetText()
+				[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
+				[11] = 0
 			};
 		end
 		
@@ -222,10 +224,28 @@ function EVTClearFrame()
 end
 
 --------- Invite Popup --------------
+function EVTFrameInvitePopupAccept_OnClick()
+	local tChan = {"PARTY", "RAID", "GUILD", "OFFICER" };
+
+	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
+	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
+	local lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
+	local selEvt = getButtonPosOffset();
+	
+	if toWho == "" then
+		toWho = "All ";
+	end
+	
+	local tableStr = TableToString(CalendarData[createDate][selEvt], lockedTo);
+	local msgStr = string.format("%s¿%s¿%s¿", toWho, "Invite", tableStr);
+
+	SendAddonMessage("EVTCalendar", msgStr, toChannel);
+end
+
 function EVTFrameInviteMenu_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameInviteMenu_Initialize);
     UIDropDownMenu_SetWidth(125, EVTFrameInviteMenu);
-    UIDropDownMenu_SetSelectedValue(this, 0);
+    UIDropDownMenu_SetSelectedValue(this, 3);
 	UIDropDownMenu_JustifyText("LEFT", EVTFrameInviteMenu);
 end
 
@@ -245,7 +265,7 @@ end
 function EVTFrameInviteLockMenu_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameInviteLockMenu_Initialize);
     UIDropDownMenu_SetWidth(125, EVTFrameInviteLockMenu);
-    UIDropDownMenu_SetSelectedValue(this, 0);
+    UIDropDownMenu_SetSelectedValue(this, 1);
 	UIDropDownMenu_JustifyText("LEFT", EVTFrameInviteLockMenu);
 end
 

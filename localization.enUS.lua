@@ -40,4 +40,4 @@ evtTypes = {"Dungeon", "Raid", "PvP", "Quests", "Meeting", "Event", "Other" };
 
 evtInvites = {"Party", "Raid", "Guild", "Guild Officers"};
 
-evtInviteLock = {"None", "Guild", "Guild Officers", "Self"};
+evtInviteLock = {"None", "Guild", "Officers", "Self"};

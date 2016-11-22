@@ -54,9 +54,8 @@ function EVT_OnLoad()
         if msg == "delete" then
 			CalendarData[displayDate()] = {};
         elseif msg == "test" then
-			
---			SendAddonMessage("EVTCalendar", "If you recieved this, test SAT.", "PARTY");
-			DEFAULT_CHAT_FRAME:AddMessage(tostring(UIDropDownMenu_GetSelectedValue(EVTFrameSubType)), 0.1, 0.1, 1);
+			local str = TableToString(CalendarData[createDate][1]);
+			DEFAULT_CHAT_FRAME:AddMessage(str, 1, 0.1, 1);
 		end
 	end
 end
@@ -83,7 +82,7 @@ function EVT_OnEvent()
 		end
 	elseif (event == "CHAT_MSG_ADDON") then
 		if (strlower(arg1) == "evtcalendar") then
-			DEFAULT_CHAT_FRAME:AddMessage(arg2, 0.1, 0.1, 1);
+			EVTIncMessage(arg2, arg4);
 		end		
 	end
 end
@@ -370,6 +369,11 @@ function EVT_UpdateDetailList()
 	if t[2] ~= UnitName("player") then
 		EVTFrameModifyButton:Disable();
 	end
+	if t[11] ~= 0 then
+		EVTFrameInviteButton:Disable();
+	else
+		EVTFrameInviteButton:Enable();
+	end
 	ShowUIPanel(EVTFrameDetailsList);	
 end	
 	
@@ -421,6 +425,7 @@ function EVTFrameInviteButton_Toggle()
 	else
 		ShowUIPanel(EVTFrameOverlay);
 		ShowUIPanel(EVTFrameInvitePopup);
+		createDate = displayDate();
 	end
 end
 
