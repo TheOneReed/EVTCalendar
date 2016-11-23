@@ -370,7 +370,7 @@ function EVT_UpdateDetailList()
 	if t[2] ~= UnitName("player") then
 		EVTFrameModifyButton:Disable();
 	end
-	if t[11] ~= 0 then
+	if t[11] > 1 then
 		EVTFrameInviteButton:Disable();
 	else
 		EVTFrameInviteButton:Enable();
@@ -381,7 +381,7 @@ end
 function EVT_FrameDeleteButton_OnClick()
 	local pos = getButtonPosOffset();
 	table.remove(CalendarData[displayDate()], pos);
-	EVT_UpdateScrollBar();
+	EVT_UpdateCalendar();
 end
 
 function EVT_EventClearSelection()

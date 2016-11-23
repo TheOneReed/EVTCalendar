@@ -79,8 +79,10 @@ function TableIndexExists(t, i)
 end
 
 function TableFindDupe(t, i)
-	for index,value in pairs(t) do 
-		if (value == i) then
+	local n = table.getn(t);
+	for x = 1, n do 
+		getName = t[x][1];
+		if ( getName == i) then
 			return true;
 		end
 	end

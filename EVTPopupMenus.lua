@@ -30,7 +30,7 @@ function EVTFrameAcceptBtn_OnClick()
 			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 			[9] = mando,
 			[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
-			[11] = 0
+			[11] = 1
 			});
 		else
 			CalendarData[createDate][createEvt] = {
@@ -44,7 +44,7 @@ function EVTFrameAcceptBtn_OnClick()
 				[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 				[9] = mando,
 				[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
-				[11] = 0
+				[11] = 1
 			};
 		end
 		
@@ -226,7 +226,7 @@ end
 
 --------- Invite Popup --------------
 function EVTFrameInvitePopupAccept_OnClick()
-	local tChan = {"PARTY", "RAID", "GUILD", "OFFICER" };
+	local tChan = {"PARTY", "RAID", "GUILD", "GUILD"};
 
 	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
 	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
