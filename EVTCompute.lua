@@ -57,7 +57,7 @@ function EVTIncMessage(msgStr, fromWho)
 
 	local s1, s2, s3, s4 = strSplit(msgStr, "¿");
 	
-	if (((s2 == 1) and player_Info["officer"]) or (s2 == 0)) and (s1 == UnitName("player") or s1 == "All ") then
+	if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") then
 		DEFAULT_CHAT_FRAME:AddMessage(s1, 1, 0.1, 1);
 		DEFAULT_CHAT_FRAME:AddMessage(s2, 1, 0.1, 1);
 		DEFAULT_CHAT_FRAME:AddMessage(s3, 1, 0.1, 1);

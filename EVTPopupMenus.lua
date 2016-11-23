@@ -240,7 +240,7 @@ function EVTFrameInvitePopupAccept_OnClick()
 	end
 	
 	local tableStr = TableToString(CalendarData[createDate][createEvt], lockedTo);
-	local msgStr = string.format("%s¿%s¿%s¿%s¿", toWho, toOff, "Invite", tableStr);
+	local msgStr = string.format("%s¿%s¿%s¿%s¿", toWho, tostring(toOff), "Invite", tableStr);
 
 	DEFAULT_CHAT_FRAME:AddMessage(msgStr, 1, 0.1, 0.1);
 	SendAddonMessage("EVTCalendar", msgStr, toChannel);
