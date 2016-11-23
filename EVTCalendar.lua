@@ -509,7 +509,7 @@ function getPlayerInfo()
 	t["name"] = UnitName("player");
 
 	guildName,guildRank,guildIndex = GetGuildInfo("player")
-	guildIndex = guildIndex + 1;
+	guildIndex = guildIndex;
 	if guildName ~= nil then
 		t["guild"] = guildName;
 		t["officer"] = isOfficer(guildIndex);
