@@ -59,11 +59,11 @@ function EVTIncMessage(msgStr, fromWho)
 			if TableIndexExists(t, b12) == false then
 				table.insert(invite_Queue, {fromWho, s4});
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
-				EVTButton_TogglePulse();
+				EVTButton_StartPulse();
 			elseif TableFindDupe(CalendarData[b12], b1) == false then
 				table.insert(invite_Queue, {fromWho, s4});
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
-				EVTButton_TogglePulse();
+				EVTButton_StartPulse();
 			end
 		end
 	end

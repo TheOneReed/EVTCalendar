@@ -53,14 +53,10 @@ function EVTButton_OnEnter()
     GameTooltip:Show();
 end 
 
-function EVTButton_TogglePulse()
-	if EVTButtonPulsing == false then
+function EVTButton_StartPulse()
 		PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 		SetButtonPulse(EVTButton, 100, 1);
 		EVTButtonPulsing = true;
-	else
-		EVTButton_PulseOff();
-	end
 end
 
 function EVTButton_PulseOff()
