@@ -109,7 +109,7 @@ function StringToTable(str)
 	if TableIndexExists(t, s12) == false then
 		t[s12] = {};
 	end
-	if TableFindDupe(t[s12], s1) then
+	if TableFindDupe(t[s12], s1) == false then
 		table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11)});
 		EVT_UpdateCalendar();
 	else
