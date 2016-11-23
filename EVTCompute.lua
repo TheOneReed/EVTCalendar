@@ -55,13 +55,14 @@ function EVTIncMessage(msgStr, fromWho)
 		DEFAULT_CHAT_FRAME:AddMessage("From Self", 1, 0.1, 1);
 	end
 
-	local s1, s2, s3 = strSplit(msgStr, "¿");
+	local s1, s2, s3, s4 = strSplit(msgStr, "¿");
 	
-	if s1 == UnitName("player") or s1 == "All " then
+	if (((s3 == 1) and player_Info["officer"]) or (s3 == 0)) and (s1 == UnitName("player") or s1 == "All ") then
 		DEFAULT_CHAT_FRAME:AddMessage(s1, 1, 0.1, 1);
 		DEFAULT_CHAT_FRAME:AddMessage(s2, 1, 0.1, 1);
 		DEFAULT_CHAT_FRAME:AddMessage(s3, 1, 0.1, 1);
-		StringToTable(s3);
+		DEFAULT_CHAT_FRAME:AddMessage(s4, 1, 0.1, 1);
+		StringToTable(s4);
 	else 
 		DEFAULT_CHAT_FRAME:AddMessage("Not for you!", 1, 0.1, 1);
 	end

@@ -227,17 +227,20 @@ end
 --------- Invite Popup --------------
 function EVTFrameInvitePopupAccept_OnClick()
 	local tChan = {"PARTY", "RAID", "GUILD", "GUILD"};
-
+	local toOff = 0;	
 	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
 	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
 	local lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
-	
+
 	if toWho == "" then
 		toWho = "All ";
 	end
+	if UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu) == 4 then
+		toOff = 1;
+	end
 	
 	local tableStr = TableToString(CalendarData[createDate][createEvt], lockedTo);
-	local msgStr = string.format("%s¿%s¿%s¿", toWho, "Invite", tableStr);
+	local msgStr = string.format("%s¿%s¿%s¿%s¿", toWho, toOff, "Invite", tableStr);
 
 	DEFAULT_CHAT_FRAME:AddMessage(msgStr, 1, 0.1, 0.1);
 	SendAddonMessage("EVTCalendar", msgStr, toChannel);
@@ -273,7 +276,7 @@ end
 function EVTFrameInviteLockMenu_Initialize()
     local info;
 
-    for i = 1, 4, 1 do
+    for i = 1, 3, 1 do
 		info = buildButton(evtInviteLock[i], i, EVTFrameInviteLockMenu_OnClick)
 		UIDropDownMenu_AddButton(info);
 	end

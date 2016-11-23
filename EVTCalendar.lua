@@ -10,6 +10,7 @@ local table_DayStr = {};
 local table_DayVal = {};
 local table_DayTex = {};
 local table_DayPos = {};
+player_Info = {};
 
 ---Initialize variables
 local displayMonth;
@@ -95,6 +96,7 @@ function EVT_Initialize()
 	if (CalendarData == nil) then
 		CalendarData = {};
 	end	
+	getPlayerInfo();
     EVT_BuildCalendar();
     initialized = true;
 end
@@ -370,7 +372,7 @@ function EVT_UpdateDetailList()
 	if t[2] ~= UnitName("player") then
 		EVTFrameModifyButton:Disable();
 	end
-	if t[11] > 1 then
+	if ((t[11] == 2) and player_Info["officer"] == false) or (t[11] == 3 and t[1] ~= player_Info["name"]) then
 		EVTFrameInviteButton:Disable();
 	else
 		EVTFrameInviteButton:Enable();
@@ -487,6 +489,33 @@ end
 function getButtonPosOffset()
 	local offset = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
 	return offset;
+end
+
+function getPlayerInfo()
+	t = player_Info;
+
+	t["name"] = UnitName("player");
+
+	guildName,guildRank,guildIndex = GetGuildInfo("player")
+	guildIndex = guildIndex + 1;
+	if guildName ~= nil then
+		t["guild"] = guildName;
+		t["officer"] = isOfficer(guildIndex);
+		
+	else
+		t["guild"] = false;
+		t["officer"] = false;
+	end
+end
+
+function isOfficer(index)
+	GuildControlSetRank(index);
+	local _,_,s3, s4 = GuildControlGetRankFlags();
+	if s3 == 1 and s4 == 1 then
+		return true;
+	else
+		return false;
+	end
 end
 
 function getDayOverlayTex(val)
