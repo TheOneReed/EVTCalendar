@@ -1,7 +1,12 @@
 local EVTButtonPosition = nil;
+local EVTButtonPulsing = false;
 
 function EVTButton_OnClick()
-	EVT_Toggle();
+	if EVTButtonPulsing then
+		EVT_ShowNextInvite();
+	else
+		EVT_Toggle();
+	end
 end
 
 function EVTButton_Init()
@@ -47,3 +52,18 @@ function EVTButton_OnEnter()
     GameTooltip:SetText(curtime);
     GameTooltip:Show();
 end 
+
+function EVTButton_TogglePulse()
+	if EVTButtonPulsing == false then
+		PlaySoundFile("Sound\\interface\\iTellMessage.wav");
+		SetButtonPulse(EVTButton, 100, 1);
+		EVTButtonPulsing = true;
+	else
+		EVTButton_PulseOff();
+	end
+end
+
+function EVTButton_PulseOff()
+		ButtonPulse_StopPulse(EVTButton);
+		EVTButtonPulsing = false;
+	end

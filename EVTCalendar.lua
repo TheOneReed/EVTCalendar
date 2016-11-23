@@ -5,12 +5,15 @@
 --
 ----------------------------------------------------------------
 ---Initialize tables
+player_Info = {};
+invite_Queue = {};
+
 local table_Days = {};
 local table_DayStr = {};
 local table_DayVal = {};
 local table_DayTex = {};
 local table_DayPos = {};
-player_Info = {};
+
 
 ---Initialize variables
 local displayMonth;
@@ -56,8 +59,7 @@ function EVT_OnLoad()
         if msg == "delete" then
 			CalendarData[displayDate()] = {};
         elseif msg == "test" then
-			local str = TableToString(CalendarData[createDate][1]);
-			DEFAULT_CHAT_FRAME:AddMessage(str, 1, 0.1, 1);
+			EVTButton_TogglePulse();
 		end
 	end
 end
@@ -473,6 +475,16 @@ function displayDate()
 	return string.format("%s%s%s", displayYear, displayMonth, displayDay);
 end
 
+function convertDate(str)
+	local nDay = tonumber(string.sub(str, 7, 8));
+	local nMon = tonumber(string.sub(str, 5, 6));
+	local nYear = tonumber(string.sub(str, 1, 4));
+
+	local newDate = string.format("%s %s, %s", table_Months[nMon], nDay, nYear);
+	
+	return newDate;
+end
+	
 function disableButton(Button, ButtonPos)
     table_DayVal[ButtonPos] = nil;
     Button:SetNormalTexture(ImgDayInactive);

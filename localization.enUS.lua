@@ -30,6 +30,8 @@ EVT_THU = "Thursday";
 EVT_FRI = "Friday";
 EVT_SAT = "Saturday";
 
+EVT_INVITE_QUEUE = "has invited you to an event. Do you accept?"
+
 evtSubMenu = {
 		[1] = {"Blackfathom Depths", "Blackrock Depths", "Blackrock Spire", "The Deadmines", "Dire Maul", "Gnomeregan", "Maraudon", "Ragefire Chasm", "Razorfen Downs", "Razorfen Kraul", "Scarlet Monastery", "Scholomance", "Shadowfang Keep", "The Stockades", "Stratholome", "The Sunken Temple", "Uldaman", "Wailing Caverns", "Zul'Farak" },
 		[2] = {"Blackwing Lair", "Molten Core", "Naxxramas", "Onxyia's Lair", "Ruins of Ahn'Qiraj", "Temple of Ahn'Qiraj", "Zul'Gurub"},

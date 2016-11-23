@@ -51,20 +51,21 @@ end
 -----------------Communications Functions------------------
 
 function EVTIncMessage(msgStr, fromWho)
-	if fromWho == UnitName("player") then
-		DEFAULT_CHAT_FRAME:AddMessage("From Self", 1, 0.1, 1);
-	end
-
-	local s1, s2, s3, s4 = strSplit(msgStr, "¿");
-	
-	if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") then
-		DEFAULT_CHAT_FRAME:AddMessage(s1, 1, 0.1, 1);
-		DEFAULT_CHAT_FRAME:AddMessage(s2, 1, 0.1, 1);
-		DEFAULT_CHAT_FRAME:AddMessage(s3, 1, 0.1, 1);
-		DEFAULT_CHAT_FRAME:AddMessage(s4, 1, 0.1, 1);
-		StringToTable(s4);
-	else 
-		DEFAULT_CHAT_FRAME:AddMessage("Not for you!", 1, 0.1, 1);
+	if fromWho ~= UnitName("player") then
+		local s1, s2, s3, s4 = strSplit(msgStr, "¿");
+		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡");
+		
+		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") then
+			if TableIndexExists(t, b12) == false then
+				table.insert(invite_Queue, {fromWho, s4});
+				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
+				EVTButton_TogglePulse();
+			elseif TableFindDupe(CalendarData[b12], b1) == false then
+				table.insert(invite_Queue, {fromWho, s4});
+				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
+				EVTButton_TogglePulse();
+			end
+		end
 	end
 end
 
@@ -118,6 +119,10 @@ function StringToTable(str)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Duplicate Exists!", 1, 0.1, 1);
 	end
+end
+
+function InsertData(str)
+
 end
 
 function checkIllegal(str)

@@ -231,7 +231,6 @@ function EVTFrameInvitePopupAccept_OnClick()
 	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
 	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
 	local lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
-
 	if toWho == "" then
 		toWho = "All ";
 	end
@@ -242,8 +241,8 @@ function EVTFrameInvitePopupAccept_OnClick()
 	local tableStr = TableToString(CalendarData[createDate][createEvt], lockedTo);
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", toWho, tostring(toOff), "Invite", tableStr);
 
-	DEFAULT_CHAT_FRAME:AddMessage(msgStr, 1, 0.1, 0.1);
 	SendAddonMessage("EVTCalendar", msgStr, toChannel);
+	EVTClearInviteFrame();
 end
 
 function EVTFrameInviteMenu_OnLoad()
@@ -286,6 +285,59 @@ function EVTFrameInviteLockMenu_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameInviteLockMenu, this.value);
 end
 
+function EVTClearInviteFrame()
+	EVTFrameInviteNameEditBox:SetText("");
+end
+
+function EVT_ShowNextInvite()
+	local str = "";
+	if TableIndexExists(invite_Queue, 1) then
+		ShowUIPanel(EVTFrameInviteQueue);
+		str = string.format("%s %s", invite_Queue[1][1], EVT_INVITE_QUEUE);
+		EVTFrameInviteQString:SetText(str);
+		EVT_UpdateQueueDetail(invite_Queue[1][2]);
+		PlaySoundFile("Sound\\interface\\uEscapeScreenOpen.wav");
+	else
+		HideUIPanel(EVTFrameInviteQueue);
+		EVTButton_PulseOff();
+		PlaySoundFile("Sound\\interface\\uEscapeScreenClose.wav");
+	end
+	
+end
+
+function EVT_UpdateQueueDetail(str)
+	local s1, s2, s3, s4, s5, s6, s7, s8, s9, _, _, s12 = strSplit(str, "¡");
+	local subType = tonumber(s7);
+	local mando = tonumber(s9);
+	local dateStr = convertDate(s12);
+	
+	EVTQueueDetailsName:SetText(s1);
+	EVTFrameInviteDString:SetText(dateStr);
+	EVTQueueDetailsTime:SetText(string.format("%s    -    %s", getTimeStr(tonumber(s3), tonumber(s4)), getTimeStr(tonumber(s5), tonumber(s6))));
+	if (subType == 1 or subType == 2 or subType == 3) then
+		EVTQueueDetailsType:SetText(string.format("%s    -    %s", evtTypes[subType], evtSubMenu[tonumber(s7)][tonumber(s8)]));
+	else
+		EVTQueueDetailsType:SetText(evtTypes[subType]);
+	end
+	if (mando == 1) then
+		EVTQueueDetailsMando:SetText("Yes");
+		EVTQueueDetailsMando:SetTextColor(1, 0.1, 0.1);
+	else
+		EVTQueueDetailsMando:SetText("No");
+		EVTQueueDetailsMando:SetTextColor(1, 1, 1);
+	end
+end	
+
+function EVTFrameInviteQueueAccept_OnClick()
+	StringToTable(invite_Queue[1][2]);
+	table.remove(invite_Queue, 1);
+	EVT_ShowNextInvite();
+end
+
+function EVTFrameInviteQueueDecline_OnClick()
+	table.remove(invite_Queue, 1);
+	EVT_ShowNextInvite();
+end
 
 --- Helper Functions ---
 function compareInputTime()
