@@ -230,7 +230,12 @@ function EVTFrameInvitePopupAccept_OnClick()
 	local toOff = 0;	
 	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
 	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
-	local lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
+	local lockedTo = 0;
+	if CalendarData[createDate][createEvt][11] == 1 then
+		lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
+	else
+		lockedTo = CalendarData[createDate][createEvt][11];
+	end
 	if toWho == "" then
 		toWho = "All ";
 	end
@@ -248,7 +253,7 @@ end
 function EVTFrameInviteMenu_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameInviteMenu_Initialize);
     UIDropDownMenu_SetWidth(125, EVTFrameInviteMenu);
-    UIDropDownMenu_SetSelectedValue(this, 3);
+    UIDropDownMenu_SetSelectedValue(this, 1);
 	UIDropDownMenu_JustifyText("LEFT", EVTFrameInviteMenu);
 end
 

@@ -540,6 +540,16 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="***An invite lock only allows those above to invite to this event.***">
+							<Color r="1" g="1" b="1"/>
+							<Anchors>
+								<Anchor point="TOP" relativeTo="EVTFrameInviteLockMenu" relativePoint="BOTTOM">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 					</Layer>
 				</Layers>
 				<Scripts>
@@ -736,6 +746,21 @@
 			</Button>
 		</Frames>
 		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnHide>
+				EVTFrameInviteQueue:StopMovingOrSizing();
+			</OnHide>
+			<OnDragStart>
+				EVTFrameInviteQueue:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				EVTFrameInviteQueue:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				EVTFrameInviteQueue:StopMovingOrSizing();
+			</OnMouseUp>
 		</Scripts>
 	</Frame>
 </Ui>

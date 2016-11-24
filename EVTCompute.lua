@@ -55,7 +55,7 @@ function EVTIncMessage(msgStr, fromWho)
 		local s1, s2, s3, s4 = strSplit(msgStr, "¿");
 		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡");
 		
-		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") then
+		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") and (s3 == "Invite") then
 			if TableIndexExists(t, b12) == false then
 				table.insert(invite_Queue, {fromWho, s4});
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
@@ -64,6 +64,12 @@ function EVTIncMessage(msgStr, fromWho)
 				table.insert(invite_Queue, {fromWho, s4});
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
 				EVTButton_StartPulse();
+			end
+		end
+		if s3 == "VersionCheck" then
+			if tonumber(s4) > tonumber(EVT_Version) then
+				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Your version of EVTCalendar is out of date! Please download the newest version at: https://github.com/TheOneReed/EVTCalendar", 0.8, 0.8, 0.1);
+				PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 			end
 		end
 	end

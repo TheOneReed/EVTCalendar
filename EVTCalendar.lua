@@ -4,6 +4,9 @@
 --
 --
 ----------------------------------------------------------------
+EVT_VERSION = "1.0";
+
+
 ---Initialize tables
 player_Info = {};
 invite_Queue = {};
@@ -31,7 +34,13 @@ local ImgDayInactive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameInact
 local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
 local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
 local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
+local ImgIcoCthun = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoCthun";
+local ImgIcoOssirian = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOssirian";
+local ImgIcoOnyxia = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOnyxia";
+local ImgIcoNefarian = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoNefarian";
+local ImgIcoHakkar = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoHakkar";
 local ImgIcoRagnaros = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoRagnaros";
+local ImgIcoKelthuzad = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoKelthuzad";
 local ImgIcoInstance = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoInstance";
 local ImgIcoMeeting = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoMeeting";
 local ImgIcoQuest = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoQuest";
@@ -56,21 +65,37 @@ function EVT_OnLoad()
     
     SLASH_EVT1 = EVT_SLASH;
     SlashCmdList["EVT"] = function(msg)
-        if msg == "delete" then
-			CalendarData[displayDate()] = {};
-        elseif msg == "test" then
-			EVTButton_TogglePulse();
-		end
+		EVT_SlashCommand(msg);
 	end
 end
 
 function EVT_SlashCommand(msg)
 
---	if(msg ~= "") then
---		DEFAULT_CHAT_FRAME:AddMessage("No such command.", 0.1, 0.1, 1);
---	else
---		EVT_Toggle();
---	end
+	if(msg == EVT_ABOUT) then
+		DEFAULT_CHAT_FRAME:AddMessage("-----"..EVT_CALENDAR..": "..EVT_ABOUT.."-----", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("Version: "..EVT_VERSION, 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("Created by: TheOneReed", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("Website: https://github.com/TheOneReed/EVTCalendar", 0.8, 0.8, 0.1);
+	elseif(msg == EVT_HELP) then
+		DEFAULT_CHAT_FRAME:AddMessage("-----"..EVT_CALENDAR..": "..EVT_HELP.."-----", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("about : Displays addon info.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("help : Displays this menu.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("unlock : Enables button dragging.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("lock : Disables button dragging.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("reset : Returns button back to the minimap.", 0.8, 0.8, 0.1);
+	elseif(msg == "unlock") then
+		EVTButton_Unlock();
+	elseif(msg == "lock") then
+		EVTButton_Lock();
+	elseif(msg == "reset") then
+		EVTButton_Reset();
+	else
+		if EVTButtonPulsing then
+			EVT_ShowNextInvite();
+		else
+			EVT_Toggle();
+		end
+	end
 end
 
 function EVT_OnEvent()
@@ -98,9 +123,20 @@ function EVT_Initialize()
 	if (CalendarData == nil) then
 		CalendarData = {};
 	end	
+	if (CalendarOptions == nil) then
+		CalendarOptions = {
+			["buttonLocked"] = true;
+			};
+	end	
 	getPlayerInfo();
+	if player_Info["guild"] ~= false then
+		local msgStr = string.format("%s¿%s¿%s¿%s¿", "", 0, "VersionCheck", EVT_VERSION);
+		SendAddonMessage("EVTCalendar", msgStr, "GUILD");
+	end
+	EVTButton_Init();
     EVT_BuildCalendar();
     initialized = true;
+	DEFAULT_CHAT_FRAME:AddMessage(EVT_CALENDAR.." loaded. Type '/evt help' for commands.", 0.1, 1, 0.1);
 end
 	
 function EVT_Toggle()
@@ -521,6 +557,9 @@ function getPlayerInfo()
 end
 
 function isOfficer(index)
+	if index == 0 then
+		return true;
+	end
 	GuildControlSetRank(index);
 	local _,_,s3, s4 = GuildControlGetRankFlags();
 	if s3 == 1 and s4 == 1 then
@@ -540,7 +579,27 @@ function getDayOverlayTex(val)
 				return ImgIcoInstance;
 			end
 			if t[1][7] == 2 then
-				return ImgIcoRagnaros;
+				if t[1][8] == 1 then
+					return ImgIcoNefarian;
+				end
+				if t[1][8] == 2 then
+					return ImgIcoRagnaros;
+				end
+				if t[1][8] == 3 then
+					return ImgIcoKelthuzad;
+				end
+				if t[1][8] == 4 then
+					return ImgIcoOnyxia;
+				end
+				if t[1][8] == 5 then
+					return ImgIcoOssirian;
+				end
+				if t[1][8] == 6 then
+					return ImgIcoCthun;
+				end
+				if t[1][8] == 7 then
+					return ImgIcoHakkar;
+				end
 			end
 			if t[1][7] == 3 then
 				return ImgIcoPvP;

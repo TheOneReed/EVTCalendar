@@ -1,5 +1,8 @@
-local EVTButtonPosition = nil;
+local EVTButtonPosition = 0;
+local EVTButtonX = 0;
+local EVTButtonY = 0;
 local EVTButtonPulsing = false;
+local EVTButtonLocked = true;
 
 function EVTButton_OnClick()
 	if EVTButtonPulsing then
@@ -10,39 +13,60 @@ function EVTButton_OnClick()
 end
 
 function EVTButton_Init()
-    EVTButtonPosition = 134.66365694988;
-	EVTButton_UpdatePosition();
+	EVTButtonLocked = CalendarOptions["buttonLocked"];
+	if EVTButtonLocked then
+		EVTButtonPosition = 134.66365694988;
+		EVTButton_UpdatePosition();
+	else
+		EVTButtonX = 1472;
+		EVTButtonY = 835;	
+		EVTButton_UpdatePosition();
+	end
 	EVTButtonFrame:Show();
 	EVTButtonDay:SetText(tostring(date("%d")));
 end
 
+function EVTButton_Reset()
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Map button reset.", 0.8, 0.8, 0.1);
+	CalendarOptions["buttonLocked"] = true;
+	EVTButton_Init();
+end
+
+function EVTButton_Unlock()
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Map button unlocked.", 0.8, 0.8, 0.1);
+	CalendarOptions["buttonLocked"] = false;
+	EVTButtonLocked = false;
+end
+
+function EVTButton_Lock()
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Map button locked.", 0.8, 0.8, 0.1);
+	CalendarOptions["buttonLocked"] = true;
+	EVTButtonLocked = true;
+end
+
+function EVTButton_StartMoving()
+	if EVTButtonLocked == false then
+		EVTButtonFrame:StartMoving();
+	end
+end
+
 function EVTButton_UpdatePosition()
-	EVTButtonFrame:SetPoint(
+	if EVTButtonLocked then
+		EVTButtonFrame:SetPoint(
+			"TOPLEFT",
+			"Minimap",
+			"TOPLEFT",
+			54 - (82 * cos(EVTButtonPosition)),
+			(82 * sin(EVTButtonPosition)) - 55
+		);
+	else
+		EVTButtonFrame:SetPoint(
 		"TOPLEFT",
-		"Minimap",
-		"TOPLEFT",
-		54 - (82 * cos(EVTButtonPosition)),
-		(82 * sin(EVTButtonPosition)) - 55
-	);
-end
-
-function EVTButton_BeingDragged()
-    local xpos,ypos = GetCursorPosition() 
-    local xmin,ymin = Minimap:GetLeft(), Minimap:GetBottom() 
-
-    xpos = xmin-xpos/UIParent:GetScale()+70 
-    ypos = ypos/UIParent:GetScale()-ymin-70 
-
-    EVTButton_SetPosition(math.deg(math.atan2(ypos,xpos)));
-end
-
-function EVTButton_SetPosition(v)
-    if(v < 0) then
-        v = v + 360;
-    end
-
-    EVTButtonPosition = v;
-    EVTButton_UpdatePosition();
+		"UIParent",
+		"BOTTOMLEFT",
+		EVTButtonX,
+		EVTButtonY);
+	end
 end
 
 function EVTButton_OnEnter()
