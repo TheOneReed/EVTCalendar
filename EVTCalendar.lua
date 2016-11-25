@@ -418,10 +418,11 @@ function EVT_EventButton_OnClick(button)
 end
 
 function EVT_EventConfirmButton_OnClick()
-	local evtDate = CalendarData[displayDate()];
+	local evtDate = displayDate();
 	local evtName = CalendarData[displayDate()][getButtonPosOffset()][1];
+	local crtName = CalendarData[displayDate()][getButtonPosOffset()][2];
 	local subStr = string.format("%s¡%s¡", evtDate, evtName);
-	local msgStr = string.format("%s¿%s¿%s¿%s¿", fromWho, 0, "ConfirmEvent", s4);
+	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	SendAddonMessage("EVTCalendar", msgStr, "RAID");
 	EVTFrameConfirmButton:Disable();
@@ -456,7 +457,7 @@ function EVT_UpdateDetailList()
 		EVTFrameModifyButton:Disable();
 		EVTDetailsStatus:Show();
 		EVTDetailsStatusLabel:Show();
-		if t[12] == 0 then
+		if t[13] == 0 then
 			EVTDetailsStatus:SetText("Unconfirmed");
 			EVTDetailsStatus:SetTextColor(0.8, 0.8, 0.1);
 			EVTFrameConfirmButton:Enable();

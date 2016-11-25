@@ -67,7 +67,7 @@ function EVTIncMessage(msgStr, fromWho, channel)
 			end
 		end
 		if s3 == "VersionCheck" then
-			if tonumber(s4) > tonumber(EVT_Version) then
+			if tonumber(s4) > tonumber(EVT_VERSION) then
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Your version of EVTCalendar is out of date! Please download the newest version at: https://github.com/TheOneReed/EVTCalendar", 0.8, 0.8, 0.1);
 				PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 			end
@@ -79,7 +79,7 @@ function EVTIncMessage(msgStr, fromWho, channel)
 			SendAddonMessage("EVTCalendar", rtnMsgStr, channel);
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmAck" then
-			CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12] = 1;
+			CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][13] = 1;
 		end
 	end
 end
@@ -140,7 +140,7 @@ function StringToTable(str)
 		t[s12] = {};
 	end
 	if TableFindDupe(t[s12], s1) == false then
-		table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11), 0});
+		table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11), nil, 0});
 		EVT_UpdateCalendar();
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Duplicate Exists!", 1, 0.1, 1);
