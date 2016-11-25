@@ -111,7 +111,7 @@ function EVT_OnEvent()
 		end
 	elseif (event == "CHAT_MSG_ADDON") then
 		if (strlower(arg1) == "evtcalendar") then
-			EVTIncMessage(arg2, arg4);
+			EVTIncMessage(arg2, arg4, arg3);
 		end		
 	end
 end
@@ -330,6 +330,7 @@ function EVT_UpdateDayPanel()
     local dow = table_Dotw[GetDayofWeek(displayYear, displayMonth, displayDay)];
     dayString = string.format("%s, %s %s, %s", dow, table_Months[displayMonth], displayDay, displayYear);
     EVTDate:SetText(dayString);
+	EVTFrameConfirmedList:Hide();
     EVT_UpdateScrollBar();
 end
 
@@ -338,8 +339,8 @@ function EVT_UpdateScrollBar()
     local yoffset;
     local t;
 	local tSize;
-	local btnText;
-	
+	local strText;
+	EVTFrameConfirmedList:Hide();	
 	EVT_EventClearSelection();
 	HideUIPanel(EVTFrameDetailsList);
 	EVTFrameModifyButton:Disable();
@@ -373,15 +374,59 @@ function EVT_UpdateScrollBar()
     end
 end
 
+function EVT_UpdateConfirmedScrollBar()
+    local y;
+    local yoffset;
+    local t;
+	local tSize;
+	if TableIndexExists(CalendarData[displayDate()][getButtonPosOffset()], 12) then
+		t = CalendarData[displayDate()][getButtonPosOffset()][12];
+	else
+		CalendarData[displayDate()][getButtonPosOffset()][12] = {}
+		t = CalendarData[displayDate()][getButtonPosOffset()][12];
+	end
+	tSize = table.getn(t);
+	FauxScrollFrame_Update(ConfirmedScrollFrame, tSize, 5, 20);
+    for y = 1, 5, 1 do
+        yoffset = y + FauxScrollFrame_GetOffset(ConfirmedScrollFrame);
+        if (yoffset <= tSize) then
+			local t2 = t[yoffset];
+            if (t2 == nil) then
+                getglobal("ConfirmedText" .. y):Hide();
+            else
+				strText = t2;
+                getglobal("ConfirmedText" .. y):SetText(strText);
+                getglobal("ConfirmedText" .. y):Show();
+            end
+        else
+            getglobal("ConfirmedText" .. y):Hide();
+        end
+    end
+end
+
 function EVT_EventButton_OnClick(button)
 	EVT_EventClearSelection();
 	button:LockHighlight();
 	selectedButton = button;
 	EVTFrameModifyButton:Enable();
 	EVTFrameDeleteButton:Enable();
-	EVT_UpdateDetailList()
+	EVTDetailsStatus:Hide();
+	EVTDetailsStatusLabel:Hide();
+	EVTFrameConfirmedList:Hide();
+	EVT_UpdateDetailList();
+	EVT_UpdateConfirmedScrollBar()
 end
 
+function EVT_EventConfirmButton_OnClick()
+	local evtDate = CalendarData[displayDate()];
+	local evtName = CalendarData[displayDate()][getButtonPosOffset()][1];
+	local subStr = string.format("%s¡%s¡", evtDate, evtName);
+	local msgStr = string.format("%s¿%s¿%s¿%s¿", fromWho, 0, "ConfirmEvent", s4);
+	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
+	SendAddonMessage("EVTCalendar", msgStr, "RAID");
+	EVTFrameConfirmButton:Disable();
+end
+	
 function EVT_UpdateDetailList()
 	local pos = getButtonPosOffset();
 	local t = CalendarData[displayDate()][pos];
@@ -409,6 +454,20 @@ function EVT_UpdateDetailList()
 	end
 	if t[2] ~= UnitName("player") then
 		EVTFrameModifyButton:Disable();
+		EVTDetailsStatus:Show();
+		EVTDetailsStatusLabel:Show();
+		if t[12] == 0 then
+			EVTDetailsStatus:SetText("Unconfirmed");
+			EVTDetailsStatus:SetTextColor(0.8, 0.8, 0.1);
+			EVTFrameConfirmButton:Enable();
+		else
+			EVTDetailsStatus:SetText("Confirmed");
+			EVTDetailsStatus:SetTextColor(0.1, 1, 0.1);
+			EVTFrameConfirmButton:Disable();
+		end
+	else
+		EVTFrameConfirmedList:Show();
+		EVTFrameConfirmButton:Disable();
 	end
 	if ((t[11] == 2) and player_Info["officer"] == false) or (t[11] == 3 and t[1] ~= player_Info["name"]) then
 		EVTFrameInviteButton:Disable();

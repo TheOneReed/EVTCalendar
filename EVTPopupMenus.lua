@@ -30,7 +30,8 @@ function EVTFrameAcceptBtn_OnClick()
 			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 			[9] = mando,
 			[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
-			[11] = 1
+			[11] = 1,
+			[12] = {}
 			});
 		else
 			CalendarData[createDate][createEvt] = {

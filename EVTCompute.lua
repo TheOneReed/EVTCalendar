@@ -50,7 +50,7 @@ end
 
 -----------------Communications Functions------------------
 
-function EVTIncMessage(msgStr, fromWho)
+function EVTIncMessage(msgStr, fromWho, channel)
 	if fromWho ~= UnitName("player") then
 		local s1, s2, s3, s4 = strSplit(msgStr, "¿");
 		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡");
@@ -72,6 +72,15 @@ function EVTIncMessage(msgStr, fromWho)
 				PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 			end
 		end
+		if s1 == UnitName("player") and s3 == "ConfirmEvent" then
+			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has confirmed for an event on "..convertDate(b1)..".", 0.8, 0.8, 0.1);
+			PlaySoundFile("Sound\\interface\\iTellMessage.wav");
+			local rtnMsgStr = string.format("%s¿%s¿%s¿%s¿", fromWho, 0, "ConfirmAck", s4);
+			SendAddonMessage("EVTCalendar", rtnMsgStr, channel);
+		end
+		if s1 == UnitName("player") and s3 == "ConfirmAck" then
+			CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12] = 1;
+		end
 	end
 end
 
@@ -81,6 +90,17 @@ function TableIndexExists(t, i)
 	for index,value in pairs(t) do 
 		if (index == i) then
 			return true;
+		end
+	end
+	return false;
+end
+
+function TableFindIndex(t, i)
+	local n = table.getn(t);
+	for x = 1, n do 
+		getName = t[x][1];
+		if ( getName == i) then
+			return x;
 		end
 	end
 	return false;
@@ -120,15 +140,11 @@ function StringToTable(str)
 		t[s12] = {};
 	end
 	if TableFindDupe(t[s12], s1) == false then
-		table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11)});
+		table.insert( t[s12], {s1, s2, tonumber(s3), tonumber(s4), tonumber(s5), tonumber(s6), tonumber(s7), tonumber(s8), tonumber(s9), s10, tonumber(s11), 0});
 		EVT_UpdateCalendar();
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Duplicate Exists!", 1, 0.1, 1);
 	end
-end
-
-function InsertData(str)
-
 end
 
 function checkIllegal(str)

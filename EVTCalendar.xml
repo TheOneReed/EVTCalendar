@@ -6,30 +6,6 @@
 			<AbsDimension x="240" y="15"/>
 		</Size>
 		<Frames>
-<!--			<Frame name="$parentButtonText" setAllPoints="true">
-				<Layers>
-					<Layer level="BORDER">
-						<FontString name="$parentNameLocation" inherits="GameFontNormal">
-							<Anchors>
-								<Anchor point="TOPLEFT">
-									<Offset>
-										<AbsDimension x="10" y="-3"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="$parentInfo" inherits="GameFontHighlightSmall" justifyH="LEFT">
-							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="$parentNameLocation" relativePoint="BOTTOMLEFT">
-									<Offset>
-										<AbsDimension x="0" y="0"/>
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-			</Frame> -->
 		</Frames>
 		<Layers>
 			<Layer level="BORDER">
@@ -45,9 +21,6 @@
 			</Layer>
 		</Layers>
 		<Scripts>
-<!--			<OnLoad>
-				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
-			</OnLoad>-->
 			<OnClick>
 				PlaySound("igMainMenuOptionCheckBoxOn");
 				EVT_EventButton_OnClick(this);
@@ -203,7 +176,25 @@
 							</OnClick>
 						</Scripts>
 					</Button>
-				</Frames>
+					<Button name="EVTFrameConfirmButton" inherits="UIPanelButtonTemplate" text="Confirm">
+						<Size>
+							<AbsDimension x="85" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="EVTFrameEventList" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-323"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								EVT_EventConfirmButton_OnClick();
+								PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
+							</OnClick>
+						</Scripts>
+					</Button>
+					</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormalSmall" text="Event Name:">
@@ -266,6 +257,16 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
+						<FontString name="EVTDetailsStatusLabel" hidden="true" inherits="GameFontNormalSmall" text="Status:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-180"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>	
 						<FontString name="EVTDetailsName" inherits="GameFontNormal" text="">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -326,8 +327,136 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
+						<FontString name="EVTDetailsStatus" hidden="true" inherits="GameFontNormal" text="Unconfirmed">
+							<Color r="1" g="0.1" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="30" y="-196"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 					</Layer>
 				</Layers>
+			</Frame>
+			<Frame name="EVTFrameConfirmedList" hidden="true" inherits="OptionFrameBoxTemplate">
+				<Size>
+					<AbsDimension x="250" y="95"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-153" y="-385"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<ScrollFrame name="ConfirmedScrollFrame" inherits="FauxScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="250" y="95"/>
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT">
+								<Offset>
+									<AbsDimension x="-7" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnVerticalScroll>
+								FauxScrollFrame_OnVerticalScroll(20, EVT_UpdateConfirmedScrollBar); 
+							</OnVerticalScroll>
+							<OnShow>
+								EVT_UpdateConfirmedScrollBar();
+							</OnShow>
+						</Scripts>
+					</ScrollFrame>
+				</Frames>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="Confirmed:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-180"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText1" inherits="GameFontNormalSmall" justifyH="LEFT" text="1">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="240" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="5" y="-6"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText2" inherits="GameFontNormalSmall" justifyH="LEFT" text="2">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="240" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText1" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText3" inherits="GameFontNormalSmall" justifyH="LEFT" text="3">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="240" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText2" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText4" inherits="GameFontNormalSmall" justifyH="LEFT" text="4">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="240" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText3" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText5" inherits="GameFontNormalSmall" justifyH="LEFT" text="5">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="240" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText4" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						this:SetBackdropColor(0.1, 0.1, 0.1);
+					</OnLoad>
+				</Scripts>
 			</Frame>
 			<Button name="EVTFrameCloseButton" inherits="UIPanelCloseButton">
 				<Anchors>
