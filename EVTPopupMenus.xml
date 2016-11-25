@@ -594,9 +594,9 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<FontString inherits="GameFontNormal" text="Invite Queue">
+				<FontString name="InviteQueueFrameHeader" inherits="GameFontNormal" text="Invite Queue">
 					<Anchors>
-						<Anchor point="TOP" relativeTo="InviteEventFrameHeader">
+						<Anchor point="TOP" relativeTo="InviteQueueFrameHeader">
 							<Offset>
 								<AbsDimension x="0" y="0"/>
 							</Offset>

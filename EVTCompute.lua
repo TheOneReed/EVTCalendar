@@ -74,12 +74,15 @@ function EVTIncMessage(msgStr, fromWho, channel)
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmEvent" then
 			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has confirmed for an event on "..convertDate(b1)..".", 0.8, 0.8, 0.1);
+			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], fromWho);
+			EVT_UpdateConfirmedScrollBar();
 			PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 			local rtnMsgStr = string.format("%s¿%s¿%s¿%s¿", fromWho, 0, "ConfirmAck", s4);
 			SendAddonMessage("EVTCalendar", rtnMsgStr, channel);
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmAck" then
 			CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][13] = 1;
+			EVT_UpdateDetailList();
 		end
 	end
 end
