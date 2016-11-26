@@ -38,3 +38,5 @@ Dryvnt
 ## License
 
 SEE LICENSE.MD.
+
+/r/LegacyAddons Verification
