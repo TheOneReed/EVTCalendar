@@ -3,6 +3,8 @@ Event Calendar AddOn for WoW 1.12.1
 
 ## Installation
 
+Download the lastest version at https://github.com/TheOneReed/EVTCalendar/releases!
+
 Extract into your World of Warcraft/Interface/Addons folder. If downloaded directly, rename EVTCalendar-master to EVTCalender.
 Thats it!
 
