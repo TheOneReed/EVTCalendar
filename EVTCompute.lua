@@ -56,24 +56,32 @@ function EVTIncMessage(msgStr, fromWho, channel)
 		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡");
 		
 		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") and (s3 == "Invite") then
-			if TableIndexExists(t, b12) == false then
-				table.insert(invite_Queue, {fromWho, s4});
+			if TableIndexExists(CalendarData, b12) == false then
+				if CalendarOptions["acceptEvents"] then
+					StringToTable(s4);
+				else
+					table.insert(invite_Queue, {fromWho, s4});
+					EVTButton_StartPulse();
+				end
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
-				EVTButton_StartPulse();
 			elseif TableFindDupe(CalendarData[b12], b1) == false then
-				table.insert(invite_Queue, {fromWho, s4});
+				if CalendarOptions["acceptEvents"] then
+					StringToTable(s4);
+				else
+					table.insert(invite_Queue, {fromWho, s4});
+					EVTButton_StartPulse();
+				end
 				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has invited you to an event!", 0.1, 1, 0.1);
-				EVTButton_StartPulse();
 			end
 		end
 		if s3 == "VersionCheck" then
 			if tonumber(s4) > tonumber(EVT_VERSION) then
-				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Your version of EVTCalendar is out of date! Please download the newest version at: https://github.com/TheOneReed/EVTCalendar", 0.8, 0.8, 0.1);
+				DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Your version of EVTCalendar is out of date! Please download the newest version at: https://github.com/TheOneReed/EVTCalendar", 0.1, 1, 0.1);
 				PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 			end
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmEvent" then
-			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has confirmed for an event on "..convertDate(b1)..".", 0.8, 0.8, 0.1);
+			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has confirmed for "..b2.." on "..convertDate(b1)..".", 0.1, 1, 0.1);
 			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], fromWho);
 			EVT_UpdateConfirmedScrollBar();
 			PlaySoundFile("Sound\\interface\\iTellMessage.wav");
@@ -82,7 +90,9 @@ function EVTIncMessage(msgStr, fromWho, channel)
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmAck" then
 			CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][13] = 1;
-			EVT_UpdateDetailList();
+			if selectedButton ~= nil then
+				EVT_UpdateDetailList();
+			end
 		end
 	end
 end
@@ -147,6 +157,12 @@ function StringToTable(str)
 		EVT_UpdateCalendar();
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Duplicate Exists!", 1, 0.1, 1);
+	end
+	if CalendarOptions["confirmEvents"] then
+		local subStr = string.format("%s¡%s¡", s12, s1);
+		local msgStr = string.format("%s¿%s¿%s¿%s¿", s2, 0, "ConfirmEvent", subStr);
+		SendAddonMessage("EVTCalendar", msgStr, "GUILD");
+		SendAddonMessage("EVTCalendar", msgStr, "RAID");
 	end
 end
 

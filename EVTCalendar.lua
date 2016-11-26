@@ -10,6 +10,15 @@ EVT_VERSION = "1.0";
 ---Initialize tables
 player_Info = {};
 invite_Queue = {};
+CalendarOptions = {
+	["buttonLocked"] = true,
+	["milFormat"] = false,
+	["frameDrag"] = false,
+	["acceptEvents"] = false,
+	["confirmEvents"] = false
+	};
+	
+selectedButton = nil;
 
 local table_Days = {};
 local table_DayStr = {};
@@ -24,7 +33,7 @@ local displayYear;
 local displayDay;
 local displayPos;
 local eventClicked;
-local selectedButton;
+
 local initialized = false;
 local varsLoaded = false;
 
@@ -60,7 +69,6 @@ function EVT_OnLoad()
     this:RegisterEvent("ADDON_LOADED");
     this:RegisterEvent("VARIABLES_LOADED");
     this:RegisterEvent("CHAT_MSG_ADDON"); 
-    
 	tinsert(UISpecialFrames, "EVTFrame");
     
     SLASH_EVT1 = EVT_SLASH;
@@ -89,6 +97,8 @@ function EVT_SlashCommand(msg)
 		EVTButton_Lock();
 	elseif(msg == "reset") then
 		EVTButton_Reset();
+	elseif(msg == "test") then
+		CalendarOptions["milFormat"] = not CalendarOptions["milFormat"];
 	else
 		if EVTButtonPulsing then
 			EVT_ShowNextInvite();
@@ -125,7 +135,8 @@ function EVT_Initialize()
 	end	
 	if (CalendarOptions == nil) then
 		CalendarOptions = {
-			["buttonLocked"] = true;
+			["buttonLocked"] = true,
+			["milFormat"] = true
 			};
 	end	
 	getPlayerInfo();
@@ -145,7 +156,7 @@ function EVT_Toggle()
         HideUIPanel(EVTFrame);
         PlaySoundFile("Sound\\interface\\uCharacterSheetClose.wav");
     else
-		if EVTFrameCreatePopup:IsVisible() or EVTFrameInvitePopup:IsVisible() then
+		if EVTFrameCreatePopup:IsVisible() or EVTFrameInvitePopup:IsVisible() or EVTFrameOptions:IsVisible() then
 			ShowUIPanel(EVTFrameOverlay);
 		end
         EVT_ResetDisplayDate();
@@ -157,19 +168,25 @@ function EVT_Toggle()
 end
 
 function EVT_GetCurrentTime()
-    ampm = "AM";
-    hour, minute = GetGameTime();
-    
-    if (hour > 12) then
-        hour = hour - 12;
-        ampm = "PM";
-    end
-    if (minute < 10) then
-        minute = string.format("%02s", minute);
-    end
-    
-    curtime = string.format("%s:%s%s", hour, minute, ampm);
-    return curtime;
+    local ampm = "AM";
+    local hour, minute = GetGameTime();
+	if (minute < 10) then
+		minute = string.format("%02s", minute);
+	end
+	if CalendarOptions["milFormat"] then
+	    curtime = string.format("%s:%s", hour, minute);
+		return curtime;	
+	else
+		if (hour >= 12) then
+			if hour > 12 then
+			hour = hour - 12;
+			end
+			ampm = "PM";
+		end
+		
+		curtime = string.format("%s:%s%s", hour, minute, ampm);
+		return curtime;
+	end
 end
 
 function EVT_IncMonth()
@@ -212,11 +229,13 @@ function EVT_UpdateCalendar()
             s:SetText(preNum);
             table_DayVal[step] = nil;
             disableButton(b, step);
+			t:SetTexture("");
         elseif (step >= (DaysInMonth(displayYear, displayMonth) + startDay)) then
             local newDays = (step - (DaysInMonth(displayYear, displayMonth) + startDay - 1));
             s:SetText(newDays);
             table_DayPos[(DaysInMonth(displayYear, displayMonth) + startDay) + newDays] = nil;
             disableButton(b, step);
+			t:SetTexture("");
         else
             s:SetText(z);
             table_DayPos[z] = step;
@@ -367,6 +386,9 @@ function EVT_UpdateScrollBar()
 					getglobal("EventButton" .. y .. "Info"):SetTextColor(1, 1, 1);
 				end
                 getglobal("EventButton" .. y):Show();
+				if y == 1 and (yoffset - y) == 0 then
+					EVT_EventButton_OnClick(getglobal("EventButton" .. y));
+				end
             end
         else
             getglobal("EventButton" .. y):Hide();
@@ -549,13 +571,24 @@ function EVTFrameModifyButton_Toggle()
 			ShowUIPanel(EVTFrameSubType);
 		end
 		UIDropDownMenu_Initialize(EVTFrameFromTime, EVTFrameFromTime_Initialize);
-		UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, t[3]);
-		UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
-		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, t[4]);
-		UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
-		UIDropDownMenu_SetSelectedValue(EVTFrameToTime, t[5]);
-		UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
-		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, t[6]);
+	
+		if CalendarOptions["milFormat"] then
+			UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, tonumber(t[3]) + ((t[4] - 1) * 12));
+			UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
+			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, 1);
+			UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
+			UIDropDownMenu_SetSelectedValue(EVTFrameToTime, tonumber(t[5]) + ((t[6] - 1) * 12));
+			UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
+			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, 1);
+		else
+			UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, t[3]);
+			UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
+			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, t[4]);
+			UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
+			UIDropDownMenu_SetSelectedValue(EVTFrameToTime, t[5]);
+			UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
+			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, t[6]);
+		end
 		UIDropDownMenu_Initialize(EVTFrameType, EVTFrameType_Initialize);
 		UIDropDownMenu_SetSelectedValue(EVTFrameType, t[7]);
 		UIDropDownMenu_Initialize(EVTFrameSubType, EVTFrameSubType_Initialize);
@@ -564,6 +597,14 @@ function EVTFrameModifyButton_Toggle()
 		EVTFrameNoteEditBox:SetText(t[10]);
 		EVTCheckComplete();
 	end
+end
+
+function EVTFrameOptions_OnClick()
+	EVTFrameOptionsLock:SetChecked(CalendarOptions["frameDrag"]);
+	EVTFrameOptionsEvents:SetChecked(CalendarOptions["acceptEvents"]);	
+	EVTFrameOptionsConfirm:SetChecked(CalendarOptions["confirmEvents"]);
+	EVTFrameOptions24h:SetChecked(CalendarOptions["milFormat"]);	
+	ShowUIPanel(EVTFrameOptions);
 end
 
 --- Helper Functions ---
@@ -609,7 +650,6 @@ function getPlayerInfo()
 	if guildName ~= nil then
 		t["guild"] = guildName;
 		t["officer"] = isOfficer(guildIndex);
-		
 	else
 		t["guild"] = false;
 		t["officer"] = false;

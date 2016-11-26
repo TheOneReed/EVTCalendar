@@ -467,6 +467,28 @@
 					</Anchor>
 				</Anchors>
 			</Button>
+			<Button name="EVTFrameOptionsButton">
+				<Size>
+					<AbsDimension x="32" y="32"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="EVTFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-17" y="-7"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						EVTFrameOptions_OnClick();
+						ShowUIPanel(EVTFrameOverlay);
+						PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
+					</OnClick>
+				</Scripts>
+				<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonOptions-Up"/>
+				<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonOptions-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
 			<Button name="EVTFrameUpButton">
 				<Size>
 					<AbsDimension x="32" y="32"/>

@@ -10,6 +10,10 @@ createEvt = 0;
 
 function EVTFrameAcceptBtn_OnClick()
 	local mando;
+	local preFrom = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
+	local preTo = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
+	local amFrom = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1);
+	local amTo = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2);
 	if (TableIndexExists(CalendarData, createDate) == false) then
 		CalendarData[createDate] = {};
 	end
@@ -18,14 +22,27 @@ function EVTFrameAcceptBtn_OnClick()
 	else
 		mando = 1;
 	end
+	if CalendarOptions["milFormat"] then
+		preFrom = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
+		preTo = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
+		if preFrom > 12 then
+			preFrom = preFrom - 12;
+			amFrom = 2;
+		end
+		if preTo > 12 then
+			preTo = preTo - 12;
+			amTo = 2;
+		end
+	end
+		
 	if (EVTFrameCreatePopupTitle:GetText() == "Create Event") then
 		table.insert(CalendarData[createDate],{
 			[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
 			[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
-			[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
-			[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
-			[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
-			[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
+			[3] = preFrom,
+			[4] = amFrom,
+			[5] = preTo,
+			[6] = amTo,
 			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 			[9] = mando,
@@ -37,10 +54,10 @@ function EVTFrameAcceptBtn_OnClick()
 			CalendarData[createDate][createEvt] = {
 				[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
 				[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
-				[3] = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime),
-				[4] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1),
-				[5] = UIDropDownMenu_GetSelectedValue(EVTFrameToTime),
-				[6] = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2),
+				[3] = preFrom,
+				[4] = amFrom,
+				[5] = preTo,
+				[6] = amTo,
 				[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 				[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 				[9] = mando,
@@ -71,7 +88,15 @@ function EVTFrameFromTime_Initialize()
     local info;
     local int = 0;
     local str;
-    for i = 1, 12, 1 do
+	local maxTime;
+	if CalendarOptions["milFormat"] then
+		maxTime = 24;
+		HideUIPanel(EVTFrameAMPM1);
+	else
+		maxTime = 12;
+		ShowUIPanel(EVTFrameAMPM1);
+	end
+    for i = 1, maxTime, 1 do
 		str = getTimeStr(i);
 		info = buildButton(str, i, EVTFrameFromTime_OnClick)  
         UIDropDownMenu_AddButton(info);
@@ -92,7 +117,15 @@ end
 function EVTFrameToTime_Initialize()
     local info;
     local str;
-    for i = 1, 12, 1 do
+	local maxTime;
+	if CalendarOptions["milFormat"] then
+		maxTime = 24;
+		HideUIPanel(EVTFrameAMPM2);
+	else
+		maxTime = 12;
+		ShowUIPanel(EVTFrameAMPM2);
+	end
+    for i = 1, maxTime, 1 do
 		str = getTimeStr(i);
 		info = buildButton(str, i, EVTFrameToTime_OnClick)  
         UIDropDownMenu_AddButton(info);
@@ -254,7 +287,7 @@ end
 function EVTFrameInviteMenu_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameInviteMenu_Initialize);
     UIDropDownMenu_SetWidth(125, EVTFrameInviteMenu);
-    UIDropDownMenu_SetSelectedValue(this, 1);
+    UIDropDownMenu_SetSelectedValue(this, 3);
 	UIDropDownMenu_JustifyText("LEFT", EVTFrameInviteMenu);
 end
 
@@ -345,7 +378,61 @@ function EVTFrameInviteQueueDecline_OnClick()
 	EVT_ShowNextInvite();
 end
 
+function EVTFrameOptionsAccept_OnClick()
+	CalendarOptions["frameDrag"] = checkBool(EVTFrameOptionsLock:GetChecked());
+	CalendarOptions["confirmEvents"] = checkBool(EVTFrameOptionsConfirm:GetChecked());
+	CalendarOptions["acceptEvents"] = checkBool(EVTFrameOptionsEvents:GetChecked());
+	CalendarOptions["milFormat"] = checkBool(EVTFrameOptions24h:GetChecked());
+	EVT_UpdateCalendar();
+	HideUIPanel(EVTFrameOptions);
+end
+
+function EVTFrameOptionsReset_OnClick()
+	EVTFrameOptions:ClearAllPoints()
+	EVTFrameOptions:SetPoint(
+		"CENTER",
+		"UIParent",
+		"CENTER",
+		0,
+		0
+		);
+	EVTFrameInvitePopup:ClearAllPoints()
+	EVTFrameInvitePopup:SetPoint(
+		"CENTER",
+		"UIParent",
+		"CENTER",
+		0,
+		0
+		);
+	EVTFrameInviteQueue:ClearAllPoints()
+	EVTFrameInviteQueue:SetPoint(
+		"CENTER",
+		"UIParent",
+		"CENTER",
+		0,
+		0
+		);
+	EVTFrameCreatePopup:ClearAllPoints()
+	EVTFrameCreatePopup:SetPoint(
+		"CENTER",
+		"UIParent",
+		"CENTER",
+		0,
+		0
+		);
+end
+
+
+
 --- Helper Functions ---
+function checkBool(num)
+	if num == nil then
+		return false;
+	else
+		return true;
+	end
+end
+
 function compareInputTime()
 	local bTime = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
 	local aTime = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
@@ -377,12 +464,17 @@ function buildButton(btText, btValue, btFunc)
 end
 
 function getTimeStr(i, ampm)
-	str = string.format("%s:%s", i, "00");
-	if ampm ~= nil then
-		if ampm == 1 then
-			str = string.format("%s%s", str, "am");
-		elseif ampm == 2 then
-			str = string.format("%s%s", str, "pm");
+	if CalendarOptions["milFormat"] and ampm ~= nil then
+		local i = tostring(tonumber(i) + ((ampm - 1) * 12));
+		str = string.format("%s:%s", i, "00");
+	else 
+		str = string.format("%s:%s", i, "00");
+		if ampm ~= nil then
+			if ampm == 1 then
+				str = string.format("%s%s", str, "am");
+			elseif ampm == 2 then
+				str = string.format("%s%s", str, "pm");
+			end
 		end
 	end
 	return str;

@@ -34,9 +34,9 @@
 				</Texture>
 				<FontString name="EVTFrameCreatePopupTitle" inherits="GameFontNormal" text="Create Event">
 					<Anchors>
-						<Anchor point="TOP" relativeTo="SoundOptionsFrameHeader">
+						<Anchor point="TOP" relativeTo="EVTFrameCreatePopup">
 							<Offset>
-								<AbsDimension x="0" y="-14"/>
+								<AbsDimension x="0" y="-2"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -357,9 +357,23 @@
 			</CheckButton>
 			</Frames>
 		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
 			<OnShow>
 				EVTFrameCreatePopup_OnLoad();
 			</OnShow>
+			<OnDragStart>
+				if CalendarOptions["frameDrag"] then
+					EVTFrameCreatePopup:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				EVTFrameCreatePopup:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				EVTFrameCreatePopup:StopMovingOrSizing();
+			</OnMouseUp>
 		</Scripts>
 	</Frame>
 	<Frame name="EVTFrameInvitePopup" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
@@ -560,6 +574,20 @@
 			</Frame>
 		</Frames>
 		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				if CalendarOptions["frameDrag"] then
+					EVTFrameInvitePopup:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				EVTFrameInvitePopup:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				EVTFrameInvitePopup:StopMovingOrSizing();
+			</OnMouseUp>
 		</Scripts>
 	</Frame>
 	<Frame name="EVTFrameInviteQueue" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
@@ -596,9 +624,9 @@
 				</Texture>
 				<FontString name="InviteQueueFrameHeader" inherits="GameFontNormal" text="Invite Queue">
 					<Anchors>
-						<Anchor point="TOP" relativeTo="InviteQueueFrameHeader">
+						<Anchor point="TOP" relativeTo="EVTFrameInviteQueue">
 							<Offset>
-								<AbsDimension x="0" y="0"/>
+								<AbsDimension x="0" y="-2"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -740,7 +768,6 @@
 					<OnClick>
 						EVTFrameInviteQueueAccept_OnClick()
 						PlaySound("gsTitleOptionExit");
-						HideUIPanel(EVTFrameInviteQueue);
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -753,13 +780,246 @@
 				EVTFrameInviteQueue:StopMovingOrSizing();
 			</OnHide>
 			<OnDragStart>
-				EVTFrameInviteQueue:StartMoving();
+				if CalendarOptions["frameDrag"] then
+					EVTFrameInviteQueue:StartMoving();
+				end
 			</OnDragStart>
 			<OnDragStop>
 				EVTFrameInviteQueue:StopMovingOrSizing();
 			</OnDragStop>
 			<OnMouseUp>
 				EVTFrameInviteQueue:StopMovingOrSizing();
+			</OnMouseUp>
+		</Scripts>
+	</Frame>
+	<Frame name="EVTFrameOptions" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="250" y="345"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="OptionsFrameHeader" inherits="GameFontNormal" text="Options">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTFrameOptions">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="EVTFrameOptionsCancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameOptions);
+						HideUIPanel(EVTFrameOverlay);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="EVTFrameOptionsAccept" inherits="GameMenuButtonTemplate" text="Accept">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						EVTFrameOptionsAccept_OnClick();
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameOptions);
+						HideUIPanel(EVTFrameOverlay);						
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="EVTFrameOptionsReset" inherits="GameMenuButtonTemplate" text="Reset">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="92"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						EVTFrameOptionsReset_OnClick()
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameOverlay);						
+					</OnClick>
+				</Scripts>
+			</Button>
+			<CheckButton name="EVTFrameOptionsLock" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameOptions" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="-75" y="-50"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Enable Popup Dragging">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuOptionCheckBoxOn");
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="EVTFrameOptionsEvents" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameOptions" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="-75" y="-75"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Automatically Accept Events">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuOptionCheckBoxOn");
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="EVTFrameOptionsConfirm" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameOptions" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="-75" y="-100"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Automatically Confirm Events">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuOptionCheckBoxOn");
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="EVTFrameOptions24h" inherits="UICheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTFrameOptions" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="-75" y="-25"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="24 Hour Format">
+							<Anchors>
+								<Anchor point="LEFT" relativePoint="RIGHT">
+									<Offset>
+										<AbsDimension x="3" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuOptionCheckBoxOn");
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnHide>
+				EVTFrameOptions:StopMovingOrSizing();
+			</OnHide>
+			<OnDragStart>
+				if CalendarOptions["frameDrag"] then
+					EVTFrameOptions:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				EVTFrameOptions:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				EVTFrameOptions:StopMovingOrSizing();
 			</OnMouseUp>
 		</Scripts>
 	</Frame>
