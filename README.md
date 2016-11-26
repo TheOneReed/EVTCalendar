@@ -11,7 +11,7 @@ Thats it!
 ## Usage
 
 EVTCalendar is a project to implement a somewhat blizz-like calendar addon to WoW V1.12.1.
-This replaces the clock in the top right with a calendar button. Alternatively, the calendar can be brought up with "/evt".
+This replaces the clock in the top right with a calendar button, which can be clicked to open the calendar. Alternatively, the calendar can be brought up with "/evt".
 
 This calendar has PARTY/RAID/GUILD communications, and all invites are done through these channels. Blizzard did not
 introduce addon capable WHISPER communications until V2.0. Because there is no access to a serverside database, this 
