@@ -162,7 +162,6 @@ function StringToTable(str)
 		local subStr = string.format("%s¡%s¡", s12, s1);
 		local msgStr = string.format("%s¿%s¿%s¿%s¿", s2, 0, "ConfirmEvent", subStr);
 		SendAddonMessage("EVTCalendar", msgStr, "GUILD");
-		SendAddonMessage("EVTCalendar", msgStr, "RAID");
 	end
 end
 

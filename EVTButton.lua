@@ -1,7 +1,7 @@
 local EVTButtonPosition = 0;
 local EVTButtonX = 0;
 local EVTButtonY = 0;
-local EVTButtonPulsing = false;
+EVTButtonPulsing = false;
 local EVTButtonLocked = true;
 
 function EVTButton_OnClick()

@@ -446,7 +446,6 @@ function EVT_EventConfirmButton_OnClick()
 	local subStr = string.format("%s¡%s¡", evtDate, evtName);
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
-	SendAddonMessage("EVTCalendar", msgStr, "RAID");
 	EVTFrameConfirmButton:Disable();
 end
 	
