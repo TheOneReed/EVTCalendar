@@ -12,3 +12,5 @@ EVTPopupMenus.lua
 EVTPopupMenus.xml
 EVTButton.lua
 EVTButton.xml
+EVTManage.lua
+EVTManage.xml

@@ -52,7 +52,7 @@ end
 
 function EVTIncMessage(msgStr, fromWho, channel)
 	if fromWho ~= UnitName("player") then
-		local s1, s2, s3, s4 = strSplit(msgStr, "¿");
+		local s1, s2, s3, s4 = strSplit(msgStr, "¿"); --from, toOff, header, msg
 		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡");
 		
 		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") and (s3 == "Invite") then
@@ -81,8 +81,12 @@ function EVTIncMessage(msgStr, fromWho, channel)
 			end
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmEvent" then
-			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has confirmed for "..b2.." on "..convertDate(b1)..".", 0.1, 1, 0.1);
-			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], fromWho);
+			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has signed up for "..b2.." on "..convertDate(b1)..".", 0.1, 1, 0.1);
+			local t = { 
+					[1] = fromWho,
+					[2] = b3
+					}
+			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], t);
 			EVT_UpdateConfirmedScrollBar();
 			PlaySoundFile("Sound\\interface\\iTellMessage.wav");
 			local rtnMsgStr = string.format("%s¿%s¿%s¿%s¿", fromWho, 0, "ConfirmAck", s4);
@@ -169,6 +173,19 @@ function checkIllegal(str)
 	str = string.gsub(str, "¿", "?");
 	str = string.gsub(str, "¡", "!");
 	return str;
+end
+
+function EVT_CopyTable(t)		
+	local new = {};					
+	local index, value = next(t, nil);	
+	while index do
+		if type(value)=="table" then 
+			value=EVT_CopyTable(value);
+		end 
+		new[index] = value;
+		index, value = next(t, index);			
+	end
+	return new;
 end
 
 

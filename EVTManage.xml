@@ -1,0 +1,656 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+	<Button name="EVTManageGroupButtonTemplate" parent="EVTFrameManage" movable="true" clampedToScreen="true" virtual="true">
+		<Size>
+			<AbsDimension x="156" y="14"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentRank" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Size>
+						<AbsDimension x="18" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="1" y="1"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentName" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Size>
+						<AbsDimension x="60" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentRank" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="2" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentLevel" inherits="GameFontNormalSmall" justifyH="CENTER">
+					<Size>
+						<AbsDimension x="40" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentName" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="-15" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentClass">
+				<Size>
+					<AbsDimension x="50" y="8"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT">
+						<Offset>
+							<AbsDimension x="110" y="1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<ButtonText>
+					<Size>
+						<AbsDimension x="50" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</ButtonText>
+				<NormalFont inherits="GameFontNormalSmall" justifyH="LEFT"/>
+				<HighlightFont inherits="GameFontHighlightSmall" justifyH="LEFT"/>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:SetFrameLevel(this:GetFrameLevel() + 1);
+				getglobal(this:GetName().."Class"):SetFrameLevel(this:GetFrameLevel() + 1);
+				this:RegisterForDrag("LeftButton");
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnDragStart>
+				this:SetFrameLevel(this:GetFrameLevel() + 1);
+				EVTManageGroupButton_OnDragStart();
+			</OnDragStart>
+			<OnDragStop>
+				this:SetFrameLevel(this:GetFrameLevel() - 1);
+				EVTManageGroupButton_OnDragStop();
+			</OnDragStop>
+		</Scripts>
+		<NormalTexture file="Interface\RaidFrame\UI-RaidFrame-GroupButton">
+			<TexCoords left="0" right="0.640625" top="0" bottom="0.4375"/>
+		</NormalTexture>
+		<HighlightTexture file="Interface\RaidFrame\UI-RaidFrame-GroupButton" alphaMode="ADD">
+			<TexCoords left="0" right="0.640625" top="0.46875" bottom="0.90625"/>
+		</HighlightTexture>
+	</Button>
+	<Button name="EVTManageGroupSlotTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="156" y="14"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<FontString inherits="GameFontDarkGraySmall" text="EMPTY">
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<HighlightTexture file="Interface\RaidFrame\UI-RaidFrame-GroupButton" alphaMode="ADD">
+			<TexCoords left="0" right="0.640625" top="0.46875" bottom="0.90625"/>
+		</HighlightTexture>
+	</Button>
+	<Frame name="EVTManageGroupTemplate" parent="EVTFrameManage" virtual="true">
+		<Size>
+			<AbsDimension x="162" y="80"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\RaidFrame\UI-RaidFrame-GroupOutline">
+					<Size>
+						<AbsDimension x="162" y="80"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.6640625" top="0" bottom="0.625"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentLabel">
+				<Size>
+					<AbsDimension x="156" y="14"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset>
+							<AbsDimension x="0" y="14"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalFont inherits="GameFontNormalSmall"/>
+				<HighlightFont inherits="GameFontHighlightSmall"/>
+			</Button>
+			<Button name="$parentSlot1" inherits="EVTManageGroupSlotTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="3" y="-3"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentSlot2" inherits="EVTManageGroupSlotTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentSlot1" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentSlot3" inherits="EVTManageGroupSlotTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentSlot2" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentSlot4" inherits="EVTManageGroupSlotTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentSlot3" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			<Button name="$parentSlot5" inherits="EVTManageGroupSlotTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentSlot4" relativePoint="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				getglobal(this:GetName().."Label"):SetText(GROUP.." "..this:GetID());
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+	<Frame name="EVTFrameManage" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="650" y="450"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER"/>
+		</Anchors>
+		<Backdrop bgFile="Interface\AddOns\EVTCalendar\Images\EVTFrameBackground-Dark" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="256" y="64"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString name="ManageFrameHeader" inherits="GameFontNormal" text="Manage">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTFrameManage">
+							<Offset>
+								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="EVTFrameManageCancel" inherits="GameMenuButtonTemplate" text="Cancel">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="16"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameManage);
+						HideUIPanel(EVTFrameOverlay);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="EVTFrameManageDone" inherits="GameMenuButtonTemplate" text="Done">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="16" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						EVTFrameManageDone_OnClick();
+						PlaySound("gsTitleOptionExit");
+						HideUIPanel(EVTFrameManage);
+						HideUIPanel(EVTFrameOverlay);						
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Frame name="EVTManageGroup1" inherits="EVTManageGroupTemplate" id="1">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-40"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup2" inherits="EVTManageGroupTemplate" id="2">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="EVTManageGroup1" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="3" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup3" inherits="EVTManageGroupTemplate" id="3">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTManageGroup1" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-14"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup4" inherits="EVTManageGroupTemplate" id="4">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="EVTManageGroup3" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="3" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup5" inherits="EVTManageGroupTemplate" id="5">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTManageGroup3" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-14"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup6" inherits="EVTManageGroupTemplate" id="6">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="EVTManageGroup5" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="3" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup7" inherits="EVTManageGroupTemplate" id="7">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="EVTManageGroup5" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="-14"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup8" inherits="EVTManageGroupTemplate" id="8">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="EVTManageGroup7" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="3" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<Frame name="EVTManageGroup9" id="9">
+				<Size>
+					<AbsDimension x="162" y="230"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="EVTFrameManage" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-50" y="-40"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture file="Interface\AddOns\EVTCalendar\Images\EVTManage15GroupOutline">
+							<Size>
+								<AbsDimension x="162" y="229"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT"/>
+							</Anchors>
+							<TexCoords left="0" right="0.6640625" top="0" bottom="0.90"/>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<ScrollFrame name="EVTManageAttendingScrollFrame" inherits="FauxScrollFrameTemplate">
+						<Size>
+							<AbsDimension x="162" y="240"/>
+						</Size>
+						<Anchors>
+							<Anchor point="RIGHT">
+								<Offset>
+									<AbsDimension x="-4" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnVerticalScroll>
+								FauxScrollFrame_OnVerticalScroll(20, EVT_UpdateAttendingScrollBar); 
+							</OnVerticalScroll>
+							<OnShow>
+								EVT_UpdateAttendingScrollBar();
+							</OnShow>
+						</Scripts>
+					</ScrollFrame>					
+					<Button name="EVTManageGroup9Label">
+						<Size>
+							<AbsDimension x="156" y="14"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="14"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<NormalFont inherits="GameFontNormalSmall"/>
+						<HighlightFont inherits="GameFontHighlightSmall"/>
+					</Button>
+					<Button name="EVTManageGroup9Slot1" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="3" y="-3"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot2" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot1" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot3" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot4" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot5" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot5" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot6" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot5" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot7" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot6" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot8" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot7" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot9" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot8" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot10" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot9" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot11" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot10" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot12" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot11" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot13" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot12" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot14" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot13" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+					<Button name="EVTManageGroup9Slot15" inherits="EVTManageGroupSlotTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parentSlot14" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-1"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+					</Button>
+				</Frames>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Label"):SetText("Attending:");
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Button name="EVTManageGroupButton1" inherits="EVTManageGroupButtonTemplate" id="1"/>
+			<Button name="EVTManageGroupButton2" inherits="EVTManageGroupButtonTemplate" id="2"/>
+			<Button name="EVTManageGroupButton3" inherits="EVTManageGroupButtonTemplate" id="3"/>
+			<Button name="EVTManageGroupButton4" inherits="EVTManageGroupButtonTemplate" id="4"/>
+			<Button name="EVTManageGroupButton5" inherits="EVTManageGroupButtonTemplate" id="5"/>
+			<Button name="EVTManageGroupButton6" inherits="EVTManageGroupButtonTemplate" id="6"/>
+			<Button name="EVTManageGroupButton7" inherits="EVTManageGroupButtonTemplate" id="7"/>
+			<Button name="EVTManageGroupButton8" inherits="EVTManageGroupButtonTemplate" id="8"/>
+			<Button name="EVTManageGroupButton9" inherits="EVTManageGroupButtonTemplate" id="9"/>
+			<Button name="EVTManageGroupButton10" inherits="EVTManageGroupButtonTemplate" id="10"/>
+			<Button name="EVTManageGroupButton11" inherits="EVTManageGroupButtonTemplate" id="11"/>
+			<Button name="EVTManageGroupButton12" inherits="EVTManageGroupButtonTemplate" id="12"/>
+			<Button name="EVTManageGroupButton13" inherits="EVTManageGroupButtonTemplate" id="13"/>
+			<Button name="EVTManageGroupButton14" inherits="EVTManageGroupButtonTemplate" id="14"/>
+			<Button name="EVTManageGroupButton15" inherits="EVTManageGroupButtonTemplate" id="15"/>
+			<Button name="EVTManageGroupButton16" inherits="EVTManageGroupButtonTemplate" id="16"/>
+			<Button name="EVTManageGroupButton17" inherits="EVTManageGroupButtonTemplate" id="17"/>
+			<Button name="EVTManageGroupButton18" inherits="EVTManageGroupButtonTemplate" id="18"/>
+			<Button name="EVTManageGroupButton19" inherits="EVTManageGroupButtonTemplate" id="19"/>
+			<Button name="EVTManageGroupButton20" inherits="EVTManageGroupButtonTemplate" id="20"/>
+			<Button name="EVTManageGroupButton21" inherits="EVTManageGroupButtonTemplate" id="21"/>
+			<Button name="EVTManageGroupButton22" inherits="EVTManageGroupButtonTemplate" id="22"/>
+			<Button name="EVTManageGroupButton23" inherits="EVTManageGroupButtonTemplate" id="23"/>
+			<Button name="EVTManageGroupButton24" inherits="EVTManageGroupButtonTemplate" id="24"/>
+			<Button name="EVTManageGroupButton25" inherits="EVTManageGroupButtonTemplate" id="25"/>
+			<Button name="EVTManageGroupButton26" inherits="EVTManageGroupButtonTemplate" id="26"/>
+			<Button name="EVTManageGroupButton27" inherits="EVTManageGroupButtonTemplate" id="27"/>
+			<Button name="EVTManageGroupButton28" inherits="EVTManageGroupButtonTemplate" id="28"/>
+			<Button name="EVTManageGroupButton29" inherits="EVTManageGroupButtonTemplate" id="29"/>
+			<Button name="EVTManageGroupButton30" inherits="EVTManageGroupButtonTemplate" id="30"/>
+			<Button name="EVTManageGroupButton31" inherits="EVTManageGroupButtonTemplate" id="31"/>
+			<Button name="EVTManageGroupButton32" inherits="EVTManageGroupButtonTemplate" id="32"/>
+			<Button name="EVTManageGroupButton33" inherits="EVTManageGroupButtonTemplate" id="33"/>
+			<Button name="EVTManageGroupButton34" inherits="EVTManageGroupButtonTemplate" id="34"/>
+			<Button name="EVTManageGroupButton35" inherits="EVTManageGroupButtonTemplate" id="35"/>
+			<Button name="EVTManageGroupButton36" inherits="EVTManageGroupButtonTemplate" id="36"/>
+			<Button name="EVTManageGroupButton37" inherits="EVTManageGroupButtonTemplate" id="37"/>
+			<Button name="EVTManageGroupButton38" inherits="EVTManageGroupButtonTemplate" id="38"/>
+			<Button name="EVTManageGroupButton39" inherits="EVTManageGroupButtonTemplate" id="39"/>
+			<Button name="EVTManageGroupButton40" inherits="EVTManageGroupButtonTemplate" id="40"/>
+			<Button name="EVTManageGroupButton41" inherits="EVTManageGroupButtonTemplate" id="41"/>
+			<Button name="EVTManageGroupButton42" inherits="EVTManageGroupButtonTemplate" id="42"/>
+			<Button name="EVTManageGroupButton43" inherits="EVTManageGroupButtonTemplate" id="43"/>
+			<Button name="EVTManageGroupButton44" inherits="EVTManageGroupButtonTemplate" id="44"/>
+			<Button name="EVTManageGroupButton45" inherits="EVTManageGroupButtonTemplate" id="45"/>
+			<Button name="EVTManageGroupButton46" inherits="EVTManageGroupButtonTemplate" id="46"/>
+			<Button name="EVTManageGroupButton47" inherits="EVTManageGroupButtonTemplate" id="47"/>
+			<Button name="EVTManageGroupButton48" inherits="EVTManageGroupButtonTemplate" id="48"/>
+			<Button name="EVTManageGroupButton49" inherits="EVTManageGroupButtonTemplate" id="49"/>
+			<Button name="EVTManageGroupButton50" inherits="EVTManageGroupButtonTemplate" id="50"/>
+			<Button name="EVTManageGroupButton51" inherits="EVTManageGroupButtonTemplate" id="51"/>
+			<Button name="EVTManageGroupButton52" inherits="EVTManageGroupButtonTemplate" id="52"/>
+			<Button name="EVTManageGroupButton53" inherits="EVTManageGroupButtonTemplate" id="53"/>
+			<Button name="EVTManageGroupButton54" inherits="EVTManageGroupButtonTemplate" id="54"/>
+			<Button name="EVTManageGroupButton55" inherits="EVTManageGroupButtonTemplate" id="55"/>
+			<!-- This must be after all of the EVTManage pullout stuff! -->
+			<Script>
+				EVTManageGroupFrame_OnLoad();
+			</Script>
+		</Frames>
+		<Scripts>
+			<OnShow>
+				EVTSetManagedTable();
+			</OnShow>
+			<OnLoad>
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnHide>
+				EVTFrameManage:StopMovingOrSizing();
+			</OnHide>
+			<OnDragStart>
+				if CalendarOptions["frameDrag"] then
+					EVTFrameManage:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				EVTFrameManage:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				EVTFrameManage:StopMovingOrSizing();
+			</OnMouseUp>
+			<OnUpdate>
+				EVTManageGroupFrame_OnUpdate();
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</Ui>

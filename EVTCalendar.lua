@@ -4,7 +4,7 @@
 --
 --
 ----------------------------------------------------------------
-EVT_VERSION = "1.0";
+EVT_VERSION = "1.1";
 
 
 ---Initialize tables
@@ -92,11 +92,13 @@ function EVT_SlashCommand(msg)
 		DEFAULT_CHAT_FRAME:AddMessage("lock : Disables button dragging.", 0.8, 0.8, 0.1);
 		DEFAULT_CHAT_FRAME:AddMessage("reset : Returns button back to the minimap.", 0.8, 0.8, 0.1);
 	elseif(msg == "unlock") then
+		CalendarOptions["frameDrag"] = true;
 		EVTButton_Unlock();
 	elseif(msg == "lock") then
+		CalendarOptions["frameDrag"] = false;
 		EVTButton_Lock();
 	elseif(msg == "reset") then
-		EVTButton_Reset();
+		EVTFrameOptionsReset_OnClick()
 	elseif(msg == "test") then
 		CalendarOptions["milFormat"] = not CalendarOptions["milFormat"];
 	else
@@ -156,7 +158,7 @@ function EVT_Toggle()
         HideUIPanel(EVTFrame);
         PlaySoundFile("Sound\\interface\\uCharacterSheetClose.wav");
     else
-		if EVTFrameCreatePopup:IsVisible() or EVTFrameInvitePopup:IsVisible() or EVTFrameOptions:IsVisible() then
+		if EVTFrameCreatePopup:IsVisible() or EVTFrameInvitePopup:IsVisible() or EVTFrameOptions:IsVisible() or EVTFrameManage:IsVisible() then
 			ShowUIPanel(EVTFrameOverlay);
 		end
         EVT_ResetDisplayDate();
@@ -401,6 +403,7 @@ function EVT_UpdateConfirmedScrollBar()
     local yoffset;
     local t;
 	local tSize;
+	local color;
 	if TableIndexExists(CalendarData[displayDate()][getButtonPosOffset()], 12) then
 		t = CalendarData[displayDate()][getButtonPosOffset()][12];
 	else
@@ -415,13 +418,20 @@ function EVT_UpdateConfirmedScrollBar()
 			local t2 = t[yoffset];
             if (t2 == nil) then
                 getglobal("ConfirmedText" .. y):Hide();
+                getglobal("ConfirmedText" .. y .. "Class"):Hide();
             else
-				strText = t2;
+				strText = t2[1];
+				classText = t2[2];
+				color = RAID_CLASS_COLORS[string.upper(classText)]
                 getglobal("ConfirmedText" .. y):SetText(strText);
+				getglobal("ConfirmedText" .. y):SetTextColor(color.r, color.g, color.b);
+                getglobal("ConfirmedText" .. y .."Class"):SetText(classText);
+				getglobal("ConfirmedText" .. y .."Class"):SetTextColor(color.r, color.g, color.b);
                 getglobal("ConfirmedText" .. y):Show();
             end
         else
             getglobal("ConfirmedText" .. y):Hide();
+            getglobal("ConfirmedText" .. y .. "Class"):Hide();
         end
     end
 end
@@ -443,7 +453,8 @@ function EVT_EventConfirmButton_OnClick()
 	local evtDate = displayDate();
 	local evtName = CalendarData[displayDate()][getButtonPosOffset()][1];
 	local crtName = CalendarData[displayDate()][getButtonPosOffset()][2];
-	local subStr = string.format("%s¡%s¡", evtDate, evtName);
+	local evtClass = UnitClass("player");
+	local subStr = string.format("%s¡%s¡%s¡", evtDate, evtName, evtClass);
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	EVTFrameConfirmButton:Disable();
@@ -480,9 +491,17 @@ function EVT_UpdateDetailList()
 		EVTDetailsStatusLabel:Show();
 		if t[13] == 0 then
 			EVTDetailsStatus:SetText("Unconfirmed");
-			EVTDetailsStatus:SetTextColor(0.8, 0.8, 0.1);
+			EVTDetailsStatus:SetTextColor(0.8, 0.1, 0.1);
 			EVTFrameConfirmButton:Enable();
-		else
+		elseif t[13] == 1 then
+			EVTDetailsStatus:SetText("Applied");
+			EVTDetailsStatus:SetTextColor(0.8, 0.8, 0.1);
+			EVTFrameConfirmButton:Disable();
+		elseif t[13] == 2 then
+			EVTDetailsStatus:SetText("On Standby");
+			EVTDetailsStatus:SetTextColor(0.5, 1, 0.1);
+			EVTFrameConfirmButton:Disable();
+		elseif t[13] == 3 then
 			EVTDetailsStatus:SetText("Confirmed");
 			EVTDetailsStatus:SetTextColor(0.1, 1, 0.1);
 			EVTFrameConfirmButton:Disable();
@@ -604,6 +623,11 @@ function EVTFrameOptions_OnClick()
 	EVTFrameOptionsConfirm:SetChecked(CalendarOptions["confirmEvents"]);
 	EVTFrameOptions24h:SetChecked(CalendarOptions["milFormat"]);	
 	ShowUIPanel(EVTFrameOptions);
+end
+
+function EVTFrameManageButton_OnClick()
+	ShowUIPanel(EVTFrameOverlay);
+	ShowUIPanel(EVTFrameManage);
 end
 
 --- Helper Functions ---

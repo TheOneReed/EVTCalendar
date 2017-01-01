@@ -1,6 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
 	<Button name="EventFrameButtonTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="240" y="15"/>
@@ -165,7 +164,7 @@
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="EVTFrameEventList" relativePoint="BOTTOMLEFT">
 								<Offset>
-									<AbsDimension x="0" y="-323"/>
+									<AbsDimension x="0" y="-318"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -183,13 +182,31 @@
 						<Anchors>
 							<Anchor point="TOP" relativeTo="EVTFrameEventList" relativePoint="BOTTOM">
 								<Offset>
-									<AbsDimension x="0" y="-323"/>
+									<AbsDimension x="0" y="-318"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
 						<Scripts>
 							<OnClick>
 								EVT_EventConfirmButton_OnClick();
+								PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
+							</OnClick>
+						</Scripts>
+					</Button>
+					<Button name="EVTFrameManageButton" inherits="UIPanelButtonTemplate" text="Manage">
+						<Size>
+							<AbsDimension x="85" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPRIGHT" relativeTo="EVTFrameEventList" relativePoint="BOTTOMRIGHT">
+								<Offset>
+									<AbsDimension x="0" y="-318"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								EVTFrameManageButton_OnClick();
 								PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
 							</OnClick>
 						</Scripts>
@@ -375,7 +392,7 @@
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormalSmall" text="Confirmed:">
+						<FontString inherits="GameFontNormalSmall" text="Signed Up:">
 							<Color r="0.8" g="0.8" b="0.1"/>
 							<Anchors>
 								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
@@ -388,7 +405,7 @@
 						<FontString name="ConfirmedText1" inherits="GameFontNormalSmall" justifyH="LEFT" text="1">
 							<Color r="1" g="1" b="1"/>
 							<Size>
-								<AbsDimension x="240" y="15"/>
+								<AbsDimension x="80" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT">
@@ -401,7 +418,7 @@
 						<FontString name="ConfirmedText2" inherits="GameFontNormalSmall" justifyH="LEFT" text="2">
 							<Color r="1" g="1" b="1"/>
 							<Size>
-								<AbsDimension x="240" y="15"/>
+								<AbsDimension x="80" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="ConfirmedText1" relativePoint="BOTTOMLEFT">
@@ -414,7 +431,7 @@
 						<FontString name="ConfirmedText3" inherits="GameFontNormalSmall" justifyH="LEFT" text="3">
 							<Color r="1" g="1" b="1"/>
 							<Size>
-								<AbsDimension x="240" y="15"/>
+								<AbsDimension x="80" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="ConfirmedText2" relativePoint="BOTTOMLEFT">
@@ -427,7 +444,7 @@
 						<FontString name="ConfirmedText4" inherits="GameFontNormalSmall" justifyH="LEFT" text="4">
 							<Color r="1" g="1" b="1"/>
 							<Size>
-								<AbsDimension x="240" y="15"/>
+								<AbsDimension x="80" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="ConfirmedText3" relativePoint="BOTTOMLEFT">
@@ -440,10 +457,85 @@
 						<FontString name="ConfirmedText5" inherits="GameFontNormalSmall" justifyH="LEFT" text="5">
 							<Color r="1" g="1" b="1"/>
 							<Size>
-								<AbsDimension x="240" y="15"/>
+								<AbsDimension x="80" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="ConfirmedText4" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString inherits="GameFontNormalSmall" text="Signed Up:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-180"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText1Class" inherits="GameFontNormalSmall" justifyH="LEFT" text="1">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="5" y="-6"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText2Class" inherits="GameFontNormalSmall" justifyH="LEFT" text="2">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText1Class" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText3Class" inherits="GameFontNormalSmall" justifyH="LEFT" text="3">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText2Class" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText4Class" inherits="GameFontNormalSmall" justifyH="LEFT" text="4">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText3Class" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText5Class" inherits="GameFontNormalSmall" justifyH="LEFT" text="5">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText4Class" relativePoint="BOTTOMLEFT">
 									<Offset>
 										<AbsDimension x="0" y="-2"/>
 									</Offset>
@@ -870,7 +962,22 @@
 		<Scripts>
 			<OnLoad>
 				EVT_OnLoad();
+				this:RegisterForDrag("LeftButton");
 			</OnLoad>
+			<OnHide>
+				EVTFrame:StopMovingOrSizing();
+			</OnHide>
+			<OnDragStart>
+				if CalendarOptions["frameDrag"] then
+					EVTFrame:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				EVTFrame:StopMovingOrSizing();
+			</OnDragStop>
+			<OnMouseUp>
+				EVTFrame:StopMovingOrSizing();
+			</OnMouseUp>
 			<OnEvent>
 				EVT_OnEvent();
 			</OnEvent>

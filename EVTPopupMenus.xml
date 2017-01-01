@@ -875,9 +875,9 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="EVTFrameOptionsReset" inherits="GameMenuButtonTemplate" text="Reset">
+			<Button name="EVTFrameOptionsReset" inherits="GameMenuButtonTemplate" text="Reset Windows">
 				<Size>
-					<AbsDimension x="100" y="21"/>
+					<AbsDimension x="120" y="21"/>
 				</Size>
 				<Anchors>
 					<Anchor point="BOTTOM">
@@ -904,7 +904,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="ARTWORK">
-						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Enable Popup Dragging">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" text="Enable Window Dragging">
 							<Anchors>
 								<Anchor point="LEFT" relativePoint="RIGHT">
 									<Offset>

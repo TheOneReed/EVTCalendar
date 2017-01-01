@@ -27,19 +27,20 @@ function EVTButton_Init()
 end
 
 function EVTButton_Reset()
-	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Map button reset.", 0.8, 0.8, 0.1);
 	CalendarOptions["buttonLocked"] = true;
 	EVTButton_Init();
 end
 
 function EVTButton_Unlock()
-	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Map button unlocked.", 0.8, 0.8, 0.1);
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Frames unlocked.", 0.8, 0.8, 0.1);
 	CalendarOptions["buttonLocked"] = false;
+	EVTButtonFrame:ClearAllPoints()
 	EVTButtonLocked = false;
+	EVTButton_SetCenter();
 end
 
 function EVTButton_Lock()
-	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Map button locked.", 0.8, 0.8, 0.1);
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] Frames locked.", 0.8, 0.8, 0.1);
 	CalendarOptions["buttonLocked"] = true;
 	EVTButtonLocked = true;
 end
@@ -67,6 +68,15 @@ function EVTButton_UpdatePosition()
 		EVTButtonX,
 		EVTButtonY);
 	end
+end
+
+function EVTButton_SetCenter()
+	EVTButtonFrame:SetPoint(
+		"CENTER",
+		"UIParent",
+		"CENTER",
+		0,
+		0);
 end
 
 function EVTButton_OnEnter()

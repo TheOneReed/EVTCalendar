@@ -48,7 +48,14 @@ function EVTFrameAcceptBtn_OnClick()
 			[9] = mando,
 			[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
 			[11] = 1,
-			[12] = {}
+			[12] = {
+				[1] = { 
+					[1] = UnitName("player"),
+					[2] = UnitClass("player"),
+					[3] = "DPS", -- UNUSED
+					[4] = 9 -- UNUSED
+					}
+				}
 			});
 		else
 			CalendarData[createDate][createEvt] = {
@@ -378,6 +385,8 @@ function EVTFrameInviteQueueDecline_OnClick()
 	EVT_ShowNextInvite();
 end
 
+--------- Options Popup --------------
+
 function EVTFrameOptionsAccept_OnClick()
 	CalendarOptions["frameDrag"] = checkBool(EVTFrameOptionsLock:GetChecked());
 	CalendarOptions["confirmEvents"] = checkBool(EVTFrameOptionsConfirm:GetChecked());
@@ -388,6 +397,16 @@ function EVTFrameOptionsAccept_OnClick()
 end
 
 function EVTFrameOptionsReset_OnClick()
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] All window locations reset to default.", 0.8, 0.8, 0.1);
+	EVTButton_Reset();
+	EVTFrame:ClearAllPoints()
+	EVTFrame:SetPoint(
+		"TOPLEFT",
+		"UIParent",
+		"TOPLEFT",
+		355,
+		-106
+		);
 	EVTFrameOptions:ClearAllPoints()
 	EVTFrameOptions:SetPoint(
 		"CENTER",
@@ -414,6 +433,14 @@ function EVTFrameOptionsReset_OnClick()
 		);
 	EVTFrameCreatePopup:ClearAllPoints()
 	EVTFrameCreatePopup:SetPoint(
+		"CENTER",
+		"UIParent",
+		"CENTER",
+		0,
+		0
+		);
+	EVTFrameManage:ClearAllPoints()
+	EVTFrameManage:SetPoint(
 		"CENTER",
 		"UIParent",
 		"CENTER",
