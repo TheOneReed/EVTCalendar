@@ -80,8 +80,21 @@ function EVTButton_SetCenter()
 end
 
 function EVTButton_OnEnter()
-	curtime = EVT_GetCurrentTime()
-	
+	local plus = "";
+	local srvHour, srvMinute, locHour, locMinute, locOffset, srvOffset, locAmpm, srvAmpm = EVT_GetCurrentTime();
+	if srvOffset > 0 then
+		plus = "+"
+	end
+	if locOffset > 0 then
+		plus = "+"
+	end
+	if not CalendarOptions["milFormat"] then
+		srvMinute = (srvMinute..srvAmpm);
+		locMinute = (locMinute..locAmpm);
+	end
+	srvTime = string.format("%s:%s Server", srvHour, srvMinute, plus, srvOffset);
+	locTime = string.format("%s:%s Local", locHour, locMinute, plus, locOffset);
+	curtime = (locTime .. "\n" .. srvTime);
     GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT");
     GameTooltip:SetText(curtime);
     GameTooltip:Show();

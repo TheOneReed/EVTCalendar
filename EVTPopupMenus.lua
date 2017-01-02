@@ -10,7 +10,7 @@ createEvt = 0;
 
 function EVTFrameAcceptBtn_OnClick()
 	local mando;
-	local preFrom = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
+	local preFrom = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime) - 1;
 	local preTo = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
 	local amFrom = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1);
 	local amTo = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2);
@@ -22,16 +22,14 @@ function EVTFrameAcceptBtn_OnClick()
 	else
 		mando = 1;
 	end
-	if CalendarOptions["milFormat"] then
-		preFrom = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
-		preTo = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
-		if preFrom > 12 then
-			preFrom = preFrom - 12;
-			amFrom = 2;
+	if not CalendarOptions["milFormat"] then
+		if amFrom == 2 then
+			preFrom = preFrom + 12;
 		end
-		if preTo > 12 then
-			preTo = preTo - 12;
-			amTo = 2;
+		if amTo == 2 then
+			preTo = preTo + 11;
+		elseif amTo == 1 then
+			amTo = amTo - 1;
 		end
 	end
 		
@@ -40,9 +38,9 @@ function EVTFrameAcceptBtn_OnClick()
 			[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
 			[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
 			[3] = preFrom,
-			[4] = amFrom,
+			[4] = "UNUSED",
 			[5] = preTo,
-			[6] = amTo,
+			[6] = "UNUSED",
 			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 			[9] = mando,
@@ -62,9 +60,9 @@ function EVTFrameAcceptBtn_OnClick()
 				[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
 				[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
 				[3] = preFrom,
-				[4] = amFrom,
+				[4] = "UNUSED",
 				[5] = preTo,
-				[6] = amTo,
+				[6] = "UNUSED",
 				[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
 				[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
 				[9] = mando,
@@ -104,7 +102,13 @@ function EVTFrameFromTime_Initialize()
 		ShowUIPanel(EVTFrameAMPM1);
 	end
     for i = 1, maxTime, 1 do
-		str = getTimeStr(i);
+		local btnTime;
+		if not CalendarOptions["milFormat"] and (i - 1) == 0 then
+			btnTime = 12;
+		else
+			btnTime = i - 1;
+		end
+		str = getTimeStr((btnTime), true);
 		info = buildButton(str, i, EVTFrameFromTime_OnClick)  
         UIDropDownMenu_AddButton(info);
     end
@@ -129,11 +133,23 @@ function EVTFrameToTime_Initialize()
 		maxTime = 24;
 		HideUIPanel(EVTFrameAMPM2);
 	else
-		maxTime = 12;
+		maxTime = 13;
 		ShowUIPanel(EVTFrameAMPM2);
 	end
     for i = 1, maxTime, 1 do
-		str = getTimeStr(i);
+		str = getTimeStr((i), true);
+		if not CalendarOptions["milFormat"] and (i) == 13 then
+				str = "11:59";
+		elseif not CalendarOptions["milFormat"] then
+			j = i;
+			if i - 1 == 0 then
+				local j = 13
+			end
+			str = getTimeStr((j - 1), true);	
+		end
+		if i == 24 then
+			str = "23:59";
+		end
 		info = buildButton(str, i, EVTFrameToTime_OnClick)  
         UIDropDownMenu_AddButton(info);
     end
@@ -359,7 +375,7 @@ function EVT_UpdateQueueDetail(str)
 	
 	EVTQueueDetailsName:SetText(s1);
 	EVTFrameInviteDString:SetText(dateStr);
-	EVTQueueDetailsTime:SetText(string.format("%s    -    %s", getTimeStr(tonumber(s3), tonumber(s4)), getTimeStr(tonumber(s5), tonumber(s6))));
+	EVTQueueDetailsTime:SetText(string.format("%s    -    %s", getTimeStr(tonumber(s3)), getTimeStr(tonumber(s5))));
 	if (subType == 1 or subType == 2 or subType == 3) then
 		EVTQueueDetailsType:SetText(string.format("%s    -    %s", evtTypes[subType], evtSubMenu[tonumber(s7)][tonumber(s8)]));
 	else
@@ -461,8 +477,13 @@ function checkBool(num)
 end
 
 function compareInputTime()
-	local bTime = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime);
-	local aTime = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
+	local bTime = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime) - 1;
+	local aTime;
+	if not CalendarOptions["milFormat"] then
+		aTime = UIDropDownMenu_GetSelectedValue(EVTFrameToTime) - 1;
+	else
+		aTime = UIDropDownMenu_GetSelectedValue(EVTFrameToTime);
+	end
 	local bAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1);
 	local aAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2);
 	
@@ -490,18 +511,37 @@ function buildButton(btText, btValue, btFunc)
 	return info;
 end
 
-function getTimeStr(i, ampm)
-	if CalendarOptions["milFormat"] and ampm ~= nil then
-		local i = tostring(tonumber(i) + ((ampm - 1) * 12));
-		str = string.format("%s:%s", i, "00");
+function getTimeStr(i, bool)
+	if CalendarOptions["milFormat"] then
+		if i < 10 then
+			i = ("0"..i)
+		end
+		if i == 24 then 
+			str = "23:59"
+		else
+			str = string.format("%s:%s", i, "00");
+		end
 	else 
-		str = string.format("%s:%s", i, "00");
-		if ampm ~= nil then
-			if ampm == 1 then
-				str = string.format("%s%s", str, "am");
-			elseif ampm == 2 then
-				str = string.format("%s%s", str, "pm");
+		ampm = "am";
+		if i == 12 then
+			ampm = "pm";
+		end
+		if i > 12 then
+			if i == 24 then
+				str = "11:59pm"
+				return str;				
+			else
+				i = i - 12;
+				ampm = "pm";
 			end
+		end
+		if i == 0 then
+			i = 12;
+		end
+		if bool == true then
+			str = string.format("%s:%s", i, "00");
+		else
+			str = string.format("%s:%s%s", i, "00", ampm);
 		end
 	end
 	return str;

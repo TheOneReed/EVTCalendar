@@ -38,23 +38,85 @@ local initialized = false;
 local varsLoaded = false;
 
 -- Asset Location
-local ImgDayActive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameActive";
-local ImgDayInactive = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameInactive";
-local ImgDayToday = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday";
-local ImgDaySelected = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected";
-local ImgDayHightlight = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight";
-local ImgIcoCthun = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoCthun";
-local ImgIcoOssirian = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOssirian";
-local ImgIcoOnyxia = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOnyxia";
-local ImgIcoNefarian = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoNefarian";
-local ImgIcoHakkar = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoHakkar";
-local ImgIcoRagnaros = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoRagnaros";
-local ImgIcoKelthuzad = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoKelthuzad";
-local ImgIcoInstance = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoInstance";
-local ImgIcoMeeting = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoMeeting";
-local ImgIcoQuest = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoQuest";
-local ImgIcoOther = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOther";
-local ImgIcoPvP = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoPvP";
+local Img = {
+    ["DayActive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameActive",
+    ["DayInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameInactive",
+    ["DayToday"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameToday",
+    ["DaySelected"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameSelected",
+    ["DayHighlight"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameHighlight",
+    ["IcoCthun"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoCthun",
+    ["IcoOssirian"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOssirian",
+    ["IcoOnyxia"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOnyxia",
+    ["IcoNefarian"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoNefarian",
+    ["IcoHakkar"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoHakkar",
+    ["IcoRagnaros"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoRagnaros",
+    ["IcoKelthuzad"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoKelthuzad",
+    ["IcoInstance"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoInstance",
+    ["IcoMeeting"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoMeeting",
+    ["IcoQuest"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoQuest",
+    ["IcoOther"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoOther",
+    ["IcoPvP"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIcoPvP",
+    ["SWinterveil"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSWinterveil",
+    ["SWinterveilInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSWinterveilInactive",
+    ["Winterveil"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTWinterveil",
+    ["IWinterveil"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIWinterveil",
+    ["EWinterveil"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEWinterveil",
+    ["EWinterveilInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEWinterveilInactive",
+    ["SNobleGarden"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSNobleGarden",
+    ["SNobleGardenInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSNobleGardenInactive",
+    ["NobleGarden"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTNobleGarden",
+    ["INobleGarden"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTINobleGarden",
+    ["ENobleGarden"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTENobleGarden",
+    ["ENobleGardenInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTENobleGardenInactive",
+    ["SLoveIsInTheAir"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSLoveIsInTheAir",
+    ["SLoveIsInTheAirInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSLoveIsInTheAirInactive",
+    ["ILoveIsInTheAir"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTILoveIsInTheAir",
+    ["LoveIsInTheAir"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTLoveIsInTheAir",
+    ["ELoveIsInTheAir"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTELoveIsInTheAir",
+    ["ELoveIsInTheAirInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTELoveIsInTheAirInactive",
+    ["SHallowsEnd"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSHallowsEnd",
+    ["SHallowsEndInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSHallowsEndInactive",
+    ["HallowsEnd"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTHallowsEnd",
+    ["IHallowsEnd"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIHallowsEnd",
+    ["EHallowsEnd"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEHallowsEnd",
+    ["EHallowsEndInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEHallowsEndInactive",
+    ["SLunarFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSLunarFestival",
+    ["SLunarFestivalInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSLunarFestivalInactive",
+    ["LunarFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTLunarFestival",
+    ["ILunarFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTILunarFestival",
+    ["ELunarFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTELunarFestival",
+    ["ELunarFestivalInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTELunarFestivalInactive",
+    ["SChildrensWeek"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSChildrensWeek",
+    ["SChildrensWeekInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSChildrensWeekInactive",
+    ["ChildrensWeek"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTChildrensWeek",
+    ["IChildrensWeek"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIChildrensWeek",
+    ["EChildrensWeek"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEChildrensWeek",
+    ["EChildrensWeekInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEChildrensWeekInactive",
+    ["SMidSummer"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSMidSummer",
+    ["SMidSummerInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSMidSummerInactive",
+    ["MidSummer"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTMidSummer",
+    ["IMidSummer"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIMidSummer",
+    ["EMidSummer"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEMidSummer",
+    ["EMidSummerInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEMidSummerInactive",
+    ["SHarvestFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSHarvestFestival",
+    ["SHarvestFestivalInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSHarvestFestivalInactive",
+    ["HarvestFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTHarvestFestival",
+    ["IHarvestFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIHarvestFestival",
+    ["EHarvestFestival"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEHarvestFestival",
+    ["EHarvestFestivalInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEHarvestFestivalInactive",
+    ["SElwynn"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSElwynn",
+    ["SElwynnInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSElwynnInactive",
+    ["DarkmoonFaire"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDarkmoonFaire",
+    ["IDarkmoonFaire"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIDarkmoonFaire",
+    ["EElwynn"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEElwynn",
+    ["EElwynnInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEElwynnInactive",
+    ["SMulgore"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSMulgore",
+    ["SMulgoreInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTSMulgoreInactive",
+    ["EMulgore"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEMulgore",
+    ["EMulgoreInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTEMulgoreInactive",
+    ["Fishing"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTFishing",
+    ["IFishing"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTIFishing"
+	}
 
 -- Calendar Data Table
 
@@ -88,9 +150,9 @@ function EVT_SlashCommand(msg)
 		DEFAULT_CHAT_FRAME:AddMessage("-----"..EVT_CALENDAR..": "..EVT_HELP.."-----", 0.8, 0.8, 0.1);
 		DEFAULT_CHAT_FRAME:AddMessage("about : Displays addon info.", 0.8, 0.8, 0.1);
 		DEFAULT_CHAT_FRAME:AddMessage("help : Displays this menu.", 0.8, 0.8, 0.1);
-		DEFAULT_CHAT_FRAME:AddMessage("unlock : Enables button dragging.", 0.8, 0.8, 0.1);
-		DEFAULT_CHAT_FRAME:AddMessage("lock : Disables button dragging.", 0.8, 0.8, 0.1);
-		DEFAULT_CHAT_FRAME:AddMessage("reset : Returns button back to the minimap.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("unlock : Enables frame dragging.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("lock : Disables frame dragging.", 0.8, 0.8, 0.1);
+		DEFAULT_CHAT_FRAME:AddMessage("reset : Returns frames back to default position.", 0.8, 0.8, 0.1);
 	elseif(msg == "unlock") then
 		CalendarOptions["frameDrag"] = true;
 		EVTButton_Unlock();
@@ -170,25 +232,61 @@ function EVT_Toggle()
 end
 
 function EVT_GetCurrentTime()
-    local ampm = "AM";
-    local hour, minute = GetGameTime();
-	if (minute < 10) then
-		minute = string.format("%02s", minute);
+	local locOffset, svrOffset;
+    local locAmpm = "AM";
+    local srvAmpm = "AM";
+    local srvHour, srvMinute = GetGameTime();
+	local gmtHour = tonumber(date("!%H")); 
+	local gmtMinute = tonumber(date("!%M")); 
+	local locHour = tonumber(date("%H")); 
+	local locMinute = tonumber(date("%M")); 
+	
+	locOffset = (locHour) - (gmtHour);
+	srvOffset = (srvHour) - (gmtHour);
+	if srvOffset > 12 then
+		srvOffset = srvOffset - 24;
+	elseif srvOffset < -12 then
+		srvOffset = srvOffset + 24;
+	end
+	if locOffset > 12 then
+		locOffset = locOffset - 24;
+	elseif locOffset < -12 then
+		locOffset = locOffset + 24;
+	end
+	
+	if (srvMinute < 10) then
+		srvMinute = string.format("%02s", srvMinute);
+	end
+	if (locMinute < 10) then
+		locMinute = string.format("%02s", srvMinute);
 	end
 	if CalendarOptions["milFormat"] then
-	    curtime = string.format("%s:%s", hour, minute);
-		return curtime;	
-	else
-		if (hour >= 12) then
-			if hour > 12 then
-			hour = hour - 12;
-			end
-			ampm = "PM";
+		if srvHour < 10 then
+			srvHour = "0" .. srvHour
 		end
-		
-		curtime = string.format("%s:%s%s", hour, minute, ampm);
-		return curtime;
+		if locHour < 10 then
+			locHour = "0" .. locHour
+		end
+	else
+		if (srvHour >= 12) then
+			if srvHour > 12 then
+			srvHour = srvHour - 12;
+			end
+			srvAmpm = "PM";
+		elseif srvHour < 1 then
+			srvHour = 12;
+		end
+		if (locHour >= 12) then
+			if locHour > 12 then
+			locHour = locHour - 12;
+			end
+			locAmpm = "PM";
+		elseif locHour < 1 then
+			locHour = 12;
+		end
 	end
+
+	return srvHour, srvMinute, locHour, locMinute, locOffset, srvOffset, locAmpm, srvAmpm;
 end
 
 function EVT_IncMonth()
@@ -230,32 +328,277 @@ function EVT_UpdateCalendar()
             local preNum = DaysInMonth(displayYear, preMonth) - startDay + (step + 1);
             s:SetText(preNum);
             table_DayVal[step] = nil;
-            disableButton(b, step);
+            disableButtonBefore(b, step);
 			t:SetTexture("");
         elseif (step >= (DaysInMonth(displayYear, displayMonth) + startDay)) then
             local newDays = (step - (DaysInMonth(displayYear, displayMonth) + startDay - 1));
             s:SetText(newDays);
             table_DayPos[(DaysInMonth(displayYear, displayMonth) + startDay) + newDays] = nil;
-            disableButton(b, step);
+            disableButtonAfter(b, step);
 			t:SetTexture("");
         else
             s:SetText(z);
             table_DayPos[z] = step;
             table_DayVal[step] = z;
+			b:SetHighlightTexture(Img["DayHighlight"]);
             if z == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
-                b:SetNormalTexture(ImgDayToday);
+                b:SetHighlightTexture(Img["DayToday"]);
+				b:LockHighlight();
                 if (initialized == false) then
                     EVT_UpdateDayPanel();
                 end
-            else
-                b:SetNormalTexture(ImgDayActive);
-            end
+			end
+			if(displayMonth == 1) then
+				if(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SMulgore"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EMulgore"]);
+					b:SetPushedTexture(Img["EMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif (displayMonth == 2) then
+				if(table_DayVal[tonumber(step)] == 8) then
+					b:SetNormalTexture(Img["SLoveIsInTheAir"]);
+					b:SetPushedTexture(Img["SLoveIsInTheAirInactive"]);
+				elseif (table_DayVal[tonumber(step)] > 8 and table_DayVal[tonumber(step)] < 12) then
+					b:SetNormalTexture(Img["LoveIsInTheAir"]);
+					b:SetPushedTexture(Img["ILoveIsInTheAir"]);
+				elseif (table_DayVal[tonumber(step)] == 12) then
+					b:SetNormalTexture(Img["ELoveIsInTheAir"]);
+					b:SetPushedTexture(Img["ELoveIsInTheAirInactive"]);
+				elseif (table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SLunarFestival"]);
+					b:SetPushedTexture(Img["SLunarFestivalInactive"]);
+				elseif (table_DayVal[tonumber(step)] > 10) then
+					b:SetNormalTexture(Img["LunarFestival"]);
+					b:SetPushedTexture(Img["ILunarFestival"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SElwynn"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EElwynn"]);
+					b:SetPushedTexture(Img["EElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif (displayMonth == 3) then
+				if(table_DayVal[tonumber(step)] == 1) then
+					b:SetNormalTexture(Img["ELunarFestival"]);
+					b:SetPushedTexture(Img["ELunarFestivalInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SMulgore"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EMulgore"]);
+					b:SetPushedTexture(Img["EMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 4) then
+				if (table_DayVal[tonumber(step)] == 3) then
+					b:SetNormalTexture(Img["SNobleGarden"]);
+					b:SetPushedTexture(Img["SNobleGardenInactive"]);
+				elseif (table_DayVal[tonumber(step)] > 3 and table_DayVal[tonumber(step)] < 8) then
+					b:SetNormalTexture(Img["NobleGarden"]);
+					b:SetPushedTexture(Img["INobleGarden"]);
+				elseif (table_DayVal[tonumber(step)] == 8) then
+					b:SetNormalTexture(Img["ENobleGarden"]);
+					b:SetPushedTexture(Img["ENobleGardenInactive"]);
+				elseif (table_DayVal[tonumber(step)] == 28) then
+					b:SetNormalTexture(Img["SChildrensWeek"]);
+					b:SetPushedTexture(Img["SChildrensWeekInactive"]);
+				elseif (table_DayVal[tonumber(step)] > 28) then
+					b:SetNormalTexture(Img["ChildrensWeek"]);
+					b:SetPushedTexture(Img["IChildrensWeek"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SElwynn"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EElwynn"]);
+					b:SetPushedTexture(Img["EElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 5) then
+				if(table_DayVal[tonumber(step)] == 6) then
+					b:SetNormalTexture(Img["EChildrensWeek"]);
+					b:SetPushedTexture(Img["EChildrensWeekInactive"]);
+				elseif(table_DayVal[tonumber(step)] < 6) then
+					b:SetNormalTexture(Img["ChildrensWeek"]);
+					b:SetPushedTexture(Img["IChildrensWeek"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SMulgore"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EMulgore"]);
+					b:SetPushedTexture(Img["EMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 6) then
+				if(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["SMidSummer"]);
+					b:SetPushedTexture(Img["SMidSummerInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 17) then
+					b:SetNormalTexture(Img["MidSummer"]);
+					b:SetPushedTexture(Img["IMidSummer"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SElwynn"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EElwynn"]);
+					b:SetPushedTexture(Img["EElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 7) then
+				if(table_DayVal[tonumber(step)] == 1) then
+					b:SetNormalTexture(Img["EMidSummer"]);
+					b:SetPushedTexture(Img["EMidSummerInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SMulgore"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EMulgore"]);
+					b:SetPushedTexture(Img["EMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 8) then
+				if(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SElwynn"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EElwynn"]);
+					b:SetPushedTexture(Img["EElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 9) then
+				if(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SMulgore"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EMulgore"]);
+					b:SetPushedTexture(Img["EMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif (displayMonth == 10) then
+				if(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["SHallowsEnd"]);
+					b:SetPushedTexture(Img["SHallowsEndInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 31) then
+					b:SetNormalTexture(Img["EHallowsEnd"]);
+					b:SetPushedTexture(Img["EHallowsEndInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 17 and table_DayVal[tonumber(step)] < 31) then
+					b:SetNormalTexture(Img["HallowsEnd"]);
+					b:SetPushedTexture(Img["IHallowsEnd"]);
+				elseif(table_DayVal[tonumber(step)] == 3) then
+					b:SetNormalTexture(Img["SHarvestFestival"]);
+					b:SetPushedTexture(Img["SHarvestFestivalInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 3 and table_DayVal[tonumber(step)] < 10) then
+					b:SetNormalTexture(Img["HarvestFestival"]);
+					b:SetPushedTexture(Img["IHarvestFestival"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["EHarvestFestival"]);
+					b:SetPushedTexture(Img["EHarvestFestivalInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SElwynn"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EElwynn"]);
+					b:SetPushedTexture(Img["EElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif(displayMonth == 11) then
+				if(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SMulgore"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EMulgore"]);
+					b:SetPushedTexture(Img["EMulgoreInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			elseif (displayMonth == 12) then
+				if (table_DayVal[tonumber(step)] > 12 and table_DayVal[tonumber(step)] < 31) then
+					b:SetNormalTexture(Img["Winterveil"]);
+					b:SetPushedTexture(Img["IWinterveil"]);
+				elseif (table_DayVal[tonumber(step)] == 31) then
+					b:SetNormalTexture(Img["EWinterveil"]);
+					b:SetPushedTexture(Img["EWinterveilInactive"]);
+				elseif (table_DayVal[tonumber(step)] == 12) then
+					b:SetNormalTexture(Img["SWinterveil"]);
+					b:SetPushedTexture(Img["SWinterveilInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 10) then
+					b:SetNormalTexture(Img["SElwynn"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] == 17) then
+					b:SetNormalTexture(Img["EElwynn"]);
+					b:SetPushedTexture(Img["EElwynnInactive"]);
+				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+				else
+					b:SetNormalTexture(Img["DayActive"]);
+					b:SetPushedTexture(Img["DayInactive"]);
+				end
+			else
+				b:SetNormalTexture(Img["DayActive"]);
+				b:SetPushedTexture(Img["DayInactive"]);
+			end
             if (displayPos == step) then
                 local name = b:GetName();
                 EVT_DayClick(name, false);
             end
-            b:SetPushedTexture(ImgDayInactive);
-            b:SetHighlightTexture(ImgDayHightlight);
             b:SetScript("OnClick", function()
                 local name = this:GetName();
                 EVT_DayClick(name, true);
@@ -316,35 +659,562 @@ function EVT_DayClick(name, pressed)
     
     if (displayPos ~= nil) then
         local b2 = table_Days[tonumber(displayPos)];
-        if displayDay == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
-            b2:SetNormalTexture(ImgDayToday);
-        else
-            if (table_DayVal[tonumber(displayPos)] ~= nil) then
-                b2:SetNormalTexture(ImgDayActive);
-            else
-                if (displayPos >= 21) then
-                    for x = displayPos, 20, -1 do
-                        if (table_DayVal[x] ~= nil) then
-                            dayNum = x;
-                            break;
-                        end
-                    end
-                else
-                    for x = displayPos, 21, 1 do
-                        if (table_DayVal[x] ~= nil) then
-                            dayNum = x;
-                            break;
-                        end
-                    end
-                end
-            end
-        end
-    end
+		if displayDay == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
+			b2:SetHighlightTexture(Img["DayToday"]);
+			b2:LockHighlight();
+		else
+			b2:SetHighlightTexture(Img["DayHighlight"]);
+			b2:UnlockHighlight();
+		end
+		if (table_DayVal[tonumber(displayPos)] ~= nil) then
+			
+		else
+			if (displayPos >= 21) then
+				for x = displayPos, 20, -1 do
+					if (table_DayVal[x] ~= nil) then
+						dayNum = x;
+						break;
+					end
+				end
+			else
+				for x = displayPos, 21, 1 do
+					if (table_DayVal[x] ~= nil) then
+						dayNum = x;
+						break;
+					end
+				end
+			end
+		end
+	end
     local b = table_Days[dayNum];
-    b:SetNormalTexture(ImgDaySelected);
     displayDay = table_DayVal[dayNum];
     displayPos = dayNum;
+	if displayDay == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
+		b:SetHighlightTexture(Img["DayToday"]);
+	else 
+		b:SetHighlightTexture(Img["DaySelected"]);
+	end
+	b:LockHighlight();
+
     EVT_UpdateDayPanel();
+end
+
+function disableButtonAfter(Button, ButtonPos)
+	for x = 1, table_DayStr[ButtonPos]:GetText(), 1 do
+		if (displayMonth + 1 == 13) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth + 1 == 2) then
+			if (x == 8) then
+				Button:SetNormalTexture(Img["SLoveIsInTheAirInactive"]);
+				Button:SetPushedTexture(Img["SLoveIsInTheAirInactive"]);
+			elseif (x == 12) then
+				Button:SetNormalTexture(Img["ELoveIsInTheAirInactive"]);
+				Button:SetPushedTexture(Img["ELoveIsInTheAirInactive"]);
+			elseif (x > 8 and x < 12) then
+				Button:SetNormalTexture(Img["ILoveIsInTheAir"]);
+				Button:SetPushedTexture(Img["ILoveIsInTheAir"]);
+			elseif (x == 10) then
+				Button:SetNormalTexture(Img["SLunarFestivalInactive"]);
+				Button:SetPushedTexture(Img["SLunarFestivalInactive"]);
+			elseif (x > 10) then
+				Button:SetNormalTexture(Img["ILunarFestival"]);
+				Button:SetPushedTexture(Img["ILunarFestival"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth + 1 == 3) then
+			if (x == 1) then
+				Button:SetNormalTexture(Img["ELunarFestivalInactive"]);
+				Button:SetPushedTexture(Img["ELunarFestivalInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth + 1 == 4) then
+			if (x > 3 and x < 8) then
+				Button:SetNormalTexture(Img["INobleGarden"]);
+				Button:SetPushedTexture(Img["INobleGarden"]);
+			elseif (x == 3) then
+				Button:SetNormalTexture(Img["SNobleGardenInactive"]);
+				Button:SetPushedTexture(Img["SNobleGardenInactive"]);
+			elseif (x == 8) then
+				Button:SetNormalTexture(Img["ENobleGardenInactive"]);
+				Button:SetPushedTexture(Img["ENobleGardenInactive"]);
+			elseif (x == 28) then
+				Button:SetNormalTexture(Img["SChildrensWeekInactive"]);
+				Button:SetPushedTexture(Img["SChildrensWeekInactive"]);
+			elseif (x > 28) then
+				Button:SetNormalTexture(Img["IChildrensWeek"]);
+				Button:SetPushedTexture(Img["IChildrensWeek"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth + 1 == 5) then
+			if(x == 6) then
+				Button:SetNormalTexture(Img["EChildrensWeekInactive"]);
+				Button:SetPushedTexture(Img["EChildrensWeekInactive"]);
+			elseif(x < 6) then
+				Button:SetNormalTexture(Img["IChildrensWeek"]);
+				Button:SetPushedTexture(Img["IChildrensWeek"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth + 1 == 6) then
+			if(x == 17) then
+				Button:SetNormalTexture(Img["SMidSummerInactive"]);
+				Button:SetPushedTexture(Img["SMidSummerInactive"]);
+			elseif(x > 17) then
+				Button:SetNormalTexture(Img["IMidSummer"]);
+				Button:SetPushedTexture(Img["IMidSummer"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth + 1 == 7) then
+			if(x == 1) then
+				Button:SetNormalTexture(Img["EMidSummerInactive"]);
+				Button:SetPushedTexture(Img["EMidSummerInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth + 1 == 8) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth + 1 == 9) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth + 1 == 10) then
+			if(x == 17) then
+				Button:SetNormalTexture(Img["SHallowsEndInactive"]);
+				Button:SetPushedTexture(Img["SHallowsEndInactive"]);
+			elseif(x == 31) then
+				Button:SetNormalTexture(Img["EHallowsEndInactive"]);
+				Button:SetPushedTexture(Img["EHallowsEndInactive"]);
+			elseif(x > 17 and x <= 30) then
+				Button:SetNormalTexture(Img["IHallowsEnd"]);
+				Button:SetPushedTexture(Img["IHallowsEnd"]);
+			elseif(x == 3) then
+				Button:SetNormalTexture(Img["SHarvestFestivalInactive"]);
+				Button:SetPushedTexture(Img["SHarvestFestivalInactive"]);
+			elseif(x > 3 and x < 10) then
+				Button:SetNormalTexture(Img["IHarvestFestival"]);
+				Button:SetPushedTexture(Img["IHarvestFestival"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["EHarvestFestivalInactive"]);
+				Button:SetPushedTexture(Img["EHarvestFestivalInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth + 1 == 11) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth + 1 == 12) then
+			if (x > 12 and x < 31) then
+				Button:SetNormalTexture(Img["IWinterveil"]);
+				Button:SetPushedTexture(Img["IWinterveil"]);
+			elseif (x == 31) then
+				Button:SetNormalTexture(Img["EWinterveilInactive"]);
+				Button:SetPushedTexture(Img["EWinterveilInactive"]);
+			elseif (x == 12) then
+				Button:SetNormalTexture(Img["SWinterveilInactive"]);
+				Button:SetPushedTexture(Img["SWinterveilInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		else
+			Button:SetNormalTexture(Img["DayInactive"]);
+			Button:SetPushedTexture(Img["DayInactive"]);
+		end
+		Button:SetHighlightTexture("");
+		Button:SetScript("Onclick", function()
+			end);
+		if (displayPos == ButtonPos) then
+			name = Button:GetName();
+			EVT_DayClick(name, false);
+		end
+	end
+end
+
+function disableButtonBefore(Button, ButtonPos)
+	for x = 1, table_DayStr[ButtonPos]:GetText(), 1 do
+		if (displayMonth - 1 == 0) then
+			if (x > 12 and x < 31) then
+				Button:SetNormalTexture(Img["IWinterveil"]);
+				Button:SetPushedTexture(Img["IWinterveil"]);
+			elseif (x == 31) then
+				Button:SetNormalTexture(Img["EWinterveilInactive"]);
+				Button:SetPushedTexture(Img["EWinterveilInactive"]);
+			elseif (x == 12) then
+				Button:SetNormalTexture(Img["SWinterveilInactive"]);
+				Button:SetPushedTexture(Img["SWinterveilInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth - 1 == 1) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth - 1 == 2) then
+			if (x == 8) then
+				Button:SetNormalTexture(Img["SLoveIsInTheAirInactive"]);
+				Button:SetPushedTexture(Img["SLoveIsInTheAirInactive"]);
+			elseif (x == 12) then
+				Button:SetNormalTexture(Img["ELoveIsInTheAirInactive"]);
+				Button:SetPushedTexture(Img["ELoveIsInTheAirInactive"]);
+			elseif (x > 8 and x < 12) then
+				Button:SetNormalTexture(Img["ILoveIsInTheAir"]);
+				Button:SetPushedTexture(Img["ILoveIsInTheAir"]);
+			elseif (x == 10) then
+				Button:SetNormalTexture(Img["SLunarFestivalInactive"]);
+				Button:SetPushedTexture(Img["SLunarFestivalInactive"]);
+			elseif (x > 10) then
+				Button:SetNormalTexture(Img["ILunarFestival"]);
+				Button:SetPushedTexture(Img["ILunarFestival"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth - 1 == 3) then
+			if (x == 1) then
+				Button:SetNormalTexture(Img["ELunarFestivalInactive"]);
+				Button:SetPushedTexture(Img["ELunarFestivalInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth - 1 == 4) then
+			if (x > 3 and x < 8) then
+				Button:SetNormalTexture(Img["INobleGardenInactive"]);
+				Button:SetPushedTexture(Img["INobleGardenInactive"]);
+			elseif (x == 3) then
+				Button:SetNormalTexture(Img["SNobleGardenInactive"]);
+				Button:SetPushedTexture(Img["SNobleGardenInactive"]);
+			elseif (x == 8) then
+				Button:SetNormalTexture(Img["ENobleGardenInactive"]);
+				Button:SetPushedTexture(Img["ENobleGardenInactive"]);
+			elseif (x == 28) then
+				Button:SetNormalTexture(Img["SChildrensWeekInactive"]);
+				Button:SetPushedTexture(Img["SChildrensWeekInactive"]);
+			elseif (x > 28) then
+				Button:SetNormalTexture(Img["IChildrensWeek"]);
+				Button:SetPushedTexture(Img["IChildrensWeek"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth - 1 == 5) then
+			if(x == 6) then
+				Button:SetNormalTexture(Img["EChildrensWeekInactive"]);
+				Button:SetPushedTexture(Img["EChildrensWeekInactive"]);
+			elseif(x < 6) then
+				Button:SetNormalTexture(Img["IChildrensWeek"]);
+				Button:SetPushedTexture(Img["IChildrensWeek"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth - 1 == 6) then
+			if(x == 17) then
+				Button:SetNormalTexture(Img["SMidSummerInactive"]);
+				Button:SetPushedTexture(Img["SMidSummerInactive"]);
+			elseif(x > 17) then
+				Button:SetNormalTexture(Img["IMidSummer"]);
+				Button:SetPushedTexture(Img["IMidSummer"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth - 1 == 7) then
+			if(x == 1) then
+				Button:SetNormalTexture(Img["EMidSummerInactive"]);
+				Button:SetPushedTexture(Img["EMidSummerInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth - 1 == 8) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth - 1 == 9) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif (displayMonth - 1 == 10) then
+			if(x == 17) then
+				Button:SetNormalTexture(Img["SHallowsEndInactive"]);
+				Button:SetPushedTexture(Img["SHallowsEndInactive"]);
+			elseif(x == 31) then
+				Button:SetNormalTexture(Img["EHallowsEndInactive"]);
+				Button:SetPushedTexture(Img["EHallowsEndInactive"]);
+			elseif(x > 17 and x < 31) then
+				Button:SetNormalTexture(Img["IHallowsEnd"]);
+				Button:SetPushedTexture(Img["IHallowsEnd"]);
+			elseif(x == 3) then
+				Button:SetNormalTexture(Img["SHarvestFestivalInactive"]);
+				Button:SetPushedTexture(Img["SHarvestFestivalInactive"]);
+			elseif(x > 3 and x < 10) then
+				Button:SetNormalTexture(Img["IHarvestFestival"]);
+				Button:SetPushedTexture(Img["IHarvestFestival"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["EHarvestFestivalInactive"]);
+				Button:SetPushedTexture(Img["EHarvestFestivalInactive"]);
+			elseif(x == 10) then
+				Button:SetNormalTexture(Img["SElwynnInactive"]);
+				Button:SetPushedTexture(Img["SElwynnInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EElwynnInactive"]);
+				Button:SetPushedTexture(Img["EElwynnInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		elseif(displayMonth - 1 == 11) then
+			if(x == 10) then
+				Button:SetNormalTexture(Img["SMulgoreInactive"]);
+				Button:SetPushedTexture(Img["SMulgoreInactive"]);
+			elseif(x == 17) then
+				Button:SetNormalTexture(Img["EMulgoreInactive"]);
+				Button:SetPushedTexture(Img["EMulgoreInactive"]);
+			elseif(x > 10 and x < 17) then
+				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
+				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
+			else
+				Button:SetNormalTexture(Img["DayInactive"]);
+				Button:SetPushedTexture(Img["DayInactive"]);
+			end
+		else
+			Button:SetNormalTexture(Img["DayInactive"]);
+			Button:SetPushedTexture(Img["DayInactive"]);
+		end
+	end
+	Button:SetHighlightTexture("");
+    Button:SetScript("Onclick", function()
+        end);
+    if (displayPos == ButtonPos) then
+        name = Button:GetName();
+        EVT_DayClick(name, false);
+    end
 end
 
 function EVT_UpdateDayPanel()
@@ -380,7 +1250,7 @@ function EVT_UpdateScrollBar()
             if (t2 == nil) then
                 getglobal("EventButton" .. y):Hide();
             else
-				btnText = string.format("%s    %s", getTimeStr(t2[3], t2[4]), t2[1]);
+				btnText = string.format("%s    %s", getTimeStr(t2[3]), t2[1]);
                 getglobal("EventButton" .. y .. "Info"):SetText(btnText);
 				if t2[9] == 1 then
 					getglobal("EventButton" .. y .. "Info"):SetTextColor(1, 0.1, 0.1);
@@ -467,7 +1337,7 @@ function EVT_UpdateDetailList()
 	local mando = t[9];
 	EVTDetailsName:SetText(t[1]);
 	EVTDetailsCreated:SetText(t[2]);
-	EVTDetailsTime:SetText(string.format("%s    -    %s", getTimeStr(t[3], t[4]), getTimeStr(t[5], t[6])));
+	EVTDetailsTime:SetText(string.format("%s    -    %s", getTimeStr(t[3]), getTimeStr(t[5])));
 	if (subType == 1 or subType == 2 or subType == 3) then
 		EVTDetailsType:SetText(string.format("%s    -    %s", evtTypes[subType], evtSubMenu[t[7]][t[8]]));
 	else
@@ -574,7 +1444,7 @@ function EVTFrameModifyButton_Toggle()
 	EVTClearFrame()
     if (EVTFrameCreatePopup:IsVisible()) then
 		HideUIPanel(EVTFrameOverlay);
-        HideUIPanel(EVTFrame);
+        HideUIPanel(EVTFrameCreatePopup);
 	else
 		EVTFrameCreatePopupTitle:SetText("Modify Event");
 		createDate = displayDate();
@@ -588,25 +1458,39 @@ function EVTFrameModifyButton_Toggle()
 		if isSubtype(t[7]) then
 			ShowUIPanel(EVTFrameSubType);
 		end
-		UIDropDownMenu_Initialize(EVTFrameFromTime, EVTFrameFromTime_Initialize);
-	
-		if CalendarOptions["milFormat"] then
-			UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, tonumber(t[3]) + ((t[4] - 1) * 12));
-			UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
-			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, 1);
-			UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
-			UIDropDownMenu_SetSelectedValue(EVTFrameToTime, tonumber(t[5]) + ((t[6] - 1) * 12));
-			UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
-			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, 1);
+		local fromTime, toTime; 
+		local fromAM = 1;
+		local toAM = 1;
+		if not CalendarOptions["milFormat"] then
+			if t[3] >= 12 then
+				if t[3] > 12 then
+					fromTime = t[3] - 12;
+				end
+				fromAM = 2;
+			else
+				fromTime = t[3];
+			end
+			if t[5] >= 12 then
+				if t[5] > 12 then
+					toTime = t[5] - 12;
+				end
+				toAM = 2;
+				toTime = toTime + 1;
+			else
+				toTime = t[5];
+			end
 		else
-			UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, t[3]);
-			UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
-			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, t[4]);
-			UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
-			UIDropDownMenu_SetSelectedValue(EVTFrameToTime, t[5]);
-			UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
-			UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, t[6]);
+			fromTime = t[3];
 		end
+		fromTime = fromTime + 1;
+		UIDropDownMenu_Initialize(EVTFrameFromTime, EVTFrameFromTime_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameFromTime, fromTime);
+		UIDropDownMenu_Initialize(EVTFrameAMPM1, EVTFrameAMPM1_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM1, fromAM);
+		UIDropDownMenu_Initialize(EVTFrameToTime, EVTFrameToTime_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameToTime, toTime);
+		UIDropDownMenu_Initialize(EVTFrameAMPM2, EVTFrameAMPM2_Initialize);
+		UIDropDownMenu_SetSelectedValue(EVTFrameAMPM2, toAM);
 		UIDropDownMenu_Initialize(EVTFrameType, EVTFrameType_Initialize);
 		UIDropDownMenu_SetSelectedValue(EVTFrameType, t[7]);
 		UIDropDownMenu_Initialize(EVTFrameSubType, EVTFrameSubType_Initialize);
@@ -643,19 +1527,6 @@ function convertDate(str)
 	local newDate = string.format("%s %s, %s", table_Months[nMon], nDay, nYear);
 	
 	return newDate;
-end
-	
-function disableButton(Button, ButtonPos)
-    table_DayVal[ButtonPos] = nil;
-    Button:SetNormalTexture(ImgDayInactive);
-    Button:SetPushedTexture(ImgDayInactive);
-    Button:SetHighlightTexture("");
-    Button:SetScript("Onclick", function()
-        end);
-    if (displayPos == ButtonPos) then
-        name = Button:GetName();
-        EVT_DayClick(name, false);
-    end
 end
 
 function getButtonPosOffset()
@@ -699,45 +1570,45 @@ function getDayOverlayTex(val)
 		local t = CalendarData[calData];
 		if t[1] ~= nil then
 			if t[1][7] == 1 then
-				return ImgIcoInstance;
+				return Img["IcoInstance"];
 			end
 			if t[1][7] == 2 then
 				if t[1][8] == 1 then
-					return ImgIcoNefarian;
+					return Img["IcoNefarian"];
 				end
 				if t[1][8] == 2 then
-					return ImgIcoRagnaros;
+					return Img["IcoRagnaros"];
 				end
 				if t[1][8] == 3 then
-					return ImgIcoKelthuzad;
+					return Img["IcoKelthuzad"];
 				end
 				if t[1][8] == 4 then
-					return ImgIcoOnyxia;
+					return Img["IcoOnyxia"];
 				end
 				if t[1][8] == 5 then
-					return ImgIcoOssirian;
+					return Img["IcoOssirian"];
 				end
 				if t[1][8] == 6 then
-					return ImgIcoCthun;
+					return Img["IcoCthun"];
 				end
 				if t[1][8] == 7 then
-					return ImgIcoHakkar;
+					return Img["IcoHakkar"];
 				end
 			end
 			if t[1][7] == 3 then
-				return ImgIcoPvP;
+				return Img["IcoPvP"];
 			end
 			if t[1][7] == 4 then
-				return ImgIcoQuest;
+				return Img["IcoQuest"];
 			end
 			if t[1][7] == 5 then
-				return ImgIcoMeeting;
+				return Img["IcoMeeting"];
 			end
 			if t[1][7] == 6 then
-				return ImgIcoOther;
+				return Img["IcoOther"];
 			end
 			if t[1][7] == 7 then
-				return ImgIcoOther;
+				return Img["IcoOther"];
 			end
 		end
 	end
