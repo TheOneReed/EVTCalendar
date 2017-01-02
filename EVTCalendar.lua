@@ -1045,8 +1045,8 @@ function disableButtonBefore(Button, ButtonPos)
 			end
 		elseif (displayMonth - 1 == 4) then
 			if (x > 3 and x < 8) then
-				Button:SetNormalTexture(Img["INobleGardenInactive"]);
-				Button:SetPushedTexture(Img["INobleGardenInactive"]);
+				Button:SetNormalTexture(Img["INobleGarden"]);
+				Button:SetPushedTexture(Img["INobleGarden"]);
 			elseif (x == 3) then
 				Button:SetNormalTexture(Img["SNobleGardenInactive"]);
 				Button:SetPushedTexture(Img["SNobleGardenInactive"]);
@@ -1071,7 +1071,7 @@ function disableButtonBefore(Button, ButtonPos)
 			else
 				Button:SetNormalTexture(Img["DayInactive"]);
 				Button:SetPushedTexture(Img["DayInactive"]);
-			end
+		end
 		elseif (displayMonth - 1 == 5) then
 			if(x == 6) then
 				Button:SetNormalTexture(Img["EChildrensWeekInactive"]);
@@ -1209,7 +1209,7 @@ function disableButtonBefore(Button, ButtonPos)
 		end
 	end
 	Button:SetHighlightTexture("");
-    Button:SetScript("Onclick", function()
+    Button:SetScript("OnClick", function()
         end);
     if (displayPos == ButtonPos) then
         name = Button:GetName();
