@@ -20,6 +20,8 @@ CalendarOptions = {
 	
 selectedButton = nil;
 
+
+-- Tables for storing calendar button and related info
 local table_Days = {};
 local table_DayStr = {};
 local table_DayVal = {};
@@ -37,7 +39,7 @@ local eventClicked;
 local initialized = false;
 local varsLoaded = false;
 
--- Asset Location
+-- Image Asset Location
 local Img = {
     ["DayActive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameActive",
     ["DayInactive"] = "Interface\\AddOns\\EVTCalendar\\Images\\EVTDayFrameInactive",
@@ -120,6 +122,8 @@ local Img = {
 
 -- Calendar Data Table
 
+
+--Sets displayed day to today
 function EVT_ResetDisplayDate()
     displayDay = currentDay();
     displayMonth = currentMonth();
@@ -138,6 +142,7 @@ function EVT_OnLoad()
 		EVT_SlashCommand(msg);
 	end
 end
+
 
 function EVT_SlashCommand(msg)
 
@@ -190,11 +195,12 @@ function EVT_OnEvent()
 	end
 end
 
+--Gets current date, initialize options if none found, builds calendar buttons.
 function EVT_Initialize()
     displayMonth = date("%m") + 0;
     displayDay = date("%d") + 0;
     displayYear = date("%Y") + 0;
-	if (CalendarData == nil) then
+	if (CalendarData == nil) then  --makes calendar data table if it does not exist. Hierarchy goes as CalendarData["datestring"][1-n event number][1-12 event details]
 		CalendarData = {};
 	end	
 	if (CalendarOptions == nil) then
@@ -213,7 +219,8 @@ function EVT_Initialize()
     initialized = true;
 	DEFAULT_CHAT_FRAME:AddMessage(EVT_CALENDAR.." loaded. Type '/evt help' for commands.", 0.1, 1, 0.1);
 end
-	
+
+-- Toggles frame between show and not show. If a popup window is displayed, also shows overlay.	
 function EVT_Toggle()
     EVTButtonDay:SetText(date("%d"));
     if (EVTFrame:IsVisible()) then
@@ -231,6 +238,7 @@ function EVT_Toggle()
     end
 end
 
+-- loc = local, svr = server, offset is hours of GMT time.
 function EVT_GetCurrentTime()
 	local locOffset, svrOffset;
     local locAmpm = "AM";
@@ -289,6 +297,7 @@ function EVT_GetCurrentTime()
 	return srvHour, srvMinute, locHour, locMinute, locOffset, srvOffset, locAmpm, srvAmpm;
 end
 
+--Move to next month
 function EVT_IncMonth()
     displayMonth = displayMonth - 1;
     if (displayMonth < 1) then
@@ -299,6 +308,7 @@ function EVT_IncMonth()
     EVT_UpdateCalendar();
 end
 
+--Move to previous month
 function EVT_DecMonth()
     displayMonth = displayMonth + 1;
     if (displayMonth > 12) then
@@ -309,34 +319,35 @@ function EVT_DecMonth()
     EVT_UpdateCalendar();
 end
 
+--Rebuild Calendar for new month
 function EVT_UpdateCalendar()
-    EVTMonthDisplay:SetText(table_Months[displayMonth]);
+    EVTMonthDisplay:SetText(table_Months[displayMonth]); -- Change header text
 
-    local startDay = GetDayofWeek(displayYear, displayMonth, 1);
+    local startDay = GetDayofWeek(displayYear, displayMonth, 1); -- Day of the week of the 1st of new month
 
-    local z = 1;
+    local z = 1; -- tracker for which numerical day of new month we're on
     
-    for step = 1, 42, 1 do
-        local s = table_DayStr[step];
-        local b = table_Days[step];
-		local t = table_DayTex[step];
+    for step = 1, 42, 1 do -- 42 meaning of li.. I mean how many buttons there are to update
+        local s = table_DayStr[step]; -- button string reference
+        local b = table_Days[step]; -- button frame reference
+		local t = table_DayTex[step]; -- button texture reference
         local preMonth = displayMonth - 1;
         if (preMonth < 1) then
             preMonth = 12
         end
-        if (step < startDay) then
+        if (step < startDay) then -- this section deals with all buttons before the 1st day
             local preNum = DaysInMonth(displayYear, preMonth) - startDay + (step + 1);
             s:SetText(preNum);
             table_DayVal[step] = nil;
             disableButtonBefore(b, step);
 			t:SetTexture("");
-        elseif (step >= (DaysInMonth(displayYear, displayMonth) + startDay)) then
+        elseif (step >= (DaysInMonth(displayYear, displayMonth) + startDay)) then -- this section deals with all buttons before the last day
             local newDays = (step - (DaysInMonth(displayYear, displayMonth) + startDay - 1));
             s:SetText(newDays);
             table_DayPos[(DaysInMonth(displayYear, displayMonth) + startDay) + newDays] = nil;
             disableButtonAfter(b, step);
 			t:SetTexture("");
-        else
+        else --this section deals with all days of new month
             s:SetText(z);
             table_DayPos[z] = step;
             table_DayVal[step] = z;
@@ -348,7 +359,7 @@ function EVT_UpdateCalendar()
                     EVT_UpdateDayPanel();
                 end
 			end
-			if(displayMonth == 1) then
+			if(displayMonth == 1) then -- all of this nonsense determines which static events to display all they way..
 				if(table_DayVal[tonumber(step)] == 10) then
 					b:SetNormalTexture(Img["SMulgore"]);
 					b:SetPushedTexture(Img["SMulgoreInactive"]);
@@ -380,7 +391,7 @@ function EVT_UpdateCalendar()
 					b:SetPushedTexture(Img["ILunarFestival"]);
 				elseif(table_DayVal[tonumber(step)] == 10) then
 					b:SetNormalTexture(Img["SElwynn"]);
-					b:SetPushedTexture(Img["SElwynnInactive"]);
+					b:SetPushedTexture(Img["SElwynnInactive"]); -- keep going..
 				elseif(table_DayVal[tonumber(step)] == 17) then
 					b:SetNormalTexture(Img["EElwynn"]);
 					b:SetPushedTexture(Img["EElwynnInactive"]);
@@ -423,7 +434,7 @@ function EVT_UpdateCalendar()
 					b:SetPushedTexture(Img["SChildrensWeekInactive"]);
 				elseif (table_DayVal[tonumber(step)] > 28) then
 					b:SetNormalTexture(Img["ChildrensWeek"]);
-					b:SetPushedTexture(Img["IChildrensWeek"]);
+					b:SetPushedTexture(Img["IChildrensWeek"]); -- almost there..
 				elseif(table_DayVal[tonumber(step)] == 10) then
 					b:SetNormalTexture(Img["SElwynn"]);
 					b:SetPushedTexture(Img["SElwynnInactive"]);
@@ -483,7 +494,7 @@ function EVT_UpdateCalendar()
 					b:SetPushedTexture(Img["EMidSummerInactive"]);
 				elseif(table_DayVal[tonumber(step)] == 10) then
 					b:SetNormalTexture(Img["SMulgore"]);
-					b:SetPushedTexture(Img["SMulgoreInactive"]);
+					b:SetPushedTexture(Img["SMulgoreInactive"]); -- well NOW almost there..
 				elseif(table_DayVal[tonumber(step)] == 17) then
 					b:SetNormalTexture(Img["EMulgore"]);
 					b:SetPushedTexture(Img["EMulgoreInactive"]);
@@ -519,7 +530,7 @@ function EVT_UpdateCalendar()
 					b:SetNormalTexture(Img["DarkmoonFaire"]);
 					b:SetPushedTexture(Img["IDarkmoonFaire"]);
 				else
-					b:SetNormalTexture(Img["DayActive"]);
+					b:SetNormalTexture(Img["DayActive"]); -- definitely more than half way there now..
 					b:SetPushedTexture(Img["DayInactive"]);
 				end
 			elseif (displayMonth == 10) then
@@ -586,7 +597,7 @@ function EVT_UpdateCalendar()
 					b:SetPushedTexture(Img["EElwynnInactive"]);
 				elseif(table_DayVal[tonumber(step)] > 10 and table_DayVal[tonumber(step)] < 17) then
 					b:SetNormalTexture(Img["DarkmoonFaire"]);
-					b:SetPushedTexture(Img["IDarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]); -- to HERE!
 				else
 					b:SetNormalTexture(Img["DayActive"]);
 					b:SetPushedTexture(Img["DayInactive"]);
@@ -599,15 +610,15 @@ function EVT_UpdateCalendar()
                 local name = b:GetName();
                 EVT_DayClick(name, false);
             end
-            b:SetScript("OnClick", function()
+            b:SetScript("OnClick", function() --set scripts on new buttons
                 local name = this:GetName();
                 EVT_DayClick(name, true);
                 PlaySoundFile("Sound\\interface\\iUiInterfaceButtonA.wav");
             end);
 			
-			t:SetTexture(getDayOverlayTex(z));
+			t:SetTexture(getDayOverlayTex(z)); -- this is where custom event texures get added from player events
 			
-            z = z + 1;
+            z = z + 1; -- start next day
         end
     end
 end
@@ -617,7 +628,7 @@ function EVT_BuildCalendar()
     local y = 1;
     
     
-    for step = 1, 42, 1 do
+    for step = 1, 42, 1 do --creates rows of buttons 7 long, creating a grid 7x5
         if (x > 7) then
             x = 1;
             y = y + 1;
@@ -634,13 +645,13 @@ function EVT_BuildCalendar()
         b:SetHeight(78);
         b:SetWidth(78);
         b:SetPoint("TOP", EVTFrame, "TOPLEFT", xoffset, yoffset);
-        table_Days[step] = b;
+        table_Days[step] = b; -- stores button frame reference
  
 		name = string.format("%s%s", name, "Tex");
 		local t = b:CreateTexture("name", "OVERLAY");
 		t:SetAllPoints();
 		t:SetAlpha(0.5);
-        table_DayTex[step] = t;		
+        table_DayTex[step] = t; -- stores button frame reference
         
         name = string.format("%s%s%s", "Day", step, "str");
         local s = b:CreateFontString(name, "OVERLAY", "GameFontNormal")
@@ -648,17 +659,17 @@ function EVT_BuildCalendar()
         s:SetWidth(20);
         s:SetPoint("TOP", b, "TOP", -25, -5);
         s:SetText(step);
-        table_DayStr[step] = s;
+        table_DayStr[step] = s; -- stores button fontstring reference
     end
     EVT_UpdateCalendar();
 end
 
-
+--performed when a day button is pressed. name is the frame name of the button clicked, and pressed is a boolean of whether the button was player initiated or code initiated. true for player, false for code.
 function EVT_DayClick(name, pressed)
     local dayNum = tonumber(strsub(name, 4));
     
     if (displayPos ~= nil) then
-        local b2 = table_Days[tonumber(displayPos)];
+        local b2 = table_Days[tonumber(displayPos)]; -- reference to the previously clicked button
 		if displayDay == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
 			b2:SetHighlightTexture(Img["DayToday"]);
 			b2:LockHighlight();
@@ -686,7 +697,7 @@ function EVT_DayClick(name, pressed)
 			end
 		end
 	end
-    local b = table_Days[dayNum];
+    local b = table_Days[dayNum]; --new button reference
     displayDay = table_DayVal[dayNum];
     displayPos = dayNum;
 	if displayDay == currentDay() and displayMonth == currentMonth() and displayYear == currentYear() then
@@ -699,6 +710,7 @@ function EVT_DayClick(name, pressed)
     EVT_UpdateDayPanel();
 end
 
+--this nonsense and the next 500 lines are all about disabling a button if it is outside the bounds of the month, and display an inactive texture for static events. Button is button name and ButtonPos is it's location on the grid (1-42)
 function disableButtonAfter(Button, ButtonPos)
 	for x = 1, table_DayStr[ButtonPos]:GetText(), 1 do
 		if (displayMonth + 1 == 13) then
@@ -1217,6 +1229,7 @@ function disableButtonBefore(Button, ButtonPos)
     end
 end
 
+--display the string date above event list
 function EVT_UpdateDayPanel()
     local dow = table_Dotw[GetDayofWeek(displayYear, displayMonth, displayDay)];
     dayString = string.format("%s, %s %s, %s", dow, table_Months[displayMonth], displayDay, displayYear);
@@ -1225,6 +1238,7 @@ function EVT_UpdateDayPanel()
     EVT_UpdateScrollBar();
 end
 
+-- fetch events from day's data and list them
 function EVT_UpdateScrollBar()
     local y;
     local yoffset;
@@ -1268,6 +1282,7 @@ function EVT_UpdateScrollBar()
     end
 end
 
+-- fetch confirmed players for an event from events's data and list them
 function EVT_UpdateConfirmedScrollBar()
     local y;
     local yoffset;
@@ -1306,6 +1321,7 @@ function EVT_UpdateConfirmedScrollBar()
     end
 end
 
+--sets up details list and enables buttons about an event when clicked. button is ScrollBar button (1-5)
 function EVT_EventButton_OnClick(button)
 	EVT_EventClearSelection();
 	button:LockHighlight();
@@ -1319,6 +1335,7 @@ function EVT_EventButton_OnClick(button)
 	EVT_UpdateConfirmedScrollBar()
 end
 
+--initiates a call to event creator in an attempt to confirm spot
 function EVT_EventConfirmButton_OnClick()
 	local evtDate = displayDate();
 	local evtName = CalendarData[displayDate()][getButtonPosOffset()][1];
@@ -1329,7 +1346,8 @@ function EVT_EventConfirmButton_OnClick()
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	EVTFrameConfirmButton:Disable();
 end
-	
+
+--populate details list with event's data	
 function EVT_UpdateDetailList()
 	local pos = getButtonPosOffset();
 	local t = CalendarData[displayDate()][pos];
@@ -1388,12 +1406,14 @@ function EVT_UpdateDetailList()
 	ShowUIPanel(EVTFrameDetailsList);	
 end	
 	
+--delete an event from your saved variables
 function EVT_FrameDeleteButton_OnClick()
 	local pos = getButtonPosOffset();
 	table.remove(CalendarData[displayDate()], pos);
 	EVT_UpdateCalendar();
 end
 
+--deselect an event
 function EVT_EventClearSelection()
 	if selectedButton ~= nil then
 		selectedButton:UnlockHighlight();
@@ -1401,6 +1421,7 @@ function EVT_EventClearSelection()
 	end
 end
 
+--toggles the Create Event frame and sets initial values
 function EVTFrameCreateButton_Toggle()
 	EVTClearFrame()
     if (EVTFrameCreatePopup:IsVisible()) then
@@ -1428,6 +1449,7 @@ function EVTFrameCreateButton_Toggle()
 	end
 end
 
+--toggles the Invite frame and sets initial values
 function EVTFrameInviteButton_Toggle()
     if (EVTFrameInvitePopup:IsVisible()) then
 		HideUIPanel(EVTFrameOverlay);
@@ -1440,6 +1462,7 @@ function EVTFrameInviteButton_Toggle()
 	end
 end
 
+--toggles the Create Event frame, changes name to modify, and sets saved values
 function EVTFrameModifyButton_Toggle()
 	EVTClearFrame()
     if (EVTFrameCreatePopup:IsVisible()) then
@@ -1501,6 +1524,7 @@ function EVTFrameModifyButton_Toggle()
 	end
 end
 
+-- opens option's frame
 function EVTFrameOptions_OnClick()
 	EVTFrameOptionsLock:SetChecked(CalendarOptions["frameDrag"]);
 	EVTFrameOptionsEvents:SetChecked(CalendarOptions["acceptEvents"]);	
@@ -1509,6 +1533,7 @@ function EVTFrameOptions_OnClick()
 	ShowUIPanel(EVTFrameOptions);
 end
 
+--opens raid management frame
 function EVTFrameManageButton_OnClick()
 	ShowUIPanel(EVTFrameOverlay);
 	ShowUIPanel(EVTFrameManage);
@@ -1519,6 +1544,7 @@ function displayDate()
 	return string.format("%s%s%s", displayYear, displayMonth, displayDay);
 end
 
+--convert numberstring date to literal date string
 function convertDate(str)
 	local nDay = tonumber(string.sub(str, 7, 8));
 	local nMon = tonumber(string.sub(str, 5, 6));
@@ -1529,11 +1555,13 @@ function convertDate(str)
 	return newDate;
 end
 
+--gets the amount of offset the eventlistscroll frame has
 function getButtonPosOffset()
 	local offset = selectedButton:GetID() + FauxScrollFrame_GetOffset(EventListScrollFrame);
 	return offset;
 end
 
+--saves if player is in a guild, and if he is an officer, checks if player has officer listen and officer speak privilages
 function getPlayerInfo()
 	t = player_Info;
 
@@ -1563,6 +1591,7 @@ function isOfficer(index)
 	end
 end
 
+--turns saves number into image references
 function getDayOverlayTex(val)
 	local calData = string.format("%s%s%s",displayYear, displayMonth, val);
 	local tex;

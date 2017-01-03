@@ -8,6 +8,7 @@
 createDate = "";
 createEvt = 0;
 
+--inputs player event inputs into saved variable database
 function EVTFrameAcceptBtn_OnClick()
 	local mando;
 	local preFrom = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime) - 1;
@@ -35,27 +36,27 @@ function EVTFrameAcceptBtn_OnClick()
 		
 	if (EVTFrameCreatePopupTitle:GetText() == "Create Event") then
 		table.insert(CalendarData[createDate],{
-			[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
-			[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
-			[3] = preFrom,
-			[4] = "UNUSED",
-			[5] = preTo,
-			[6] = "UNUSED",
-			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType),
-			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType),
-			[9] = mando,
-			[10] = checkIllegal(EVTFrameNoteEditBox:GetText()),
-			[11] = 1,
-			[12] = {
-				[1] = { 
+			[1] = checkIllegal(EVTFrameNameEditBox:GetText()), --Event Name
+			[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()), -- Creator's Name
+			[3] = preFrom, -- Start Time
+			[4] = "UNUSED", --DEPRECIATED: OLD AMPM FROM SLOT, SAVE FOR FUTURE GROWTH?
+			[5] = preTo, -- End Time
+			[6] = "UNUSED", --DEPRECIATED: OLD AMPM TO SLOT, SAVE FOR FUTURE GROWTH?
+			[7] = UIDropDownMenu_GetSelectedValue(EVTFrameType), --event type
+			[8] = UIDropDownMenu_GetSelectedValue(EVTFrameSubType), -- event subtype
+			[9] = mando, --mandatory flag
+			[10] = checkIllegal(EVTFrameNoteEditBox:GetText()), --note box
+			[11] = 1, --locked flag, 1 = can invite, 0 = cannot invite
+			[12] = { --confirmed table of players
+				[1] = { --first player is creator
 					[1] = UnitName("player"),
 					[2] = UnitClass("player"),
-					[3] = "DPS", -- UNUSED
-					[4] = 9 -- UNUSED
+					[3] = "DPS", 
+					[4] = 9
 					}
 				}
 			});
-		else
+		else -- if window is mondify not create
 			CalendarData[createDate][createEvt] = {
 				[1] = checkIllegal(EVTFrameNameEditBox:GetText()),
 				[2] = checkIllegal(EVTFrameCreatorEditBox:GetText()),
@@ -76,6 +77,8 @@ function EVTFrameAcceptBtn_OnClick()
 		HideUIPanel(EVTFrameOverlay);
 		EVT_UpdateCalendar();
 end
+
+-------Almost everything under here is the same three functions over and over for dropdown menu functionality, refer to blizzard api
 
 function EVTFrameCreatePopup_OnLoad()
 	EVTFrameCreatorEditBox:SetText(UnitName("player"));
@@ -266,7 +269,7 @@ function EVTFrameSubType_OnClick()
 	EVTCheckComplete();
 end
 
-function EVTCheckComplete()
+function EVTCheckComplete() -- verifies if inputs are legal, end time cannot be before start time, and has a proper name
 	if ((EVTFrameNameEditBox:GetText() ~= "") and compareInputTime() and (isSubtype(UIDropDownMenu_GetSelectedValue(EVTFrameType)) == (UIDropDownMenu_GetSelectedValue(EVTFrameSubType) ~= 0))) then
 		EVTFrameCreatePopupAccept:Enable()
 	else
@@ -274,7 +277,7 @@ function EVTCheckComplete()
 	end
 end
 
-function EVTClearFrame()
+function EVTClearFrame() --reset frames
 	EVTFrameCreatorEditBox:SetText("");
 	EVTFrameNameEditBox:SetText("");
 	EVTFrameNoteEditBox:SetText("");
@@ -283,11 +286,11 @@ end
 
 --------- Invite Popup --------------
 function EVTFrameInvitePopupAccept_OnClick()
-	local tChan = {"PARTY", "RAID", "GUILD", "GUILD"};
-	local toOff = 0;	
-	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText());
-	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)];
-	local lockedTo = 0;
+	local tChan = {"PARTY", "RAID", "GUILD", "GUILD"}; --tale of who to send invites too
+	local toOff = 0;	-- send to officers flag 1 for true, 0 false
+	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText()); -- who is it going to
+	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)]; -- selection from table of who to send to
+	local lockedTo = 0; -- can recepients invite others?
 	if CalendarData[createDate][createEvt][11] == 1 then
 		lockedTo = UIDropDownMenu_GetSelectedValue(EVTFrameInviteLockMenu);
 	else
@@ -301,11 +304,13 @@ function EVTFrameInvitePopupAccept_OnClick()
 	end
 	
 	local tableStr = TableToString(CalendarData[createDate][createEvt], lockedTo);
-	local msgStr = string.format("%s¿%s¿%s¿%s¿", toWho, tostring(toOff), "Invite", tableStr);
+	local msgStr = string.format("%s¿%s¿%s¿%s¿", toWho, tostring(toOff), "Invite", tableStr); --build invite message
 
-	SendAddonMessage("EVTCalendar", msgStr, toChannel);
+	SendAddonMessage("EVTCalendar", msgStr, toChannel); -- send invite message
 	EVTClearInviteFrame();
 end
+
+--more dropdown menu stuff
 
 function EVTFrameInviteMenu_OnLoad()
     UIDropDownMenu_Initialize(this, EVTFrameInviteMenu_Initialize);
@@ -347,10 +352,12 @@ function EVTFrameInviteLockMenu_OnClick()
     UIDropDownMenu_SetSelectedValue(EVTFrameInviteLockMenu, this.value);
 end
 
+--reset frame
 function EVTClearInviteFrame()
 	EVTFrameInviteNameEditBox:SetText("");
 end
 
+--cycles through invite queue table for events
 function EVT_ShowNextInvite()
 	local str = "";
 	if TableIndexExists(invite_Queue, 1) then
@@ -367,6 +374,7 @@ function EVT_ShowNextInvite()
 	
 end
 
+--populate invite queue window with current event details
 function EVT_UpdateQueueDetail(str)
 	local s1, s2, s3, s4, s5, s6, s7, s8, s9, _, _, s12 = strSplit(str, "¡");
 	local subType = tonumber(s7);
@@ -390,12 +398,14 @@ function EVT_UpdateQueueDetail(str)
 	end
 end	
 
+--add invite to events database
 function EVTFrameInviteQueueAccept_OnClick()
 	StringToTable(invite_Queue[1][2]);
 	table.remove(invite_Queue, 1);
 	EVT_ShowNextInvite();
 end
 
+--reject invite
 function EVTFrameInviteQueueDecline_OnClick()
 	table.remove(invite_Queue, 1);
 	EVT_ShowNextInvite();
@@ -403,7 +413,7 @@ end
 
 --------- Options Popup --------------
 
-function EVTFrameOptionsAccept_OnClick()
+function EVTFrameOptionsAccept_OnClick() --confirm new settings
 	CalendarOptions["frameDrag"] = checkBool(EVTFrameOptionsLock:GetChecked());
 	CalendarOptions["confirmEvents"] = checkBool(EVTFrameOptionsConfirm:GetChecked());
 	CalendarOptions["acceptEvents"] = checkBool(EVTFrameOptionsEvents:GetChecked());
@@ -412,7 +422,7 @@ function EVTFrameOptionsAccept_OnClick()
 	HideUIPanel(EVTFrameOptions);
 end
 
-function EVTFrameOptionsReset_OnClick()
+function EVTFrameOptionsReset_OnClick() --resets all frames to default positions
 	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] All window locations reset to default.", 0.8, 0.8, 0.1);
 	EVTButton_Reset();
 	EVTFrame:ClearAllPoints()
@@ -468,7 +478,7 @@ end
 
 
 --- Helper Functions ---
-function checkBool(num)
+function checkBool(num) --if num is anything return true, nil is false
 	if num == nil then
 		return false;
 	else
@@ -476,7 +486,7 @@ function checkBool(num)
 	end
 end
 
-function compareInputTime()
+function compareInputTime() --checks if dropdown menu start time is before end time, returns boolean
 	local bTime = UIDropDownMenu_GetSelectedValue(EVTFrameFromTime) - 1;
 	local aTime;
 	if not CalendarOptions["milFormat"] then
@@ -494,6 +504,7 @@ function compareInputTime()
 	end
 end
 
+--if selected type contains subtypes
 function isSubtype(subType)
 	if subType == 1 or subType == 2 or subType == 3 then
 		return true;
@@ -501,6 +512,7 @@ function isSubtype(subType)
 	return false;
 end
 
+--build a button info and returns it to function that called
 function buildButton(btText, btValue, btFunc)
 	local info;
     info = {};
@@ -511,6 +523,7 @@ function buildButton(btText, btValue, btFunc)
 	return info;
 end
 
+--convert time into readable string format
 function getTimeStr(i, bool)
 	if CalendarOptions["milFormat"] then
 		if i < 10 then

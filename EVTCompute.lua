@@ -50,12 +50,13 @@ end
 
 -----------------Communications Functions------------------
 
+--addon message handler functions,
 function EVTIncMessage(msgStr, fromWho, channel)
 	if fromWho ~= UnitName("player") then
 		local s1, s2, s3, s4 = strSplit(msgStr, "¿"); --from, toOff, header, msg
-		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡");
+		local b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12 = strSplit(s4, "¡"); --varies per message, each segment separated by ¡ symbol
 		
-		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") and (s3 == "Invite") then
+		if (((tonumber(s2) == 1) and player_Info["officer"]) or (tonumber(s2) == 0)) and (s1 == UnitName("player") or s1 == "All ") and (s3 == "Invite") then --if message has invite header, parse and add to invite queue
 			if TableIndexExists(CalendarData, b12) == false then
 				if CalendarOptions["acceptEvents"] then
 					StringToTable(s4);
@@ -103,7 +104,7 @@ end
 
 
 ------- Helper Functions----------
-function TableIndexExists(t, i)
+function TableIndexExists(t, i) --does table t contain index i
 	for index,value in pairs(t) do 
 		if (index == i) then
 			return true;
@@ -112,29 +113,29 @@ function TableIndexExists(t, i)
 	return false;
 end
 
-function TableFindIndex(t, i)
+function TableFindIndex(t, name) --returns index i of associated name
 	local n = table.getn(t);
-	for x = 1, n do 
-		getName = t[x][1];
-		if ( getName == i) then
-			return x;
+	for i = 1, n do 
+		getName = t[i][1];
+		if ( getName == name) then
+			return i;
 		end
 	end
 	return false;
 end
 
-function TableFindDupe(t, i)
+function TableFindDupe(t, name) -- checks if table t contains duplicate entry to name
 	local n = table.getn(t);
-	for x = 1, n do 
-		getName = t[x][1];
-		if ( getName == i) then
+	for i = 1, n do 
+		getName = t[i][1];
+		if ( getName == name) then
 			return true;
 		end
 	end
 	return false;
 end
 
-function strSplit(msgStr, c)
+function strSplit(msgStr, c) -- separate a string msgStr based on a seperator character c
 	local table_str = {};
 	local capture = string.format("(.-)%s", c);
 	
@@ -142,15 +143,15 @@ function strSplit(msgStr, c)
 		table.insert(table_str, v);
 	end
 	
-	return unpack(table_str);
+	return unpack(table_str); --returns all table elements as arguments
 end
 
-function TableToString(t, lock)
+function TableToString(t, lock) -- builds a string from a table for transfer via addon message
 	strTable = string.format("%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡%s¡", t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8], t[9], t[10], lock, createDate);
 	return strTable;
 end
 
-function StringToTable(str)
+function StringToTable(str) --builds a table from a string recieved from an addon message
 	local s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12 = strSplit(str, "¡");
 	local t = CalendarData;
 	if TableIndexExists(t, s12) == false then
@@ -169,13 +170,13 @@ function StringToTable(str)
 	end
 end
 
-function checkIllegal(str)
+function checkIllegal(str) --SANITIZE YOUR CODE TO PREVENT UNINTENDED OPERATION
 	str = string.gsub(str, "¿", "?");
 	str = string.gsub(str, "¡", "!");
 	return str;
 end
 
-function EVT_CopyTable(t)		
+function EVT_CopyTable(t) -- duplicates a table t
 	local new = {};					
 	local index, value = next(t, nil);	
 	while index do
