@@ -26,7 +26,9 @@ Thank you for your interest in EVTCalendar!
 ## History
 
 V1.0: Initial Release!
+
 V1.1: Optimizations
+
 V1.2: Added Static Events - from /u/Air_chandler
 
 ## Credits
@@ -35,7 +37,9 @@ Author:
 TheOneReed (Blake Roos)
 
 Contributors:
+
 Dryvnt - Day of the week functions/optimizations
+
 /u/Air_chandler - Holiday Events
 
 ## License
