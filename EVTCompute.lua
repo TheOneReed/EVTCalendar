@@ -83,7 +83,6 @@ function EVTIncMessage(msgStr, fromWho, channel)
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmEvent" then
 			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has signed up for "..b2.." on "..convertDate(b1)..".", 0.1, 1, 0.1);
-			print(s4)
 			local t = { 
 					[1] = fromWho,
 					[2] = b3,
@@ -167,9 +166,7 @@ function StringToTable(str) --builds a table from a string recieved from an addo
 		DEFAULT_CHAT_FRAME:AddMessage("Duplicate Exists!", 1, 0.1, 1);
 	end
 	if CalendarOptions["confirmEvents"] then
-		local subStr = string.format("%s¡%s¡", s12, s1);
-		local msgStr = string.format("%s¿%s¿%s¿%s¿", s2, 0, "ConfirmEvent", subStr);
-		SendAddonMessage("EVTCalendar", msgStr, "GUILD");
+		EVT_EventConfirm(s12, s1, s2);
 	end
 end
 

@@ -1090,6 +1090,10 @@ function EVT_EventConfirmButton_OnClick()
 	local evtDate = displayDate();
 	local evtName = CalendarData[displayDate()][getButtonPosOffset()][1];
 	local crtName = CalendarData[displayDate()][getButtonPosOffset()][2];
+	EVT_EventConfirm(evtDate, evtName, crtName);
+end
+
+function EVT_EventConfirm(evtDate, evtName, crtName)
 	local evtClass = UnitClass("player");
 	local evtRole = "DPS";
 	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "DPS");
