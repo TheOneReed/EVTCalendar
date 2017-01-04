@@ -88,7 +88,7 @@ function EVTIncMessage(msgStr, fromWho, channel)
 					[2] = b3,
 					[3] = b4,
 					[4] = b5
-					}
+					};
 			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], t);
 			EVT_UpdateConfirmedScrollBar();
 			PlaySoundFile("Sound\\interface\\iTellMessage.wav");

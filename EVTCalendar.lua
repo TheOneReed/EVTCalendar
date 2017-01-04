@@ -1055,14 +1055,15 @@ function EVT_UpdateConfirmedScrollBar()
                 getglobal("ConfirmedText" .. y):Hide();
                 getglobal("ConfirmedText" .. y .. "Class"):Hide();
             else
-				strText = t2[1];
-				classText = t2[2];
+				local strText = t2[1];
+				local classText = t2[2];
 				color = RAID_CLASS_COLORS[string.upper(classText)]
                 getglobal("ConfirmedText" .. y):SetText(strText);
 				getglobal("ConfirmedText" .. y):SetTextColor(color.r, color.g, color.b);
                 getglobal("ConfirmedText" .. y .."Class"):SetText(classText);
 				getglobal("ConfirmedText" .. y .."Class"):SetTextColor(color.r, color.g, color.b);
                 getglobal("ConfirmedText" .. y):Show();
+				getglobal("ConfirmedText" .. y .. "Class"):Show();
             end
         else
             getglobal("ConfirmedText" .. y):Hide();
@@ -1366,7 +1367,6 @@ function getDayOverlayTex(val)
 		tempDay = "0"..tempDay;
 	end
 	local calData = string.format("%s%s%s", displayYear, tempMonth, tempDay);
-	print(calData)
 	local tex;
 	if TableIndexExists(CalendarData, calData) then
 		local t = CalendarData[calData];
