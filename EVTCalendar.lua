@@ -1291,7 +1291,16 @@ end
 
 --- Helper Functions ---
 function displayDate()
-	return string.format("%s%s%s", displayYear, displayMonth, displayDay);
+	local tempMonth = displayMonth;
+	local tempDay = displayDay;
+	if tempMonth < 10 then
+		tempMonth = "0"..tempMonth;
+	end
+	if tempDay < 10 then
+		tempDay = "0"..tempDay;
+	end
+	
+	return string.format("%s%s%s", displayYear, tempMonth, tempDay);
 end
 
 --convert numberstring date to literal date string

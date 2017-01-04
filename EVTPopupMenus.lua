@@ -286,7 +286,7 @@ end
 
 --------- Invite Popup --------------
 function EVTFrameInvitePopupAccept_OnClick()
-	local tChan = {"PARTY", "RAID", "GUILD", "GUILD"}; --tale of who to send invites too
+	local tChan = {"PARTY", "RAID", "GUILD", "GUILD"}; --table of who to send invites too
 	local toOff = 0;	-- send to officers flag 1 for true, 0 false
 	local toWho = checkIllegal(EVTFrameInviteNameEditBox:GetText()); -- who is it going to
 	local toChannel = tChan[UIDropDownMenu_GetSelectedValue(EVTFrameInviteMenu)]; -- selection from table of who to send to
@@ -376,6 +376,7 @@ end
 
 --populate invite queue window with current event details
 function EVT_UpdateQueueDetail(str)
+	print(str)
 	local s1, s2, s3, s4, s5, s6, s7, s8, s9, _, _, s12 = strSplit(str, "¡");
 	local subType = tonumber(s7);
 	local mando = tonumber(s9);
