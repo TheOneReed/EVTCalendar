@@ -1092,7 +1092,7 @@ function EVT_EventConfirmButton_OnClick()
 	local crtName = CalendarData[displayDate()][getButtonPosOffset()][2];
 	local evtClass = UnitClass("player");
 	local evtRole = "DPS";
-	local subStr = string.format("%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "DPS");
+	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "DPS");
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	EVTFrameConfirmButton:Disable();
@@ -1353,7 +1353,16 @@ end
 
 --turns saves number into image references
 function getDayOverlayTex(val)
-	local calData = string.format("%s%s%s",displayYear, displayMonth, val);
+	local tempMonth = displayMonth;
+	local tempDay = val;
+	if tempMonth < 10 then
+		tempMonth = "0"..tempMonth;
+	end
+	if tempDay < 10 then
+		tempDay = "0"..tempDay;
+	end
+	local calData = string.format("%s%s%s", displayYear, tempMonth, tempDay);
+	print(calData)
 	local tex;
 	if TableIndexExists(CalendarData, calData) then
 		local t = CalendarData[calData];

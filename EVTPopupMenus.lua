@@ -376,7 +376,6 @@ end
 
 --populate invite queue window with current event details
 function EVT_UpdateQueueDetail(str)
-	print(str)
 	local s1, s2, s3, s4, s5, s6, s7, s8, s9, _, _, s12 = strSplit(str, "¡");
 	local subType = tonumber(s7);
 	local mando = tonumber(s9);

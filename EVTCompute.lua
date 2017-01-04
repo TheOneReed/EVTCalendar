@@ -83,6 +83,7 @@ function EVTIncMessage(msgStr, fromWho, channel)
 		end
 		if s1 == UnitName("player") and s3 == "ConfirmEvent" then
 			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has signed up for "..b2.." on "..convertDate(b1)..".", 0.1, 1, 0.1);
+			print(s4)
 			local t = { 
 					[1] = fromWho,
 					[2] = b3,
