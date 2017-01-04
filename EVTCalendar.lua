@@ -717,9 +717,6 @@ function disableButtonAfter(Button, ButtonPos)
 			if(x == 10) then
 				Button:SetNormalTexture(Img["SMulgoreInactive"]);
 				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -746,9 +743,6 @@ function disableButtonAfter(Button, ButtonPos)
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SElwynnInactive"]);
 				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -763,9 +757,6 @@ function disableButtonAfter(Button, ButtonPos)
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SMulgoreInactive"]);
 				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -783,18 +774,9 @@ function disableButtonAfter(Button, ButtonPos)
 			elseif (x == 8) then
 				Button:SetNormalTexture(Img["ENobleGardenInactive"]);
 				Button:SetPushedTexture(Img["ENobleGardenInactive"]);
-			elseif (x == 28) then
-				Button:SetNormalTexture(Img["SChildrensWeekInactive"]);
-				Button:SetPushedTexture(Img["SChildrensWeekInactive"]);
-			elseif (x > 28) then
-				Button:SetNormalTexture(Img["IChildrensWeek"]);
-				Button:SetPushedTexture(Img["IChildrensWeek"]);
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SElwynnInactive"]);
 				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -812,9 +794,6 @@ function disableButtonAfter(Button, ButtonPos)
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SMulgoreInactive"]);
 				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -823,18 +802,9 @@ function disableButtonAfter(Button, ButtonPos)
 				Button:SetPushedTexture(Img["DayInactive"]);
 			end
 		elseif(displayMonth + 1 == 6) then
-			if(x == 17) then
-				Button:SetNormalTexture(Img["SMidSummerInactive"]);
-				Button:SetPushedTexture(Img["SMidSummerInactive"]);
-			elseif(x > 17) then
-				Button:SetNormalTexture(Img["IMidSummer"]);
-				Button:SetPushedTexture(Img["IMidSummer"]);
-			elseif(x == 10) then
+			if(x == 10) then
 				Button:SetNormalTexture(Img["SElwynnInactive"]);
 				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -849,9 +819,6 @@ function disableButtonAfter(Button, ButtonPos)
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SMulgoreInactive"]);
 				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -863,9 +830,6 @@ function disableButtonAfter(Button, ButtonPos)
 			if(x == 10) then
 				Button:SetNormalTexture(Img["SElwynnInactive"]);
 				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -877,9 +841,6 @@ function disableButtonAfter(Button, ButtonPos)
 			if(x == 10) then
 				Button:SetNormalTexture(Img["SMulgoreInactive"]);
 				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -888,16 +849,7 @@ function disableButtonAfter(Button, ButtonPos)
 				Button:SetPushedTexture(Img["DayInactive"]);
 			end
 		elseif (displayMonth + 1 == 10) then
-			if(x == 17) then
-				Button:SetNormalTexture(Img["SHallowsEndInactive"]);
-				Button:SetPushedTexture(Img["SHallowsEndInactive"]);
-			elseif(x == 31) then
-				Button:SetNormalTexture(Img["EHallowsEndInactive"]);
-				Button:SetPushedTexture(Img["EHallowsEndInactive"]);
-			elseif(x > 17 and x <= 30) then
-				Button:SetNormalTexture(Img["IHallowsEnd"]);
-				Button:SetPushedTexture(Img["IHallowsEnd"]);
-			elseif(x == 3) then
+			if(x == 3) then
 				Button:SetNormalTexture(Img["SHarvestFestivalInactive"]);
 				Button:SetPushedTexture(Img["SHarvestFestivalInactive"]);
 			elseif(x > 3 and x < 10) then
@@ -909,9 +861,6 @@ function disableButtonAfter(Button, ButtonPos)
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SElwynnInactive"]);
 				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -923,9 +872,6 @@ function disableButtonAfter(Button, ButtonPos)
 			if(x == 10) then
 				Button:SetNormalTexture(Img["SMulgoreInactive"]);
 				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -937,18 +883,12 @@ function disableButtonAfter(Button, ButtonPos)
 			if (x > 12 and x < 31) then
 				Button:SetNormalTexture(Img["IWinterveil"]);
 				Button:SetPushedTexture(Img["IWinterveil"]);
-			elseif (x == 31) then
-				Button:SetNormalTexture(Img["EWinterveilInactive"]);
-				Button:SetPushedTexture(Img["EWinterveilInactive"]);
 			elseif (x == 12) then
 				Button:SetNormalTexture(Img["SWinterveilInactive"]);
 				Button:SetPushedTexture(Img["SWinterveilInactive"]);
 			elseif(x == 10) then
 				Button:SetNormalTexture(Img["SElwynnInactive"]);
 				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
 			elseif(x > 10 and x < 17) then
 				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
 				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
@@ -973,198 +913,40 @@ end
 function disableButtonBefore(Button, ButtonPos)
 	for x = 1, table_DayStr[ButtonPos]:GetText(), 1 do
 		if (displayMonth - 1 == 0) then
-			if (x > 12 and x < 31) then
+			if (x > 20 and x < 31) then
 				Button:SetNormalTexture(Img["IWinterveil"]);
 				Button:SetPushedTexture(Img["IWinterveil"]);
 			elseif (x == 31) then
 				Button:SetNormalTexture(Img["EWinterveilInactive"]);
 				Button:SetPushedTexture(Img["EWinterveilInactive"]);
-			elseif (x == 12) then
-				Button:SetNormalTexture(Img["SWinterveilInactive"]);
-				Button:SetPushedTexture(Img["SWinterveilInactive"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SElwynnInactive"]);
-				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
 			else
 				Button:SetNormalTexture(Img["DayInactive"]);
 				Button:SetPushedTexture(Img["DayInactive"]);
 			end
-		elseif(displayMonth - 1 == 1) then
-			if(x == 10) then
-				Button:SetNormalTexture(Img["SMulgoreInactive"]);
-				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-			end
+
 		elseif (displayMonth - 1 == 2) then
-			if (x == 8) then
-				Button:SetNormalTexture(Img["SLoveIsInTheAirInactive"]);
-				Button:SetPushedTexture(Img["SLoveIsInTheAirInactive"]);
-			elseif (x == 12) then
-				Button:SetNormalTexture(Img["ELoveIsInTheAirInactive"]);
-				Button:SetPushedTexture(Img["ELoveIsInTheAirInactive"]);
-			elseif (x > 8 and x < 12) then
-				Button:SetNormalTexture(Img["ILoveIsInTheAir"]);
-				Button:SetPushedTexture(Img["ILoveIsInTheAir"]);
-			elseif (x == 10) then
-				Button:SetNormalTexture(Img["SLunarFestivalInactive"]);
-				Button:SetPushedTexture(Img["SLunarFestivalInactive"]);
-			elseif (x > 10) then
+			if (x > 21) then
 				Button:SetNormalTexture(Img["ILunarFestival"]);
 				Button:SetPushedTexture(Img["ILunarFestival"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SElwynnInactive"]);
-				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-			end
-		elseif (displayMonth - 1 == 3) then
-			if (x == 1) then
-				Button:SetNormalTexture(Img["ELunarFestivalInactive"]);
-				Button:SetPushedTexture(Img["ELunarFestivalInactive"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SMulgoreInactive"]);
-				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
 			else
 				Button:SetNormalTexture(Img["DayInactive"]);
 				Button:SetPushedTexture(Img["DayInactive"]);
 			end
 		elseif (displayMonth - 1 == 4) then
-			if (x > 3 and x < 8) then
-				Button:SetNormalTexture(Img["INobleGarden"]);
-				Button:SetPushedTexture(Img["INobleGarden"]);
-			elseif (x == 3) then
-				Button:SetNormalTexture(Img["SNobleGardenInactive"]);
-				Button:SetPushedTexture(Img["SNobleGardenInactive"]);
-			elseif (x == 8) then
-				Button:SetNormalTexture(Img["ENobleGardenInactive"]);
-				Button:SetPushedTexture(Img["ENobleGardenInactive"]);
-			elseif (x == 28) then
+			if (x == 28) then
 				Button:SetNormalTexture(Img["SChildrensWeekInactive"]);
 				Button:SetPushedTexture(Img["SChildrensWeekInactive"]);
 			elseif (x > 28) then
 				Button:SetNormalTexture(Img["IChildrensWeek"]);
 				Button:SetPushedTexture(Img["IChildrensWeek"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SElwynnInactive"]);
-				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-		end
-		elseif (displayMonth - 1 == 5) then
-			if(x == 6) then
-				Button:SetNormalTexture(Img["EChildrensWeekInactive"]);
-				Button:SetPushedTexture(Img["EChildrensWeekInactive"]);
-			elseif(x < 6) then
-				Button:SetNormalTexture(Img["IChildrensWeek"]);
-				Button:SetPushedTexture(Img["IChildrensWeek"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SMulgoreInactive"]);
-				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
 			else
 				Button:SetNormalTexture(Img["DayInactive"]);
 				Button:SetPushedTexture(Img["DayInactive"]);
 			end
-		elseif(displayMonth - 1 == 6) then
-			if(x == 17) then
-				Button:SetNormalTexture(Img["SMidSummerInactive"]);
-				Button:SetPushedTexture(Img["SMidSummerInactive"]);
-			elseif(x > 17) then
+		elseif (displayMonth - 1 == 6) then
+			if(x > 17) then
 				Button:SetNormalTexture(Img["IMidSummer"]);
 				Button:SetPushedTexture(Img["IMidSummer"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SElwynnInactive"]);
-				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-			end
-		elseif(displayMonth - 1 == 7) then
-			if(x == 1) then
-				Button:SetNormalTexture(Img["EMidSummerInactive"]);
-				Button:SetPushedTexture(Img["EMidSummerInactive"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SMulgoreInactive"]);
-				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-			end
-		elseif(displayMonth - 1 == 8) then
-			if(x == 10) then
-				Button:SetNormalTexture(Img["SElwynnInactive"]);
-				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-			end
-		elseif(displayMonth - 1 == 9) then
-			if(x == 10) then
-				Button:SetNormalTexture(Img["SMulgoreInactive"]);
-				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
 			else
 				Button:SetNormalTexture(Img["DayInactive"]);
 				Button:SetPushedTexture(Img["DayInactive"]);
@@ -1179,38 +961,6 @@ function disableButtonBefore(Button, ButtonPos)
 			elseif(x > 17 and x < 31) then
 				Button:SetNormalTexture(Img["IHallowsEnd"]);
 				Button:SetPushedTexture(Img["IHallowsEnd"]);
-			elseif(x == 3) then
-				Button:SetNormalTexture(Img["SHarvestFestivalInactive"]);
-				Button:SetPushedTexture(Img["SHarvestFestivalInactive"]);
-			elseif(x > 3 and x < 10) then
-				Button:SetNormalTexture(Img["IHarvestFestival"]);
-				Button:SetPushedTexture(Img["IHarvestFestival"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["EHarvestFestivalInactive"]);
-				Button:SetPushedTexture(Img["EHarvestFestivalInactive"]);
-			elseif(x == 10) then
-				Button:SetNormalTexture(Img["SElwynnInactive"]);
-				Button:SetPushedTexture(Img["SElwynnInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EElwynnInactive"]);
-				Button:SetPushedTexture(Img["EElwynnInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
-			else
-				Button:SetNormalTexture(Img["DayInactive"]);
-				Button:SetPushedTexture(Img["DayInactive"]);
-			end
-		elseif(displayMonth - 1 == 11) then
-			if(x == 10) then
-				Button:SetNormalTexture(Img["SMulgoreInactive"]);
-				Button:SetPushedTexture(Img["SMulgoreInactive"]);
-			elseif(x == 17) then
-				Button:SetNormalTexture(Img["EMulgoreInactive"]);
-				Button:SetPushedTexture(Img["EMulgoreInactive"]);
-			elseif(x > 10 and x < 17) then
-				Button:SetNormalTexture(Img["IDarkmoonFaire"]);
-				Button:SetPushedTexture(Img["IDarkmoonFaire"]);
 			else
 				Button:SetNormalTexture(Img["DayInactive"]);
 				Button:SetPushedTexture(Img["DayInactive"]);
