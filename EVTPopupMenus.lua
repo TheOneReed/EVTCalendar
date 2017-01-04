@@ -52,7 +52,8 @@ function EVTFrameAcceptBtn_OnClick()
 					[1] = UnitName("player"),
 					[2] = UnitClass("player"),
 					[3] = "DPS", 
-					[4] = 9
+					[4] = "9",
+					[5] = "1"
 					}
 				}
 			});

@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
-	<Button name="EVTManageGroupButtonTemplate" parent="EVTFrameManage" movable="true" clampedToScreen="true" virtual="true">
+<!--Templates-->
+	<Button name="EVTManageGroupButtonTemplate" toplevel="true" parent="EVTFrameManage" movable="true" clampedToScreen="true" virtual="true">
 		<Size>
 			<AbsDimension x="156" y="14"/>
 		</Size>
@@ -21,12 +21,12 @@
 				</FontString>
 				<FontString name="$parentName" inherits="GameFontNormalSmall" justifyH="LEFT">
 					<Size>
-						<AbsDimension x="60" y="8"/>
+						<AbsDimension x="70" y="8"/>
 					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativeTo="$parentRank" relativePoint="RIGHT">
+						<Anchor point="LEFT">
 							<Offset>
-								<AbsDimension x="2" y="0"/>
+								<AbsDimension x="3" y="1"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -38,7 +38,19 @@
 					<Anchors>
 						<Anchor point="LEFT" relativeTo="$parentName" relativePoint="RIGHT">
 							<Offset>
-								<AbsDimension x="-15" y="0"/>
+								<AbsDimension x="-5" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentClass" inherits="GameFontNormalSmall" justifyH="LEFT">
+					<Size>
+						<AbsDimension x="60" y="8"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT">
+							<Offset>
+								<AbsDimension x="110" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -46,46 +58,19 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parentClass">
-				<Size>
-					<AbsDimension x="50" y="8"/>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT">
-						<Offset>
-							<AbsDimension x="110" y="1"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<ButtonText>
-					<Size>
-						<AbsDimension x="50" y="8"/>
-					</Size>
-					<Anchors>
-						<Anchor point="LEFT">
-							<Offset>
-								<AbsDimension x="0" y="0"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</ButtonText>
-				<NormalFont inherits="GameFontNormalSmall" justifyH="LEFT"/>
-				<HighlightFont inherits="GameFontHighlightSmall" justifyH="LEFT"/>
-			</Button>
 		</Frames>
 		<Scripts>
+			<OnClick>
+				print(this.subgroup);
+			</OnClick>
 			<OnLoad>
-				this:SetFrameLevel(this:GetFrameLevel() + 1);
-				getglobal(this:GetName().."Class"):SetFrameLevel(this:GetFrameLevel() + 1);
 				this:RegisterForDrag("LeftButton");
 				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 			</OnLoad>
 			<OnDragStart>
-				this:SetFrameLevel(this:GetFrameLevel() + 1);
 				EVTManageGroupButton_OnDragStart();
 			</OnDragStart>
 			<OnDragStop>
-				this:SetFrameLevel(this:GetFrameLevel() - 1);
 				EVTManageGroupButton_OnDragStop();
 			</OnDragStop>
 		</Scripts>
@@ -96,6 +81,7 @@
 			<TexCoords left="0" right="0.640625" top="0.46875" bottom="0.90625"/>
 		</HighlightTexture>
 	</Button>
+
 	<Button name="EVTManageGroupSlotTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="156" y="14"/>
@@ -117,6 +103,7 @@
 			<TexCoords left="0" right="0.640625" top="0.46875" bottom="0.90625"/>
 		</HighlightTexture>
 	</Button>
+
 	<Frame name="EVTManageGroupTemplate" parent="EVTFrameManage" virtual="true">
 		<Size>
 			<AbsDimension x="162" y="80"/>
@@ -202,7 +189,26 @@
 		</Scripts>
 	</Frame>
 
-	<Frame name="EVTFrameManage" toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
+	<Button name="EVTManageSortButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="21" y="21"/>
+		</Size>
+		<Scripts>
+			<OnClick>
+				EVT_SortManaged(this:GetID());
+				PlaySound("gsTitleOptionExit");
+			</OnClick>
+		</Scripts>
+		<ButtonText name="$parentText"/>
+		<NormalFont inherits="GameFontNormalSmall"/>
+		<HighlightFont inherits="GameFontHighlightSmall"/>
+		<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
+		<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+		<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+	</Button>
+	
+<!--Frames-->
+	<Frame name="EVTFrameManage" frameStrata="DIALOG" movable="true" enableMouse="true" parent="UIParent" hidden="true" enableKeyboard="true">
 		<Size>
 			<AbsDimension x="650" y="450"/>
 		</Size>
@@ -239,6 +245,306 @@
 						<Anchor point="TOP" relativeTo="EVTFrameManage">
 							<Offset>
 								<AbsDimension x="0" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompTank" inherits="GameFontNormal" text="Tanks:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="50" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset>
+								<AbsDimension x="50" y="150"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompDPS" inherits="GameFontNormal" text="DPS:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="50" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompTank" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompHeal" inherits="GameFontNormal" text="Healers:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="50" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompDPS" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompTankN" inherits="GameFontNormal" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="50" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="BOTTOM">
+							<Offset>
+								<AbsDimension x="110" y="150"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompDPSN" inherits="GameFontNormal" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="50" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompTankN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompHealN" inherits="GameFontNormal" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="50" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompDPSN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="-10"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompDruid" inherits="GameFontNormalSmall" text="Druids:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="45" y="-50"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompHunter" inherits="GameFontNormalSmall" text="Hunters:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompDruid" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompMage" inherits="GameFontNormalSmall" text="Mages:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompHunter" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompPaladin" inherits="GameFontNormalSmall" text="Paladins:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompMage" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompPriest" inherits="GameFontNormalSmall" text="Priests:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompPaladin" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompRogue" inherits="GameFontNormalSmall" text="Rogues:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompPriest" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompShaman" inherits="GameFontNormalSmall" text="Shamans:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompRogue" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompWarlock" inherits="GameFontNormalSmall" text="Warlocks:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompShaman" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompWarrior" inherits="GameFontNormalSmall" text="Warriors:" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="70" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompWarlock" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompDruidN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="95" y="-50"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompHunterN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompDruidN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompMageN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompHunterN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompPaladinN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompMageN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompPriestN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompPaladinN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompRogueN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompPriestN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompShamanN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompRogueN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompWarlockN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompShamanN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="EVTRaidCompWarriorN" inherits="GameFontNormalSmall" text="0" justifyH="LEFT">
+					<Color r="1" g="1" b="1"/>
+					<Size>
+						<AbsDimension x="20" y="20"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP" relativeTo="EVTRaidCompWarlockN" relativePoint="BOTTOM">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -282,6 +588,24 @@
 						PlaySound("gsTitleOptionExit");
 						HideUIPanel(EVTFrameManage);
 						HideUIPanel(EVTFrameOverlay);						
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="EVTFrameManageInvite" inherits="GameMenuButtonTemplate" text="Invite All">
+				<Size>
+					<AbsDimension x="100" y="21"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="116" y="16"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						EVTFrameManageInvite_OnClick();
+						PlaySound("gsTitleOptionExit");
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -379,6 +703,15 @@
 							</Anchors>
 							<TexCoords left="0" right="0.6640625" top="0" bottom="0.90"/>
 						</Texture>
+						<FontString inherits="GameFontNormalSmall" text="Sort by:" justifyH="CENTER">
+							<Anchors>
+								<Anchor point="TOPLEFT">
+									<Offset>
+										<AbsDimension x="6" y="29"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 					</Layer>
 				</Layers>
 				<Frames>
@@ -395,19 +728,16 @@
 						</Anchors>
 						<Scripts>
 							<OnVerticalScroll>
-								FauxScrollFrame_OnVerticalScroll(20, EVT_UpdateAttendingScrollBar); 
+								FauxScrollFrame_OnVerticalScroll(120, EVT_UpdateAttendingScrollBar); 
 							</OnVerticalScroll>
-							<OnShow>
-								EVT_UpdateAttendingScrollBar();
-							</OnShow>
 						</Scripts>
 					</ScrollFrame>					
 					<Button name="EVTManageGroup9Label">
 						<Size>
-							<AbsDimension x="156" y="14"/>
+							<AbsDimension x="65" y="14"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP">
+							<Anchor point="TOPLEFT">
 								<Offset>
 									<AbsDimension x="0" y="14"/>
 								</Offset>
@@ -559,6 +889,101 @@
 								</Offset>
 							</Anchor>
 						</Anchors>
+					</Button>
+					<Button name="EVTAttendingSortName" inherits="EVTManageSortButtonTemplate" text="N" id="1">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="EVTManageGroup9Label" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-15" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Name");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+					</Button>
+					<Button name="EVTAttendingSortClass" inherits="EVTManageSortButtonTemplate" text="C" id="2">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="EVTAttendingSortName" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Class");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+					</Button>
+					<Button name="EVTAttendingSortRole" inherits="EVTManageSortButtonTemplate" text="R" id="3">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="EVTAttendingSortClass" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Role");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+					</Button>
+					<Button name="EVTAttendingSortOrder" inherits="EVTManageSortButtonTemplate" text="O" id="5">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="EVTAttendingSortRole" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Order Received");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+					</Button>
+					<Button name="EVTAttendingSortGRank" inherits="EVTManageSortButtonTemplate" text="G" id="6">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="EVTAttendingSortOrder" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="-5" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Guild Rank");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
 					</Button>
 				</Frames>
 				<Scripts>

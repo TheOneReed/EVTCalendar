@@ -87,7 +87,8 @@ function EVTIncMessage(msgStr, fromWho, channel)
 					[1] = fromWho,
 					[2] = b3,
 					[3] = b4,
-					[4] = b5
+					[4] = b5,
+					[5] = (table.getn(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12]) + 1)
 					};
 			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], t);
 			EVT_UpdateConfirmedScrollBar();
@@ -106,6 +107,7 @@ end
 
 
 ------- Helper Functions----------
+
 function TableIndexExists(t, i) --does table t contain index i
 	for index,value in pairs(t) do 
 		if (index == i) then
@@ -135,6 +137,62 @@ function TableFindDupe(t, name) -- checks if table t contains duplicate entry to
 		end
 	end
 	return false;
+end
+
+function EVT_TableSort(t, index, critReverse)
+	local t2 = {};
+	table.insert(t2, t[1]);
+	table.remove(t, 1);
+	local tSize = table.getn(t);
+	if tSize > 0 then
+		for x = 1, tSize do
+			local t2Size = table.getn(t2);
+			for y = 1, t2Size do
+				if y < t2Size then
+					if critReverse then
+						if (t[1][index] >= t2[y][index]) then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+							break;
+						elseif (t[1][index] < t2[y][index]) and (t[1][index] >= t2[(y + 1)][index]) then
+							table.insert(t2, (y + 1), t[1]);
+							table.remove(t, 1);
+							break;
+						end
+					else
+						if (t[1][index] <= t2[y][index]) then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+							break;
+						elseif (t[1][index] > t2[y][index]) and (t[1][index] <= t2[(y + 1)][index]) then
+							table.insert(t2, (y + 1), t[1]);
+							table.remove(t, 1);
+							break;
+						end
+					end
+				elseif y == t2Size then
+					if critReverse then
+						if t[1][index] > t2[y][index] then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+						else
+							table.insert(t2, t[1]);
+							table.remove(t, 1);
+						end
+					else
+						if t[1][index] < t2[y][index] then
+							table.insert(t2, y, t[1]);
+							table.remove(t, 1);
+						else
+							table.insert(t2, t[1]);
+							table.remove(t, 1);
+						end
+					end
+				end
+			end
+		end
+	end
+	return t2;
 end
 
 function strSplit(msgStr, c) -- separate a string msgStr based on a seperator character c

@@ -135,6 +135,7 @@ function EVT_OnLoad()
     this:RegisterEvent("ADDON_LOADED");
     this:RegisterEvent("VARIABLES_LOADED");
     this:RegisterEvent("CHAT_MSG_ADDON"); 
+    this:RegisterEvent("GUILD_ROSTER_UPDATE"); 
 	tinsert(UISpecialFrames, "EVTFrame");
     
     SLASH_EVT1 = EVT_SLASH;
@@ -192,6 +193,8 @@ function EVT_OnEvent()
 		if (strlower(arg1) == "evtcalendar") then
 			EVTIncMessage(arg2, arg4, arg3);
 		end		
+	elseif (event == "GUILD_ROSTER_UPDATE") then
+		EVTGetGuildRankInfo();	
 	end
 end
 
@@ -209,6 +212,7 @@ function EVT_Initialize()
 			["milFormat"] = true
 			};
 	end	
+	GuildRoster();
 	getPlayerInfo();
 	if player_Info["guild"] ~= false then
 		local msgStr = string.format("%s¿%s¿%s¿%s¿", "", 0, "VersionCheck", EVT_VERSION);
