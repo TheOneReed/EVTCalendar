@@ -1096,7 +1096,7 @@ end
 function EVT_EventConfirm(evtDate, evtName, crtName)
 	local evtClass = UnitClass("player");
 	local evtRole = "DPS";
-	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "DPS");
+	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, 9);
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	EVTFrameConfirmButton:Disable();
