@@ -85,7 +85,9 @@ function EVTIncMessage(msgStr, fromWho, channel)
 			DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..fromWho.." has signed up for "..b2.." on "..convertDate(b1)..".", 0.1, 1, 0.1);
 			local t = { 
 					[1] = fromWho,
-					[2] = b3
+					[2] = b3,
+					[3] = b4,
+					[4] = b5
 					}
 			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], t);
 			EVT_UpdateConfirmedScrollBar();
