@@ -1004,6 +1004,7 @@ function EVT_UpdateScrollBar()
 	EVTFrameConfirmedList:Hide();	
 	EVT_EventClearSelection();
 	HideUIPanel(EVTFrameDetailsList);
+	EVTFrameEventCopy:Disable();
 	EVTFrameModifyButton:Disable();
 	EVTFrameDeleteButton:Disable(); 	
 	if TableIndexExists(CalendarData, displayDate()) then
@@ -1164,6 +1165,7 @@ function EVT_UpdateDetailList()
 		EVTDetailsStatus:Show();
 		EVTDetailsStatusLabel:Show();
 		EVTDetailsRoleLabel:Show();
+		EVTFrameEventCopy:Disable();
 		EVTFrameRoleTank:Show();
 		EVTFrameRoleHeal:Show();
 		EVTFrameRoleDPS:Show();
@@ -1198,6 +1200,7 @@ function EVT_UpdateDetailList()
 		EVTFrameConfirmedList:Show();
 		EVTFrameConfirmButton:Disable();
 		EVTFrameManageButton:Enable();
+		EVTFrameEventCopy:Enable();
 	end
 	if ((t[11] == 2) and player_Info["officer"] == false) or (t[11] == 3 and t[1] ~= player_Info["name"]) then
 		EVTFrameInviteButton:Disable();

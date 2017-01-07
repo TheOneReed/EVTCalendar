@@ -154,7 +154,7 @@
 						<HighlightFont inherits="GameFontHighlightSmall"/>
 						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
 						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
-						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Disabled"/>
 						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
 					</Button>
 					<Button name="EVTFrameEventPaste">
@@ -187,7 +187,7 @@
 						<HighlightFont inherits="GameFontHighlightSmall"/>
 						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
 						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
-						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Disabled"/>
 						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
 					</Button>					
 				</Frames>
