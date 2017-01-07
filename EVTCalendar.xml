@@ -124,6 +124,72 @@
 							</Anchor>
 						</Anchors>
 					</Button>
+					<Button name="EVTFrameEventCopy">
+						<Size>
+							<AbsDimension x="21" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT" relativeTo="EventListScrollFrame" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="-10" y="-5"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								EVT_CopyEvent();
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Copy Event");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+						<ButtonText text="C"/>
+						<NormalFont inherits="GameFontNormalSmall"/>
+						<HighlightFont inherits="GameFontHighlightSmall"/>
+						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
+						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+					</Button>
+					<Button name="EVTFrameEventPaste">
+						<Size>
+							<AbsDimension x="21" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOMRIGHT" relativeTo="EventListScrollFrame" relativePoint="TOPRIGHT">
+								<Offset>
+									<AbsDimension x="5" y="-5"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								EVT_PasteEvent();
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+							<OnEnter>
+								GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", 0, 0);
+								GameTooltip:SetText("Paste Event");
+								GameTooltip:Show();
+							</OnEnter>
+							<OnLeave>
+								GameTooltip:Hide();
+							</OnLeave>
+						</Scripts>
+						<ButtonText text="P"/>
+						<NormalFont inherits="GameFontNormalSmall"/>
+						<HighlightFont inherits="GameFontHighlightSmall"/>
+						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
+						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+					</Button>					
 				</Frames>
 				<Layers>
 					<Layer level="OVERLAY">

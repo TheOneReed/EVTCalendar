@@ -36,6 +36,7 @@ local displayYear;
 local displayDay;
 local displayPos;
 local eventClicked;
+local copyEvent = {};
 
 local initialized = false;
 local varsLoaded = false;
@@ -1343,6 +1344,27 @@ function EVTFrameManageButton_OnClick()
 	ShowUIPanel(EVTFrameManage);
 end
 
+function EVT_CopyEvent()
+	local pos = getButtonPosOffset();
+	for i, v in pairs(copyEvent) do
+		v = nil;
+	end
+	copyEvent = EVT_CopyTable(CalendarData[displayDate()][pos]);
+	for i = 1, (table.getn(copyEvent[12]) - 1) do
+		table.remove(copyEvent[12], 2);
+	end
+	EVT_print("Event copied to clipboard.");
+end
+
+function EVT_PasteEvent()
+	if (TableIndexExists(CalendarData, displayDate()) == false) then
+		CalendarData[displayDate()] = {};
+	end
+	table.insert(CalendarData[displayDate()], copyEvent);
+	EVT_print("Event pasted.");
+	EVT_UpdateCalendar();
+end
+
 --- Helper Functions ---
 function displayDate()
 	local tempMonth = displayMonth;
@@ -1357,6 +1379,9 @@ function displayDate()
 	return string.format("%s%s%s", displayYear, tempMonth, tempDay);
 end
 
+function EVT_print(str)
+	DEFAULT_CHAT_FRAME:AddMessage("[EVTCalendar] "..tostring(str), 0.8, 0.8, 0.1);
+end
 --convert numberstring date to literal date string
 function convertDate(str)
 	local nDay = tonumber(string.sub(str, 7, 8));
