@@ -1312,6 +1312,7 @@ function EVTFrameModifyButton_Toggle()
 			end
 		else
 			fromTime = t[3];
+			toTime = t[5];
 		end
 		fromTime = fromTime + 1;
 		UIDropDownMenu_Initialize(EVTFrameFromTime, EVTFrameFromTime_Initialize);

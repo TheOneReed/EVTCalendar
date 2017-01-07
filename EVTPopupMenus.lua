@@ -501,7 +501,6 @@ function compareInputTime() --checks if dropdown menu start time is before end t
 	end
 	local bAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM1);
 	local aAMPM = UIDropDownMenu_GetSelectedValue(EVTFrameAMPM2);
-	
 	if (aTime + (12 * (aAMPM - 1))) > (bTime + (12 * (bAMPM - 1))) then
 		return true;
 	else
