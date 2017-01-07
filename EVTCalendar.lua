@@ -1123,15 +1123,9 @@ function EVT_EventConfirm(evtDate, evtName, crtName)
 		evtRole = "Tank"
 	end
 	local srvHour, srvMinute = EVT_GetCurrentTime();
-	local curDay = currentDay();
-	if tonumber(srvHour) < 10 then
-		srvHour = "0"..srvHour;
-	end
-	if tonumber(srvMinute) < 10 then
-		srvMinute = "0"..srvMinute;
-	end
+	local curDate = currentMonth().."/"..currentDay();
 	local srvTime = srvHour..":"..srvMinute;
-	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "9", curDay, srvTime );
+	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "9", curDate, srvTime );
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	EVTFrameConfirmButton:Disable();
@@ -1165,6 +1159,7 @@ function EVT_UpdateDetailList()
 	end
 	if t[2] ~= UnitName("player") then
 		EVTFrameModifyButton:Disable();
+		EVTFrameManageButton:Disable();
 		EVTDetailsStatus:Show();
 		EVTDetailsStatusLabel:Show();
 		EVTDetailsRoleLabel:Show();
@@ -1201,6 +1196,7 @@ function EVT_UpdateDetailList()
 	else
 		EVTFrameConfirmedList:Show();
 		EVTFrameConfirmButton:Disable();
+		EVTFrameManageButton:Enable();
 	end
 	if ((t[11] == 2) and player_Info["officer"] == false) or (t[11] == 3 and t[1] ~= player_Info["name"]) then
 		EVTFrameInviteButton:Disable();

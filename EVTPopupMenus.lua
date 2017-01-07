@@ -34,12 +34,6 @@ function EVTFrameAcceptBtn_OnClick()
 		end
 	end
 	local srvHour, srvMinute = EVT_GetCurrentTime();
-	if tonumber(srvHour) < 10 then
-		srvHour = "0"..srvHour;
-	end
-	if tonumber(srvMinute) < 10 then
-		srvMinute = "0"..srvMinute;
-	end
 	local srvTime = srvHour..":"..srvMinute;
 	if (EVTFrameCreatePopupTitle:GetText() == "Create Event") then
 		table.insert(CalendarData[createDate],{
@@ -60,9 +54,9 @@ function EVTFrameAcceptBtn_OnClick()
 					[2] = UnitClass("player"),
 					[3] = "Self", 
 					[4] = "9",
-					[5] = "1",
+					[5] = 1,
 					[6] = "10",
-					[7] = currentDay(),
+					[7] = (currentMonth().."/"..currentDay()),
 					[8] = srvTime
 					}
 				}

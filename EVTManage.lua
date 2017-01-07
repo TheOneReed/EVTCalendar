@@ -311,6 +311,14 @@ function EVTCountRaidData()
 				tanks = tanks + 1;
 			elseif managedTable[x][3] == "Heal" then
 				healers = healers + 1;
+			elseif managedTable[x][3] == "Self" then
+				if CalendarOptions["selectedRole"] == 1 then
+					dps = dps + 1;
+				elseif CalendarOptions["selectedRole"] == 3 then
+					tanks = tanks + 1;
+				elseif CalendarOptions["selectedRole"] == 2 then
+					healers = healers + 1;
+				end
 			end
 		end
 	end
