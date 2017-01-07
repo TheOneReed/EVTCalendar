@@ -211,6 +211,134 @@
 							</OnClick>
 						</Scripts>
 					</Button>
+					<Button name="EVTFrameRoleDPS" hidden="true" id="1">
+						<Size>
+							<AbsDimension x="21" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="EVTDetailsRoleLabel" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="20" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="GameFontNormalSmall" text="DPS">
+									<Color r="1" g="1" b="1"/>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="10" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnClick>
+								EVT_RoleButton_OnClick();
+								this:Disable();
+								this:LockHighlight();
+								EVTFrameRoleHeal:Enable();
+								EVTFrameRoleHeal:UnlockHighlight();
+								EVTFrameRoleTank:Enable();
+								EVTFrameRoleTank:UnlockHighlight();
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+						<HighlightFont inherits="GameFontHighlightSmall"/>
+						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
+						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+					</Button>
+					<Button name="EVTFrameRoleHeal" hidden="true" id="2">
+						<Size>
+							<AbsDimension x="21" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="EVTDetailsRoleLabel" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="20" y="-20"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="GameFontNormalSmall" text="Healer">
+									<Color r="1" g="1" b="1"/>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="10" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnClick>
+								EVT_RoleButton_OnClick();
+								this:Disable();
+								this:LockHighlight();
+								EVTFrameRoleDPS:Enable();
+								EVTFrameRoleDPS:UnlockHighlight();
+								EVTFrameRoleTank:Enable();
+								EVTFrameRoleTank:UnlockHighlight();								
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+						<HighlightFont inherits="GameFontHighlightSmall"/>
+						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
+						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+					</Button>
+					<Button name="EVTFrameRoleTank" hidden="true" id="3">
+						<Size>
+							<AbsDimension x="21" y="21"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="EVTDetailsRoleLabel" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="20" y="-40"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer level="ARTWORK">
+								<FontString inherits="GameFontNormalSmall" text="Tank">
+									<Color r="1" g="1" b="1"/>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="10" y="0"/>
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnClick>
+								EVT_RoleButton_OnClick();
+								this:Disable();
+								this:LockHighlight();
+								EVTFrameRoleHeal:Enable();
+								EVTFrameRoleHeal:UnlockHighlight();
+								EVTFrameRoleDPS:Enable();
+								EVTFrameRoleDPS:UnlockHighlight();
+								PlaySound("gsTitleOptionExit");
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Up"/>
+						<PushedTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<DisabledTexture file="Interface\Addons\EVTCalendar\Images\EVTButtonBlank-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+					</Button>
 					</Frames>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -284,6 +412,16 @@
 								</Anchor>
 							</Anchors>
 						</FontString>	
+						<FontString name="EVTDetailsRoleLabel" hidden="true" inherits="GameFontNormalSmall" text="Your Role:">
+							<Color r="0.8" g="0.8" b="0.1"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="EVTFrameDetailsList" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="10" y="-210"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
 						<FontString name="EVTDetailsName" inherits="GameFontNormal" text="">
 							<Color r="1" g="1" b="1"/>
 							<Anchors>
@@ -536,6 +674,71 @@
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="ConfirmedText4Class" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText1Time" inherits="GameFontNormalSmall" justifyH="LEFT" text="1">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPRIGHT">
+									<Offset>
+										<AbsDimension x="0" y="-6"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText2Time" inherits="GameFontNormalSmall" justifyH="LEFT" text="2">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText1Time" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText3Time" inherits="GameFontNormalSmall" justifyH="LEFT" text="3">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText2Time" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText4Time" inherits="GameFontNormalSmall" justifyH="LEFT" text="4">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText3Time" relativePoint="BOTTOMLEFT">
+									<Offset>
+										<AbsDimension x="0" y="-2"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="ConfirmedText5Time" inherits="GameFontNormalSmall" justifyH="LEFT" text="5">
+							<Color r="1" g="1" b="1"/>
+							<Size>
+								<AbsDimension x="80" y="15"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="ConfirmedText4Time" relativePoint="BOTTOMLEFT">
 									<Offset>
 										<AbsDimension x="0" y="-2"/>
 									</Offset>

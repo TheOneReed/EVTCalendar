@@ -15,7 +15,8 @@ CalendarOptions = {
 	["milFormat"] = false,
 	["frameDrag"] = false,
 	["acceptEvents"] = false,
-	["confirmEvents"] = false
+	["confirmEvents"] = false,
+	["selectedRole"] = 1
 	};
 	
 selectedButton = nil;
@@ -1058,20 +1059,29 @@ function EVT_UpdateConfirmedScrollBar()
             if (t2 == nil) then
                 getglobal("ConfirmedText" .. y):Hide();
                 getglobal("ConfirmedText" .. y .. "Class"):Hide();
+				getglobal("ConfirmedText" .. y .. "Time"):Hide();
             else
 				local strText = t2[1];
 				local classText = t2[2];
-				color = RAID_CLASS_COLORS[string.upper(classText)]
+				color = RAID_CLASS_COLORS[string.upper(classText)]				
+				if CalendarData[displayDate()][getButtonPosOffset()][2] == UnitName("player") then
+					local timeText = (t2[7].." "..t2[8]);
+					getglobal("ConfirmedText" .. y .."Time"):SetText(timeText);
+					getglobal("ConfirmedText" .. y .."Time"):SetTextColor(color.r, color.g, color.b);
+				end
+
                 getglobal("ConfirmedText" .. y):SetText(strText);
 				getglobal("ConfirmedText" .. y):SetTextColor(color.r, color.g, color.b);
                 getglobal("ConfirmedText" .. y .."Class"):SetText(classText);
 				getglobal("ConfirmedText" .. y .."Class"):SetTextColor(color.r, color.g, color.b);
                 getglobal("ConfirmedText" .. y):Show();
 				getglobal("ConfirmedText" .. y .. "Class"):Show();
+				getglobal("ConfirmedText" .. y .. "Time"):Show();
             end
         else
             getglobal("ConfirmedText" .. y):Hide();
             getglobal("ConfirmedText" .. y .. "Class"):Hide();
+			getglobal("ConfirmedText" .. y .. "Time"):Hide();
         end
     end
 end
@@ -1084,7 +1094,11 @@ function EVT_EventButton_OnClick(button)
 	EVTFrameModifyButton:Enable();
 	EVTFrameDeleteButton:Enable();
 	EVTDetailsStatus:Hide();
+	EVTFrameRoleTank:Hide();
+	EVTFrameRoleHeal:Hide();
+	EVTFrameRoleDPS:Hide();
 	EVTDetailsStatusLabel:Hide();
+	EVTDetailsRoleLabel:Hide();
 	EVTFrameConfirmedList:Hide();
 	EVT_UpdateDetailList();
 	EVT_UpdateConfirmedScrollBar()
@@ -1100,8 +1114,24 @@ end
 
 function EVT_EventConfirm(evtDate, evtName, crtName)
 	local evtClass = UnitClass("player");
-	local evtRole = "DPS";
-	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, 9);
+	local evtRole;
+	if CalendarOptions["selectedRole"] == 1 then
+		evtRole = "DPS";
+	elseif CalendarOptions["selectedRole"] == 2 then
+		evtRole = "Heal";
+	elseif CalendarOptions["selectedRole"] == 3 then
+		evtRole = "Tank"
+	end
+	local srvHour, srvMinute = EVT_GetCurrentTime();
+	local curDay = currentDay();
+	if tonumber(srvHour) < 10 then
+		srvHour = "0"..srvHour;
+	end
+	if tonumber(srvMinute) < 10 then
+		srvMinute = "0"..srvMinute;
+	end
+	local srvTime = srvHour..":"..srvMinute;
+	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "9", curDay, srvTime );
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);
 	SendAddonMessage("EVTCalendar", msgStr, "GUILD");
 	EVTFrameConfirmButton:Disable();
@@ -1137,7 +1167,21 @@ function EVT_UpdateDetailList()
 		EVTFrameModifyButton:Disable();
 		EVTDetailsStatus:Show();
 		EVTDetailsStatusLabel:Show();
-		if t[13] == 0 then
+		EVTDetailsRoleLabel:Show();
+		EVTFrameRoleTank:Show();
+		EVTFrameRoleHeal:Show();
+		EVTFrameRoleDPS:Show();
+		if CalendarOptions["selectedRole"] == 1 then
+			EVTFrameRoleDPS:Disable();
+			EVTFrameRoleDPS:LockHighlight();
+		elseif CalendarOptions["selectedRole"] == 2 then
+			EVTFrameRoleHeal:Disable();
+			EVTFrameRoleHeal:LockHighlight();
+		elseif CalendarOptions["selectedRole"] == 3 then
+			EVTFrameRoleTank:Disable();
+			EVTFrameRoleTank:LockHighlight();
+		end
+		if t[13] == 0 or t[13] == nil then
 			EVTDetailsStatus:SetText("Unconfirmed");
 			EVTDetailsStatus:SetTextColor(0.8, 0.1, 0.1);
 			EVTFrameConfirmButton:Enable();
@@ -1166,7 +1210,11 @@ function EVT_UpdateDetailList()
 	ShowUIPanel(EVTFrameDetailsList);	
 end	
 	
---delete an event from your saved variables
+function EVT_RoleButton_OnClick()
+	local role = this:GetID();
+	CalendarOptions["selectedRole"] = role;
+end
+	--delete an event from your saved variables
 function EVT_FrameDeleteButton_OnClick()
 	local pos = getButtonPosOffset();
 	table.remove(CalendarData[displayDate()], pos);

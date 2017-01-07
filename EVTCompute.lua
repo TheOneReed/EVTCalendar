@@ -88,7 +88,10 @@ function EVTIncMessage(msgStr, fromWho, channel)
 					[2] = b3,
 					[3] = b4,
 					[4] = b5,
-					[5] = (table.getn(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12]) + 1)
+					[5] = (table.getn(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12]) + 1),
+					[6] = "10",
+					[7] = b6,
+					[8] = b7
 					};
 			table.insert(CalendarData[b1][TableFindIndex(CalendarData[b1], b2)][12], t);
 			EVT_UpdateConfirmedScrollBar();
