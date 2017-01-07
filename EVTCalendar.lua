@@ -1123,7 +1123,7 @@ function EVT_EventConfirm(evtDate, evtName, crtName)
 		evtRole = "Tank"
 	end
 	local srvHour, srvMinute = EVT_GetCurrentTime();
-	local curDate = currentMonth().."/"..currentDay();
+	local curDate = currentDay().."/"..currentMonth();
 	local srvTime = srvHour..":"..srvMinute;
 	local subStr = string.format("%s¡%s¡%s¡%s¡%s¡%s¡%s¡", evtDate, evtName, evtClass, evtRole, "9", curDate, srvTime );
 	local msgStr = string.format("%s¿%s¿%s¿%s¿", crtName, 0, "ConfirmEvent", subStr);

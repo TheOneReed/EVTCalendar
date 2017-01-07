@@ -56,7 +56,7 @@ function EVTFrameAcceptBtn_OnClick()
 					[4] = "9",
 					[5] = 1,
 					[6] = "10",
-					[7] = (currentMonth().."/"..currentDay()),
+					[7] = (currentDay().."/"..currentMonth()),
 					[8] = srvTime
 					}
 				}
