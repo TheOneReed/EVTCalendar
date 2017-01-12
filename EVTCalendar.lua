@@ -36,7 +36,7 @@ local displayYear;
 local displayDay;
 local displayPos;
 local eventClicked;
-local copyEvent = {};
+local copyEvent = nil;
 
 local initialized = false;
 local varsLoaded = false;
@@ -989,6 +989,11 @@ end
 function EVT_UpdateDayPanel()
     local dow = table_Dotw[GetDayofWeek(displayYear, displayMonth, displayDay)];
     dayString = string.format("%s, %s %s, %s", dow, table_Months[displayMonth], displayDay, displayYear);
+	if copyEvent == nil then
+		EVTFrameDeleteButton:Disable(); 
+	else
+		EVTFrameDeleteButton:Enable(); 
+	end
     EVTDate:SetText(dayString);
 	EVTFrameConfirmedList:Hide();
     EVT_UpdateScrollBar();
@@ -1006,7 +1011,7 @@ function EVT_UpdateScrollBar()
 	HideUIPanel(EVTFrameDetailsList);
 	EVTFrameEventCopy:Disable();
 	EVTFrameModifyButton:Disable();
-	EVTFrameDeleteButton:Disable(); 	
+	EVTFrameEventPaste:Disable(); 	
 	if TableIndexExists(CalendarData, displayDate()) then
 		t = CalendarData[displayDate()];
 	else
@@ -1361,12 +1366,14 @@ function EVT_CopyEvent()
 end
 
 function EVT_PasteEvent()
-	if (TableIndexExists(CalendarData, displayDate()) == false) then
-		CalendarData[displayDate()] = {};
+	if copyEvent ~= nil then
+		if (TableIndexExists(CalendarData, displayDate()) == false) then
+			CalendarData[displayDate()] = {};
+		end
+		table.insert(CalendarData[displayDate()], copyEvent);
+		EVT_print("Event pasted.");
+		EVT_UpdateCalendar();
 	end
-	table.insert(CalendarData[displayDate()], copyEvent);
-	EVT_print("Event pasted.");
-	EVT_UpdateCalendar();
 end
 
 --- Helper Functions ---
