@@ -34,7 +34,7 @@ V1.2: Added Static Events - from /u/Air_chandler
 ## Credits
 
 Author: 
-TheOneReed (Blake Roos)
+TheOneReed
 
 Contributors:
 
