@@ -4,7 +4,7 @@
 --
 --
 ----------------------------------------------------------------
-EVT_VERSION = "1.2";
+EVT_VERSION = "1.3";
 
 
 ---Initialize tables
@@ -989,11 +989,6 @@ end
 function EVT_UpdateDayPanel()
     local dow = table_Dotw[GetDayofWeek(displayYear, displayMonth, displayDay)];
     dayString = string.format("%s, %s %s, %s", dow, table_Months[displayMonth], displayDay, displayYear);
-	if copyEvent == nil then
-		EVTFrameDeleteButton:Disable(); 
-	else
-		EVTFrameDeleteButton:Enable(); 
-	end
     EVTDate:SetText(dayString);
 	EVTFrameConfirmedList:Hide();
     EVT_UpdateScrollBar();
@@ -1011,7 +1006,12 @@ function EVT_UpdateScrollBar()
 	HideUIPanel(EVTFrameDetailsList);
 	EVTFrameEventCopy:Disable();
 	EVTFrameModifyButton:Disable();
+	EVTFrameDeleteButton:Disable();
+	if copyEvent ~= nil then 
+		EVTFrameEventPaste:Enable(); 
+	else
 	EVTFrameEventPaste:Disable(); 	
+	end
 	if TableIndexExists(CalendarData, displayDate()) then
 		t = CalendarData[displayDate()];
 	else
@@ -1355,13 +1355,17 @@ end
 
 function EVT_CopyEvent()
 	local pos = getButtonPosOffset();
+	if copyEvent then 
 	for i, v in pairs(copyEvent) do
 		v = nil;
+	end
+		table.setn(copyEvent,0)
 	end
 	copyEvent = EVT_CopyTable(CalendarData[displayDate()][pos]);
 	for i = 1, (table.getn(copyEvent[12]) - 1) do
 		table.remove(copyEvent[12], 2);
 	end
+	EVTFrameEventPaste:Enable();
 	EVT_print("Event copied to clipboard.");
 end
 
