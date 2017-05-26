@@ -4,7 +4,7 @@
 --
 --
 ----------------------------------------------------------------
-EVT_VERSION = "1.2";
+EVT_VERSION = "1.3";
 
 
 ---Initialize tables
@@ -1011,7 +1011,11 @@ function EVT_UpdateScrollBar()
 	HideUIPanel(EVTFrameDetailsList);
 	EVTFrameEventCopy:Disable();
 	EVTFrameModifyButton:Disable();
-	EVTFrameEventPaste:Disable(); 	
+	if copyEvent == nil then
+		EVTFrameEventPaste:Disable(); 	
+	else
+		EVTFrameEventPaste:Enable();
+	end
 	if TableIndexExists(CalendarData, displayDate()) then
 		t = CalendarData[displayDate()];
 	else
@@ -1355,8 +1359,10 @@ end
 
 function EVT_CopyEvent()
 	local pos = getButtonPosOffset();
-	for i, v in pairs(copyEvent) do
-		v = nil;
+	if copyEvent ~= nil then
+		for i, v in pairs(copyEvent) do
+			v = nil;
+		end
 	end
 	copyEvent = EVT_CopyTable(CalendarData[displayDate()][pos]);
 	for i = 1, (table.getn(copyEvent[12]) - 1) do
