@@ -1,4 +1,4 @@
-# EVTCalendarTBC
+# EVTCalendar
 
 An in-game WoTLK Calendar for Classic, based on the original work of TheOneReed and updated/maintained by AirChandler.
 
