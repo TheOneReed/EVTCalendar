@@ -445,9 +445,6 @@ function EVT_UpdateCalendar()
 					b:SetPushedTexture(Img["SElwynnInactive"]);
 					firstSunday = false;
 					stopdarkmoonfaireDay = false;
-				elseif((stopdarkmoonfaireDay == false and firstSunday == false) and (darkmoonfaireDay > 1 and darkmoonfaireDay < 7)) then
-					b:SetNormalTexture(Img["DarkmoonFaire"]);
-					b:SetPushedTexture(Img["IDarkmoonFaire"]);
 				elseif((stopdarkmoonfaireDay == false and firstSunday == false) and darkmoonfaireDay == 7) then
 					b:SetNormalTexture(Img["EElwynn"]);
 					b:SetPushedTexture(Img["EElwynnInactive"]);
@@ -461,6 +458,9 @@ function EVT_UpdateCalendar()
 				elseif (table_DayVal[tonumber(step)] == 28) then
 					b:SetNormalTexture(Img["SChildrensWeek"]);
 					b:SetPushedTexture(Img["SChildrensWeekInactive"]);
+				elseif((stopdarkmoonfaireDay == false and firstSunday == false) and (darkmoonfaireDay > 1 and darkmoonfaireDay < 7)) then
+					b:SetNormalTexture(Img["DarkmoonFaire"]);
+					b:SetPushedTexture(Img["IDarkmoonFaire"]);
 				elseif (table_DayVal[tonumber(step)] > 3 and table_DayVal[tonumber(step)] < 8) then
 					b:SetNormalTexture(Img["NobleGarden"]);
 					b:SetPushedTexture(Img["INobleGarden"]);
