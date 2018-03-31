@@ -1,4 +1,3 @@
-# EVTCalendar
 Event Calendar AddOn for WoW 1.12.1
 
 ## Installation
@@ -47,3 +46,4 @@ Dryvnt - Day of the week functions/optimizations
 SEE LICENSE.MD.
 
 /r/LegacyAddons Verification
+
